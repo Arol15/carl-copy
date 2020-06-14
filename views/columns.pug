@@ -1,15 +1,16 @@
 extends layout.pug
 
 block content
-  table.table
-    thead
-      tr
-        th Column ID
-        th Column Name
-        th Project ID
-    tbody
-      each column in columns
+  div.table-wrapper
+    table.table
+      thead
         tr
-          td= column.id
-          td= column.columnName
-          td= column.projectId
+          th Column ID
+          th Column Name
+          th Project ID
+      tbody
+        each column in columns
+          tr
+            td= column.id
+            td= column.columnName
+            td= column.projectId

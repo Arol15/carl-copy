@@ -1,13 +1,14 @@
 extends layout.pug
 
 block content
-  table.table
-    thead
-      tr
-        th Team ID
-        th Team Name
-    tbody
-      each team in teams
+  div.table-wrapper
+    table.table
+      thead
         tr
-          td= team.id
-          td= team.teamName
+          th Team ID
+          th Team Name
+      tbody
+        each team in teams
+          tr
+            td= team.id
+            td= team.teamName

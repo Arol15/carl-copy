@@ -1,19 +1,20 @@
 extends layout.pug
 
 block content
-  table.table.table-striped.table-hover
-    thead.thead-dark
-      tr
-        th Team
-        th Project
-        th Column
-        th Task
-        th Due Date
-    tbody
-      each field in data
+  div.table-wrapper
+    table.table.table-striped.table-hover
+      thead.thead-dark
         tr
-          td= field.Column.Project.Team.teamName
-          td= field.Column.Project.projectName
-          td= field.Column.columnName
-          td= field.taskDescription
-          td= field.dueDate
+          th Team
+          th Project
+          th Column
+          th Task
+          th Due Date
+      tbody
+        each field in data
+          tr
+            td= field.Column.Project.Team.teamName
+            td= field.Column.Project.projectName
+            td= field.Column.columnName
+            td= field.taskDescription
+            td= field.dueDate
