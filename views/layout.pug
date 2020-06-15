@@ -4,16 +4,9 @@ html
     title Asana Clone
     link(rel="stylesheet" type="text/css" href="home-page.css")
   body
-    nav.navbar.navbar-expand-lg.navbar-light.bg-light.d-flex.justify-content-between
-      a.navbar-brand(href='/') Asana Clone
-      .navbar-nav
-        a.nav-item.nav-link(href='/user') Users
-        a.nav-item.nav-link(href='/project') Projects
-        a.nav-item.nav-link(href='/team') Teams
-        a.nav-item.nav-link(href='/column') Columns
-        a.nav-item.nav-link(href='/task') Tasks
-        a.nav-item.nav-link(href='/data') All Data
-      .navbar-nav
-        a.nav-item.nav-link(href='/user/login') Login
-        a.nav-item.nav-link(href='/user/register') Register
+    nav.navbar
+      a.navbar-brand(href='/') CARL
+      div.navbar-nav
+        a.nav-item.nav-link.nav-1(href='/user/login') Login
+        a.nav-item.nav-link.nav-2(href='/user/register') Register
   block content
