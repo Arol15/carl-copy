@@ -1,6 +1,6 @@
 mixin validationErrorSummary(errors)
   if errors
-    div(class='alert alert-danger' role='alert')
+    div(class='alert alert-danger' role='alert').wrapper
       p The following error(s) occurred:
       ul
         each error in errors

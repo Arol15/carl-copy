@@ -9,11 +9,8 @@ html
       crossorigin='anonymous'
       )
     style(type='text/css').
-      body {
+      .wrapper {
         margin: 50px;
-      }
-      table {
-        margin: 50px 0;
       }
       form {
         margin: 50px auto;
@@ -30,5 +27,6 @@ html
         a.nav-item.nav-link(href='/task') Tasks
         a.nav-item.nav-link(href='/data') All Data
       .navbar-nav
+        a.nav-item.nav-link(href='/user/login') Login
         a.nav-item.nav-link(href='/user/register') Register
-    block content
+  block content

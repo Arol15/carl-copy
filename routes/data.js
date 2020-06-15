@@ -12,10 +12,7 @@ router.get('/data', asyncHandler(async (req, res) => {
         model: Project,
         include: {
           model: Team,
-        }
-      }
-    }
-  })
+  }}}})
 
 
   res.render('data', { data })

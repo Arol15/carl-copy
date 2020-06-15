@@ -5,14 +5,15 @@ include utils.pug
 block content
   +validationErrorSummary(errors)
   form(action='/user/register' method='post')
+    h4.text-center.py-4.text-muted User Registration
     input(type='hidden' name='_csrf' value=token)
     +field('First Name', 'firstName', user.firstName)
     +field('Last Name', 'lastName', user.lastName)
     +field('Email Address', 'email', user.email)
-    +field('Password', 'hashedPassword', user.hashedPassword, 'password')
+    +field('Password', 'password', user.hashedPassword, 'password')
     +field('Confirm Password', 'confirmPassword', '', 'password')
     div(class='py-4')
       button(type='submit' class='btn btn-secondary') Register
       a(href='/' class='btn btn-secondary ml-2') Cancel
-  //- div
-  //-   p: a(href='/user/login') Already have an account?
+    div
+      a.text-decoration-none.text-muted(href='/user/login') Already have an account?
