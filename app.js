@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
+const path = require('path')
 
 const rootRouter = require('./routes/root')
 const userRouter = require('./routes/user')
@@ -13,10 +14,10 @@ const dataRouter = require('./routes/data')
 
 // express configurations
 app.set('view engine', 'pug')
+app.use(express.static(path.join(__dirname, "stylesheets")));
 app.use(morgan('dev'))
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
-
 // routers
 app.use(rootRouter)
 app.use(userRouter)
