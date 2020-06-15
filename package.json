@@ -4,7 +4,8 @@
   "description": "a/A Week 12 Full Stack Project - Asana Clone",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon -r dotenv/config ./bin/www"
+    "start": "node ./bin/www",
+    "start:development": "nodemon -r dotenv/config ./bin/www"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,8 @@
     "csurf": "^1.11.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-bearer-token": "^2.4.0",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "per-env": "^1.0.2",
     "pg": "^8.2.1",

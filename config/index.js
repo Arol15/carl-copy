@@ -1,6 +1,6 @@
 module.exports = {
   environment: process.env.NODE_ENV || "development",
-  port: process.env.PORT || 8080,
+  port: Number.parseInt(process.env.PORT, 10) || 8080,
   db: {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
@@ -11,4 +11,9 @@ module.exports = {
     secret: process.env.JWT_SECRET,
     expiresIn: process.env.JWT_EXPIRES_IN,
   },
+  production: {
+    use_env_variable: 'DATABASE_URL',
+  },
 };
+
+
