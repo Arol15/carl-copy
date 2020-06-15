@@ -75,17 +75,17 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
 
-  // User.beforeCreate(async user => {
-  //   return user.hashedPassword = await bcrypt.hash(user.hashedPassword, 15)
-  // });
+  User.beforeCreate(async user => {
+    return user.hashedPassword = await bcrypt.hash(user.hashedPassword, 15)
+  });
 
   User.associate = function(models) {
     User.belongsTo(models.Team, { foreignKey: 'teamId' })
   };
 
-  User.prototype.validatePassword = function (password) {
+  User.prototype.validatePassword = async function (password) {
     // because this is a model instance method, `this` is the user instance here:
-    return bcrypt.compareSync(password, this.hashedPassword.toString())
+    return bcrypt.compare(password, this.hashedPassword.toString())
   }
 
   return User;
