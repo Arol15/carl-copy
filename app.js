@@ -36,14 +36,14 @@ app.use((req, res, next) => {
 // Custom error handlers.
 
 // Error handler to log errors.
-app.use((err, req, res, next) => {
-  if (process.env.NODE_ENV === 'production') {
-    // TODO Log the error to the database.
-  } else {
-    console.error(err);
-  }
-  next(err);
-});
+// app.use((err, req, res, next) => {
+//   if (process.env.NODE_ENV === 'production') {
+//     // TODO Log the error to the database.
+//   } else {
+//     console.error(err);
+//   }
+//   next(err);
+// });
 
 // Error handler for 404 errors.
 app.use((err, req, res, next) => {

@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const bcrypt = require('bcryptjs')
 const { asyncHandler, csrfProtection } = require('./utils')
 const db = require('../db/models')
 
@@ -16,11 +17,22 @@ router.get('/user/register', csrfProtection, asyncHandler(async (req, res) => {
 }))
 
 // - register page (POST - 'user/register')
-
 router.post('/user/register', csrfProtection, asyncHandler(async (req, res) => {
-  const { firstName, lastName, email, hashedPassword } = req.body
-  await db.User.create({ firstName, lastName, email, hashedPassword })
-  res.redirect('/user')
+  const { firstName, lastName, email, password } = req.body
+  const user = db.User.build({ firstName, lastName, email, hashedPassword: password })
+
+
+  try {
+    await user.save()
+    res.redirect('/user')
+  } catch (err) {
+    const errors = err.errors.map(error => error.message)
+    res.render('user-register', {
+        errors,
+        user,
+        token: req.csrfToken()
+      })
+  }
 }))
 
 module.exports = router
