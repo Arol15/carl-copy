@@ -1,0 +1,16 @@
+extends layout.pug
+
+block content
+  div.wrapper
+    table.table
+      thead
+        tr
+          th Project ID
+          th Project Name
+          th Team ID
+      tbody
+        each project in projects
+          tr
+            td= project.id
+            td= project.projectName
+            td= project.teamId

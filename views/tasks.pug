@@ -1,0 +1,20 @@
+extends layout.pug
+
+block content
+  div.wrapper
+    table.table
+      thead
+        tr
+          th Task ID
+          th Task
+          th Due Date
+          th Column ID
+          th Column Index
+      tbody
+        each task in tasks
+          tr
+            td= task.id
+            td= task.taskDescription
+            td= task.dueDate
+            td= task.columnId
+            td= task.columnIndx
