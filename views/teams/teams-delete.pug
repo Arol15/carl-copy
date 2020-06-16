@@ -1,0 +1,12 @@
+extends ../layout.pug
+
+block content
+  h3= teamToDelete.teamName
+  div
+    p Proceed with deleting this team?
+    
+  div
+    form(action=`/teams/${teamToDelete.id}/delete` method='post')
+      input(type='hidden' name='_csrf' value=csrfToken)
+      button(class='btn btn-danger' type='submit') Delete Team
+      a(class='btn btn-warning ml-2' href=`/teams` role='button') Cancel
