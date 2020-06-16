@@ -1,5 +1,6 @@
 body {
   background-color: rgba(235, 235, 235, 0.7);
+  margin: 0px;
 }
 
 nav {
@@ -19,6 +20,7 @@ nav {
   color: black;
   font-size: 45px;
   grid-column: 1;
+  padding: 5px 10px;
 }
 
 .navbar-nav {
@@ -40,13 +42,14 @@ nav {
 .nav-2 {
   background-color: rgb(78, 78, 78);
   color: white;
-  border-radius: 15px;
+  border-radius: 10px;
   padding: 5px 10px;
   margin: 0 15px;
 }
 
 .nav-item {
   text-decoration: none;
+  padding: 5px 5px;
 }
 
 .nav-2:hover {
