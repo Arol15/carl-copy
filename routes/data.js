@@ -2,9 +2,9 @@ const express = require('express')
 const router = express.Router()
 const { asyncHandler } = require('./utils')
 const { Task, Column, Project, Team, User } = require('../db/models')
+const { requireAuth } = require('../auth')
 
-
-router.get('/data', asyncHandler(async (req, res) => {
+router.get('/data', requireAuth, asyncHandler(async (req, res) => {
   const data = await Task.findAll({
     include: {
       model: Column,
