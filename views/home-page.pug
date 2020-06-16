@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    title Asana Clone
+    link(rel="stylesheet" type="text/css" href="../home-page.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+  body
+    nav.navbar
+      a.navbar-brand(href='/') CARL
+      div.navbar-nav
+        a.nav-item.nav-link.nav-1(href='/user/login') Login
+        a.nav-item.nav-link.nav-2(href='/user/register') Register
+    .body-paragraph
+      h1 Continue to keep your team organized and well-oiled!
+      p With CARL, you and your team members can keep your projects/tasks/priorities organized and get the job done!
+      //- Will have to move video src to the final link
+    .body-video
+      video(src="http://localhost:8080/board-demo.mp4" width="750" height="500" autoplay="" loop="")
+    .body-video
+      video(src="http://localhost:8080/board-demo-2.mp4" width="750" height="500" autoplay="" loop="")
+    .information
+      .message
+        h1 Get Organized
+        p Organize work in a way that’s best for you and your team. Set priorities and deadlines. Share info and assign tasks. All in one place.
+      .message
+        h1 Stay on Track
+        p Follow projects and tasks through every stage. You'll know when tasks should be finished and can keep every team member on track.
+      .message
+        h1 Hit Deadlines
+        p Create visual project ideas to vision how every step occurs over time. Determine risks. Exterminate roadblocks. Even when ideas or plans were revised.
+  footer
+      a(href='https://github.com')
+        i.fa.fa-github-square
+      a(href='https://linkedin.com')
+        i.fa.fa-linkedin

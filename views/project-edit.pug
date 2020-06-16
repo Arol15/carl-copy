@@ -1,0 +1,11 @@
+extends layout.pug
+include project-utils.pug
+
+block content
+  body
+    +error(error)
+    form(action=`/teams/${teamId}/projects/${project.id}/edit` method='post')
+      include project-form-fields.pug
+      div
+        button(type='submit') Update Project
+        a(href=`/teams/${teamId}/projects` roll='button') Cancel
