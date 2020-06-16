@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
-const { asyncHandler, csrfProtection } = require('./utils')
 const db = require('../db/models')
+const { asyncHandler, csrfProtection } = require('./utils')
+const { loginUser, logoutUser } = require('../auth');
 
 
 router.get('/user', asyncHandler(async (req, res) => {
@@ -24,6 +25,7 @@ router.post('/user/register', csrfProtection, asyncHandler(async (req, res) => {
 
   try {
     await user.save()
+    loginUser(req, res, user)
     res.redirect('/user')
   } catch (err) {
     const errors = err.errors.map(error => error.message)
@@ -50,8 +52,7 @@ router.post('/user/login', csrfProtection, asyncHandler(async (req, res) => {
     if (user !== null) {
       const passwordMatch = await user.validatePassword(password)
       if (passwordMatch) {
-        // TODO: Login the user
-        const token = getUserToken(user)
+        loginUser(req, res, user)
         return res.redirect('/')
       }
     }
@@ -67,5 +68,10 @@ router.post('/user/login', csrfProtection, asyncHandler(async (req, res) => {
     token: req.csrfToken()
   })
 }))
+
+router.post('/user/logout', (req, res) => {
+  logoutUser(req, res);
+  res.redirect('/user/login');
+});
 
 module.exports = router

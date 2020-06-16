@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
+const session = require('express-session')
+const { sessionSecret } = require('./config')
+const { restoreUser } = require('./auth')
 
 const rootRouter = require('./routes/root')
 const userRouter = require('./routes/user')
@@ -14,9 +17,17 @@ const dataRouter = require('./routes/data')
 // express configurations
 app.set('view engine', 'pug')
 app.use(morgan('dev'))
-app.use(cookieParser())
-app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser(sessionSecret))
+app.use(express.urlencoded({ extended: false }))
+app.use(session({
+  name: 'asana-clone.sid',
+  store: new (require('connect-pg-simple')(session))(),
+  secret: sessionSecret,
+  resave: false,
+  saveUninitialized: false,
+}))
 
+app.use(restoreUser)
 // routers
 app.use(rootRouter)
 app.use(userRouter)

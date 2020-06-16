@@ -12,9 +12,14 @@ html
       .wrapper {
         margin: 50px;
       }
-      form {
+      .authForm {
         margin: 50px auto;
         width: 300px;
+      }
+      .logout {
+        outline: none;
+        border: none;
+        background: none;
       }
   body
     nav.navbar.navbar-expand-lg.navbar-light.bg-light.d-flex.justify-content-between
@@ -26,7 +31,23 @@ html
         a.nav-item.nav-link(href='/column') Columns
         a.nav-item.nav-link(href='/task') Tasks
         a.nav-item.nav-link(href='/data') All Data
-      .navbar-nav
-        a.nav-item.nav-link(href='/user/login') Login
-        a.nav-item.nav-link(href='/user/register') Register
+      if locals.authenticated
+        .navbar-nav
+          .nav-item.nav-link Welcome #{user.firstName}!
+          form.navbar-nav(action='/user/logout' method='post')
+            button.logout.nav-item.text-muted(type='submit') Logout
+      else
+        .navbar-nav
+          a.nav-item.nav-link(href='/user/login') Login
+          a.nav-item.nav-link(href='/user/register') Register
   block content
+
+
+        //- if locals.authenticated
+        //-   span(class='navbar-text px-4') Welcome #{user.firstName}!
+        //-   form(class='form-inline pr-4' action='/user/logout' method='post')
+        //-     button(class='btn btn-sm btn-warning' type='submit') Logout
+        //- else
+        //-   span(class='navbar-text px-4')
+        //-     a(class='btn btn-sm btn-dark mr-2' href='/user/login') Login
+        //-     a(class='btn btn-sm btn-dark' href='/user/register') Register
