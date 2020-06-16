@@ -51,7 +51,7 @@ router.post('/teams/:teamId/projects-create', csrfProtection, asyncHandler(async
 
   try {
     await project.save();
-    res.redirect(`/projects/teams/${teamId}/projects`);
+    res.redirect(`/teams/${teamId}/projects`);
   } catch(err) {
     if (err.name === 'SequelizeValidationError') {
       const error = err.errors.map(error => error.message);
@@ -92,8 +92,6 @@ router.get('/teams/:teamId/projects/:projectId/edit', csrfProtection, asyncHandl
   });
 
   const allTeams = await Team.findAll();
-
-  console.log(JSON.stringify(project, null, 2))
 
   res.render('projects/project-edit', { project, allTeams, teamId, csrfToken: req.csrfToken() })
 }));
