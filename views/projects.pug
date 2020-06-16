@@ -1,16 +1,23 @@
 extends layout.pug
 
 block content
+  h3 Team Name: #{project.Team.teamName}
+
   div.wrapper
     table.table
       thead
         tr
           th Project ID
           th Project Name
-          th Team ID
       tbody
         each project in projects
           tr
             td= project.id
             td= project.projectName
-            td= project.teamId
+            td
+              a.btn.btn-primary(href=`/teams/${teamId}/projects/${project.id}/delete` role='button') Delete
+            td
+              a(href=`/teams/${teamId}/projects/${project.id}/edit` role='button') Edit
+
+  div
+    a(href=`/teams/${teamId}/projects-create` role='button') Add Project
