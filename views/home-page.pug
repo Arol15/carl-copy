@@ -1,6 +1,15 @@
-extends layout.pug
-
-block content
+doctype html
+html
+  head
+    title Asana Clone
+    link(rel="stylesheet" type="text/css" href="../home-page.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+  body
+    nav.navbar
+      a.navbar-brand(href='/') CARL
+      div.navbar-nav
+        a.nav-item.nav-link.nav-1(href='/user/login') Login
+        a.nav-item.nav-link.nav-2(href='/user/register') Register
     .body-paragraph
       h1 Continue to keep your team organized and well-oiled!
       p With CARL, you and your team members can keep your projects/tasks/priorities organized and get the job done!
@@ -19,5 +28,8 @@ block content
       .message
         h1 Hit Deadlines
         p Create visual project ideas to vision how every step occurs over time. Determine risks. Exterminate roadblocks. Even when ideas or plans were revised.
-      
-      
+  footer
+      a(href='https://github.com')
+        i.fa.fa-github-square
+      a(href='https://linkedin.com')
+        i.fa.fa-linkedin
