@@ -1,0 +1,13 @@
+extends ../layout.pug
+include teams-utils.pug
+
+block content
+  h3 Edit Team
+
+  body
+    +error(error)
+    form(action=`/teams/${team.id}/edit` method='post')
+      include teams-form-fields.pug
+      div
+        button(type='submit') Update Team
+        a(href=`/teams` roll='button') Cancel

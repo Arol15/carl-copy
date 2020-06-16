@@ -26,9 +26,7 @@ router.get('/teams/:teamId/projects', asyncHandler(async (req, res) => {
     include: { model: Team }
   });
 
-  console.log(JSON.stringify(project.Team.teamName, null, 2))
-
-  res.render('projects', { projects, teamId, project });
+  res.render('projects/projects', { projects, teamId, project });
 }))
 
 
@@ -40,13 +38,13 @@ router.get('/teams/:teamId/projects-create', csrfProtection, asyncHandler(async 
   const project = await Project.build();
   const allTeams = await Team.findAll();
 
-  res.render('projects-create', { project, teamId, allTeams, csrfToken: req.csrfToken() })
+  res.render('projects/projects-create', { project, teamId, allTeams, csrfToken: req.csrfToken() })
 }));
 
 
 
 // post new project
-router.post('/teams/:teamId/projects-create', csrfProtection, asyncHandler(async (req, res) => {
+router.post('/teams/:teamId/projects-create', csrfProtection, asyncHandler(async (req, res, next) => {
   const { projectName, teamId } = req.body;
 
   const project = Project.build({ projectName, teamId });
@@ -79,7 +77,7 @@ router.get('/teams/:teamId/projects/:projectId', asyncHandler(async (req, res) =
     }
   });
 
-  res.render('project-detail', { project })
+  res.render('projects/project-detail', { project })
 }));
 
 
@@ -89,28 +87,33 @@ router.get('/teams/:teamId/projects/:projectId/edit', csrfProtection, asyncHandl
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
 
-  const project = await Project.findByPk(projectId);
+  const project = await Project.findByPk(projectId, {
+    include: { model: Team }
+  });
+
   const allTeams = await Team.findAll();
 
-  res.render('project-edit', { project, teamId, allTeams, csrfToken: req.csrfToken() })
+  res.render('projects/project-edit', { project, allTeams, teamId, csrfToken: req.csrfToken() })
 }));
 
 
 
 // post edit
-router.post('/teams/:teamId/projects/:projectId/edit', csrfProtection, asyncHandler(async (req, res) => {
+router.post('/teams/:teamId/projects/:projectId/edit', csrfProtection, asyncHandler(async (req, res, next) => {
   const projectId = parseInt(req.params.projectId, 10);
   const projectToUpdate = await Project.findByPk(projectId);
 
   const { projectName, teamId } = req.body;
 
+  const project = { projectName, teamId }
+
   try {
-    await projectToUpdate.update({ projectName, teamId });
+    await projectToUpdate.update(project);
     res.redirect(`/teams/${teamId}/projects`)
   } catch(err) {
     if (err.name === 'SequelizeValidationError') {
       const error = e.errors.map(error => error.message);
-      res.render('project-edit', {
+      res.render('projects/project-edit', {
         project: { ...project, id: projectId },
         error,
         csrfToken: req.csrfToken()
@@ -127,7 +130,7 @@ router.get('/teams/:teamId/projects/:projectId/delete', csrfProtection, asyncHan
   const projectId = parseInt(req.params.projectId, 10);
   const projectToDelete = await Project.findByPk(projectId)
 
-  res.render('project-delete', {  projectToDelete, teamId, csrfToken: req.csrfToken() })
+  res.render('projects/project-delete', {  projectToDelete, teamId, csrfToken: req.csrfToken() })
 }));
 
 
