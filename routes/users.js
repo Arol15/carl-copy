@@ -1,10 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const bcrypt = require('bcryptjs')
 const { Op } = require('sequelize')
 const db = require('../db/models')
 const { asyncHandler, csrfProtection } = require('./utils')
-const { loginUser, logoutUser } = require('../auth')
+const { loginUser, logoutUser, requireAuth } = require('../auth')
 
 
 router.get('/users', asyncHandler(async (req, res) => {
@@ -70,13 +69,13 @@ router.post('/users/logout', (req, res) => {
   res.redirect('/users/login')
 })
 
-router.get('/users/edit/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
+router.get('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const userId = parseInt(req.params.id, 10)
   const user = await db.User.findByPk(userId)
   res.render('users/user-edit', { user, token: req.csrfToken() })
 }))
 
-router.post('/users/edit/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
+router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const { firstName, lastName, email } = req.body
   const userId = parseInt(req.params.id, 10)
   const user = await db.User.findByPk(userId)
@@ -108,7 +107,7 @@ router.post('/users/edit/:id(\\d+)', csrfProtection, asyncHandler(async (req, re
 //   }))
 
 
-router.post('/users/delete/:id(\\d+)', asyncHandler(async (req, res) => {
+router.post('/users/delete/:id(\\d+)', requireAuth, asyncHandler(async (req, res) => {
     const userId = parseInt(req.params.id, 10)
     const user = await db.User.findByPk(userId)
     if (req.session.auth.userId === userId) {
