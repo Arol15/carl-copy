@@ -1,0 +1,12 @@
+extends layout.pug
+
+block content
+  h3= projectToDelete.projectName
+  div
+    p Proceed with deleting this project?
+    
+  div
+    form(action=`/teams/${teamId}/projects/${projectToDelete.id}/delete` method='post')
+      input(type='hidden' name='_csrf' value=csrfToken)
+      button(class='btn btn-danger' type='submit') Delete Project
+      a(class='btn btn-warning ml-2' href=`/teams/${teamId}/projects` role='button') Cancel

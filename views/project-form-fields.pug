@@ -1,0 +1,10 @@
+input(type='hidden' name='_csrf' value=csrfToken)
+div
+  label Project Name:
+  input(type='text' name='projectName' value=project.projectName)
+div
+  label Choose Team:
+  select(name='teamId')
+    each oneTeam in allTeams
+        option(value=oneTeam.id select=(value === project.teamId))= oneTeam.teamName
+
