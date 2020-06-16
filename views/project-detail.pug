@@ -1,0 +1,30 @@
+extends layout.pug
+
+block content
+  h3= project.projectName
+
+  body
+    div
+      ol
+        each column in project.Columns
+          li Task Name: #{column.columnName}
+            ul
+              each task in column.Tasks
+                li Description: #{task.taskDescription}
+                  ul
+                    li Due Date: #{task.dueDate}
+
+    div
+      table.table.table-dark
+        thead
+          tr
+            th Column(Task) Name
+            th Task Description
+            th Due Date
+        tbody
+          each column in project.Columns
+            each task in column.Tasks
+              tr
+                td= column.columnName
+                td= task.taskDescription
+                td= task.dueDate
