@@ -8,7 +8,7 @@ const { restoreUser } = require('./auth')
 const path = require('path')
 
 const rootRouter = require('./routes/root')
-const userRouter = require('./routes/user')
+const userRouter = require('./routes/users')
 const teamRouter = require('./routes/team')
 const projectRouter = require('./routes/project')
 const columnRouter = require('./routes/column')
@@ -27,7 +27,7 @@ app.use(session({
   store: new (require('connect-pg-simple')(session))(),
   secret: sessionSecret,
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: false,     // TODO: Add cookie security options
 }))
 
 app.use(restoreUser)
