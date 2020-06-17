@@ -17,7 +17,7 @@ const dataRouter = require('./routes/data')
 
 // express configurations
 app.set('view engine', 'pug')
-// app.use(express.static(__dirname + "/public"))
+app.use(express.static(__dirname + "/public"))
 // app.use(express.static(path.join(__dirname, "public/assets/videos")))
 // app.use(express.static(path.join(__dirname, "public/js")))
 app.use(morgan('dev'))
@@ -85,8 +85,8 @@ app.use((err, req, res, next) => {
   const isProduction = process.env.NODE_ENV === 'production'
   res.render('error', {
     title: 'Server Error',
-    message: isProduction ? err.message : err.message,
-    stack: isProduction ? err.stack : err.stack,
+    message: isProduction ? null : err.message,
+    stack: isProduction ? null : err.stack,
   })
 })
 
