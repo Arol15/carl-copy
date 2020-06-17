@@ -1,10 +1,10 @@
-extends layout.pug
+extends ../layout.pug
 
-include utils.pug
+include ../utils.pug
 
 block content
   +validationErrorSummary(errors)
-  form(class='authForm' action='/user/login' method='post')
+  form(class='authForm' action='/users/login' method='post')
     h4.text-center.py-4.text-muted Login
     input(type='hidden' name='_csrf' value=token)
     +field('Email Address', 'email')
@@ -13,4 +13,4 @@ block content
       button(type='submit' class='btn btn-secondary') Login
       a(href='/' class='btn btn-secondary ml-2') Cancel
     div
-      a.text-decoration-none.text-muted(href='/user/register') Don't have an account?
+      a.text-decoration-none.text-muted(href='/users/register') Don't have an account?

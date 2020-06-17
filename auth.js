@@ -14,11 +14,13 @@ const logoutUser = (req, res) => {
 
 const requireAuth = (req, res, next) => {
   if (!res.locals.authenticated) {
-    return res.redirect('/user/login')
+    return res.redirect('/users/login')
   }
   return next()
 }
 
+// resource would be the item you're trying to edit: user, team, project, etc
+// this is to prevent a user from editing something that doesn't belong to them
 const checkPermissions = (resource, currentUser) => {
   if (resource.userId !== currentUser.id) {
     const err = new Error('Illegal operation.')
@@ -31,7 +33,7 @@ const checkPermissions = (resource, currentUser) => {
 const restoreUser = async (req, res, next) => {
   // Log the session object to the console
   // to assist with debugging.
-  console.log(req.session)
+  // console.log(req.session)
 
   if (req.session.auth) {
     const { userId } = req.session.auth

@@ -5,6 +5,9 @@ div
 div
   label Choose Team:
   select(name='teamId')
-    each oneTeam in allTeams
-        option(value=oneTeam.id select=(value === project.teamId))= oneTeam.teamName
+    each team in allTeams
+      if team.id == teamId
+        option(value=team.id selected)= team.teamName
+      else 
+        option(value=team.id)= team.teamName
 

@@ -1,0 +1,7 @@
+mixin error(err)
+  if err
+        div(role='alert')
+          p The following error(s) occurred: 
+          ul
+            each e in err
+              li= e

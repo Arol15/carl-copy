@@ -1,4 +1,4 @@
-extends layout.pug
+extends ../layout.pug
 
 block content
   div.wrapper
@@ -10,6 +10,7 @@ block content
           th Last Name
           th eMail
           th Team ID
+          th
       tbody
         each user in users
           tr
@@ -18,3 +19,8 @@ block content
             td= user.lastName
             td= user.email
             td= user.teamId
+            td
+              div.d-flex
+                a.btn.btn-secondary.ml-2(href=`users/edit/${user.id}`) Edit
+                form(action=`/users/delete/${user.id}` method='post')
+                  button(type='submit' class='btn btn-secondary ml-2') Delete
