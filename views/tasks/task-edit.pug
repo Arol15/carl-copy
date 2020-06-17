@@ -1,0 +1,11 @@
+extends ../layout.pug
+include task-utils.pug
+
+block content
+  body
+    +error(error)
+    form(action=`/teams/${task.Column.Project.Team.id}/projects/${task.Column.Project.id}/columns/${task.Column.id}/tasks/${task.id}/edit` method='post')
+      include task-form-fields.pug
+      div
+        button(type='submit') Update Task
+        a(href=`/teams/${task.Column.Project.Team.id}/projects/${task.Column.Project.id}/columns/${task.Column.id}/tasks` roll='button') Cancel

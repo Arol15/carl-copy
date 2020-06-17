@@ -1,0 +1,12 @@
+extends ../layout.pug
+
+block content
+  h3= columnToDelete.columnName
+  div
+    p Proceed with deleting this column?
+    
+  div
+    form(action=`/teams/${teamId}/projects/${projectId}/columns/${columnId}/delete` method='post')
+      input(type='hidden' name='_csrf' value=csrfToken)
+      button(class='btn btn-danger' type='submit') Delete Column
+      a(class='btn btn-warning ml-2' href=`/teams/${teamId}/projects/${projectId}/columns` role='button') Cancel

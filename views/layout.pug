@@ -23,22 +23,22 @@ html
       }
   body
     nav.navbar.navbar-expand-lg.navbar-light.bg-light.d-flex.justify-content-between
-      a.navbar-brand(href='/') Asana Clone
+      a.navbar-brand(href='/users') Asana Clone
       .navbar-nav
-        a.nav-item.nav-link(href='/user') Users
+        a.nav-item.nav-link(href='/users') Users
         //- have to change the links so that user can choose which projects to see for a specific team
         //- a.nav-item.nav-link(href=`/teams/${teams.teamId}/projects`) Projects
-        a.nav-item.nav-link(href='/team') Teams
-        a.nav-item.nav-link(href='/column') Columns
-        a.nav-item.nav-link(href='/task') Tasks
+        a.nav-item.nav-link(href='/teams') Teams
+        a.nav-item.nav-link(href='/teams/1/projects/1/columns') Columns
+        a.nav-item.nav-link(href='/teams/1/projects/1/columns/1/tasks') Tasks
         a.nav-item.nav-link(href='/data') All Data
       if locals.authenticated
         .navbar-nav
           .nav-item.nav-link Welcome #{user.firstName}!
-          form.navbar-nav(action='/user/logout' method='post')
+          form.navbar-nav(action='/users/logout' method='post')
             input.logout.nav-item.text-muted(type='submit' value='Logout')
       else
         .navbar-nav
-          a.nav-item.nav-link(href='/user/login') Login
-          a.nav-item.nav-link(href='/user/register') Register
+          a.nav-item.nav-link(href='/users/login') Login
+          a.nav-item.nav-link(href='/users/register') Register
   block content

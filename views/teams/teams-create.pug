@@ -1,0 +1,14 @@
+extends ../layout.pug
+include teams-utils.pug
+
+block content
+  h3 Create New Team
+
+  body
+    +error(error)
+    form(action=`/teams/create`, method='post')
+      include teams-form-fields.pug
+      div
+          button(type='submit') Create
+      div
+        a(href=`/teams` role='button') Cancel

@@ -1,0 +1,14 @@
+extends ../layout.pug
+include columns-utils.pug
+
+block content
+  h3 Create New Column
+
+  body
+    +error(error)
+    form(action=`/teams/${teamId}/projects/${projectId}/columns/create`, method='post')
+      include columns-form-fields.pug
+      div
+          button(type='submit') Create
+      div
+        a(href=`/teams/${teamId}/projects/${projectId}/columns` role='button') Cancel

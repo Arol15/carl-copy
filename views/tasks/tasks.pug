@@ -1,0 +1,29 @@
+extends ../layout.pug
+
+block content
+  h3 Task List
+
+  div
+    a(href=`/teams/${teamId}/projects/${projectId}/columns/${columnId}/tasks/create` role='button') Add Task
+
+  div.wrapper
+    table.table
+      thead
+        tr
+          th Task ID
+          th Task
+          th Due Date
+          th Column ID
+          th Column Index
+      tbody
+        each task in tasks
+          tr
+            td= task.id
+            td= task.taskDescription
+            td= task.dueDate
+            td= task.columnId
+            td= task.columnIndx
+            td
+              a(href=`/teams/${task.Column.Project.Team.id}/projects/${task.Column.Project.id}/columns/${task.Column.id}/tasks/${task.id}/edit` role='button') Edit
+            td
+              a(href=`/teams/${task.Column.Project.Team.id}/projects/${task.Column.Project.id}/columns/${task.Column.id}/tasks/${task.id}/delete` role='button') Delete

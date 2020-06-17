@@ -1,0 +1,12 @@
+extends ../layout.pug
+
+block content
+  h3= taskToDelete.taskDescription
+  div
+    p Proceed with deleting this task?
+    
+  div
+    form(action=`/teams/${teamId}/projects/${projectId}/columns/${columnId}/tasks/${taskId}/delete` method='post')
+      input(type='hidden' name='_csrf' value=csrfToken)
+      button(class='btn btn-danger' type='submit') Delete Task
+      a(class='btn btn-warning ml-2' href=`/teams/${teamId}/projects/${projectId}/columns/${columnId}/tasks` role='button') Cancel
