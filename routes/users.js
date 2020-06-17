@@ -16,7 +16,6 @@ router.get('/users', asyncHandler(async (req, res) => {
 router.get('/users/register', csrfProtection, asyncHandler(async (req, res) => {
   const user = db.User.build()
   const teams = await db.Team.findAll()
-  // res.render('users/user-register', { user, token: req.csrfToken() })
   res.render('users/user-register', { user, teams, token: req.csrfToken() })
 }))
 
