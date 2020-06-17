@@ -15,7 +15,7 @@ router.get('/user', asyncHandler(async (req, res) => {
 // - register page (GET - 'user/register')
 router.get('/user/register', csrfProtection, asyncHandler(async (req, res) => {
   const user = db.User.build()
-  res.render('user-register', { user, token: req.csrfToken() })
+  res.render('register-lora', { user, token: req.csrfToken() })
 }))
 
 // - register page (POST - 'user/register')
@@ -29,7 +29,7 @@ router.post('/user/register', csrfProtection, asyncHandler(async (req, res) => {
     res.redirect('/user')
   } catch (err) {
     const errors = err.errors.map(error => error.message)
-    res.render('user-register', {
+    res.render('register-lora', {
         errors,
         user,
         token: req.csrfToken()
@@ -39,7 +39,7 @@ router.post('/user/register', csrfProtection, asyncHandler(async (req, res) => {
 
 // - login page (GET - 'user/login')
 router.get('/user/login', csrfProtection, asyncHandler(async (req, res) => {
-  res.render('user-login', { token: req.csrfToken() })
+  res.render('login-lora', { token: req.csrfToken() })
 }))
 
 // - login page (POST - 'user/login')
@@ -62,7 +62,7 @@ router.post('/user/login', csrfProtection, asyncHandler(async (req, res) => {
     errors = err.errors.map(error => error.message)
   }
 
-  res.render('user-login', {
+  res.render('login-lora', {
     errors,
     email,
     token: req.csrfToken()

@@ -19,6 +19,8 @@ const dataRouter = require('./routes/data')
 app.set('view engine', 'pug')
 app.use(express.static(path.join(__dirname, "stylesheets")));
 app.use(express.static(path.join(__dirname, "videos")));
+app.use(express.static(path.join(__dirname, "images")));
+
 app.use(morgan('dev'))
 app.use(cookieParser(sessionSecret))
 app.use(express.urlencoded({ extended: false }))
