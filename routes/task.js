@@ -6,12 +6,12 @@ const csrf = require('csurf');
 
 const csrfProtection = csrf({ cookie: true });
 
-// get all tasks
+// get all tasks in a particular column
 router.get('/teams/:teamId/projects/:projectId/columns/:columnId/tasks', asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
-  
+
   const tasks = await Task.findAll({
     where: {
       columnId
@@ -71,7 +71,7 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/create',
 // get edit task form
 router.get('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/:taskId/edit', csrfProtection, asyncHandler(async (req, res) => {
   const taskId = parseInt(req.params.taskId, 10);
-  
+
   const task = await Task.findByPk(taskId, {
     include: {
       model: Column,

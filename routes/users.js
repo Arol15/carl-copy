@@ -9,34 +9,40 @@ const { loginUser, logoutUser, requireAuth } = require('../auth')
 router.get('/users', asyncHandler(async (req, res) => {
   const users = await db.User.findAll()
   res.render('users/users', { users })
+
 }))
+
 
 router.get('/users/register', csrfProtection, asyncHandler(async (req, res) => {
   const user = db.User.build()
-  res.render('users/user-register', { user, token: req.csrfToken() })
+  const teams = await db.Team.findAll()
+  res.render('users/user-register', { user, teams, token: req.csrfToken() })
 }))
 
+
 router.post('/users/register', csrfProtection, asyncHandler(async (req, res) => {
-  const { firstName, lastName, email, password, confirmPassword } = req.body
-  const user = db.User.build({ firstName, lastName, email, hashedPassword: password })
+  const { firstName, lastName, email, password, confirmPassword, teamId } = req.body
+  const user = db.User.build({ firstName, lastName, email, hashedPassword: password, teamId })
   // TODO: add confirm password validation
   try {
     await user.save()
     loginUser(req, res, user)
-    res.redirect('/users')
   } catch (err) {
     const errors = err.errors.map(error => error.message)
     res.render('users/user-register', {
-        errors,
-        user,
-        token: req.csrfToken()
-      })
+      errors,
+      user,
+      token: req.csrfToken()
+    })
   }
+  res.redirect(`/teams/${user.teamId}/projects`)
 }))
+
 
 router.get('/users/login', csrfProtection, asyncHandler(async (req, res) => {
   res.render('users/user-login', { token: req.csrfToken() })
 }))
+
 
 router.post('/users/login', csrfProtection, asyncHandler(async (req, res) => {
   const { email, password } = req.body
@@ -64,6 +70,7 @@ router.post('/users/login', csrfProtection, asyncHandler(async (req, res) => {
   })
 }))
 
+
 router.post('/users/logout', (req, res) => {
   logoutUser(req, res)
   res.redirect('/users/login')
@@ -74,6 +81,7 @@ router.get('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(as
   const user = await db.User.findByPk(userId)
   res.render('users/user-edit', { user, token: req.csrfToken() })
 }))
+
 
 router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const { firstName, lastName, email } = req.body
@@ -95,6 +103,7 @@ router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(a
       })
   }
 }))
+
 
 // TODO: add user-delete.pug confirmation
 // router.get('/users/delete/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
