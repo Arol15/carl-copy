@@ -21,12 +21,9 @@ router.get('/teams/:teamId/projects', asyncHandler(async (req, res) => {
     include: { model: Team }
   });
 
-  const project = await Project.findOne({
-    where: { teamId },
-    include: { model: Team }
-  });
+  const team = await Team.findOne({ where: teamId })
 
-  res.render('projects/projects', { projects, teamId, project });
+  res.render('projects/projects', { projects, team });
 }))
 
 
@@ -70,9 +67,9 @@ router.post('/teams/:teamId/projects-create', csrfProtection, asyncHandler(async
 router.get('/teams/:teamId/projects/:projectId', asyncHandler(async (req, res) => {
   const projectId = parseInt(req.params.projectId, 10);
 
-  const project = await Project.findByPk( projectId, { 
+  const project = await Project.findByPk( projectId, {
     include: {
-      model: Column, 
+      model: Column,
       include: Task
     }
   });
