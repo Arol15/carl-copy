@@ -23,9 +23,16 @@ app.set('view engine', 'pug')
 app.use(morgan('dev'))
 app.use(cookieParser(sessionSecret))
 app.use(express.urlencoded({ extended: false }))
+// app.use(session({
+//   name: 'asana-clone.sid',
+//   store: new (require('connect-pg-simple')(session))(),
+//   secret: sessionSecret,
+//   resave: false,
+//   saveUninitialized: false,     // TODO: Add cookie security options
+// }))
+
 app.use(session({
   name: 'asana-clone.sid',
-  store: new (require('connect-pg-simple')(session))(),
   secret: sessionSecret,
   resave: false,
   saveUninitialized: false,     // TODO: Add cookie security options
