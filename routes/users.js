@@ -24,6 +24,7 @@ router.post('/users/register', csrfProtection, asyncHandler(async (req, res) => 
   const { firstName, lastName, email, password, confirmPassword, teamId } = req.body
   const teams = db.Team.findAll()
   const user = db.User.build({ firstName, lastName, email, hashedPassword: password, teamId })
+  const teams = await db.Team.findAll()
   // TODO: add confirm password validation
   try {
     await user.save()
