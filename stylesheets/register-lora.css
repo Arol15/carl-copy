@@ -19,12 +19,14 @@ body {
 } 
 
 .logo-header {
+    display: block; 
     letter-spacing: 1px; 
     color: whitesmoke; 
     text-align: center;
-    font-size: 2.5rem; 
+    font-size: 32px; 
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
     padding: 3rem; 
+    text-decoration: none; 
 }
 
 .form-container {
@@ -64,7 +66,9 @@ body {
     position: relative; 
     width: 100%; 
     padding: 1rem; 
-    font-size: 1rem; 
+    font-size: 1.2rem; 
+    border: none; 
+    outline: none; 
 }
 
 .input-group button {
@@ -78,18 +82,6 @@ body {
     border-radius: 3rem; 
 
 }
-
-/* .switch-login a {
-    margin: .5rem;  
-    padding: .5rem 3rem; 
-    border: 1px solid gray; 
-    color: gray; 
-    font-size: 1rem; 
-    cursor: pointer; 
-    border-radius: 1rem; 
-    text-decoration: none; 
-
-} */
 
 .switch-login {
     display: flex; 
@@ -118,3 +110,26 @@ p {
     color: white; 
     font-size: 1.2rem; 
 }
+
+.input-group .bar {
+    position: absolute; 
+    left: 0; 
+    bottom: 0; 
+    background-color: rgba(0,0,0,.1);
+    width: 100%; 
+    height: 1px; 
+}
+
+.input-group .bar::before {
+    content: ""; 
+    position: absolute; 
+    background-color: #FF5F6D;
+    width: 0; 
+    height: 2px; 
+    transition: width 650ms; 
+}
+
+.input-group input:focus + .bar::before {
+    width: 100%; 
+}
+

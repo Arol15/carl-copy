@@ -9,17 +9,18 @@ html(lang="en")
         title CARL - Log In 
     body
       div(class='login-page')
-      h2(class="logo-header") CARL
-        a(href="/")
+      a(href="/" class='logo-header') CARL
       div(class='form-container')
           h2(class='form-heading') Log In
           +validationErrorSummary(errors)
           form(class='authForm' action='/user/login' method='post')
             input(type='hidden' name='_csrf' value=token)
             div(class='input-group')
-                input(type="email" class='input-field' name='email' placeholder="Email Address")    
+                input(type="email" class='input-field' name='email' placeholder="Email Address")
+                span(class='bar')    
             div(class='input-group')
                 input(type="password" class='input-field' name='password' placeholder="Password")
+                span(class='bar')
             div(class='input-group')
                 button(type='submit' class='login') Login         
       div(class="switch-group")
