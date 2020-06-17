@@ -23,19 +23,21 @@ router.get('/users/register', csrfProtection, asyncHandler(async (req, res) => {
 router.post('/users/register', csrfProtection, asyncHandler(async (req, res) => {
   const { firstName, lastName, email, password, confirmPassword, teamId } = req.body
   const user = db.User.build({ firstName, lastName, email, hashedPassword: password, teamId })
+  const teams = await db.Team.findAll()
   // TODO: add confirm password validation
   try {
     await user.save()
     loginUser(req, res, user)
+    res.redirect(`/teams/${user.teamId}/projects`)
   } catch (err) {
     const errors = err.errors.map(error => error.message)
     res.render('users/user-register', {
       errors,
       user,
+      teams,
       token: req.csrfToken()
     })
   }
-  res.redirect(`/teams/${user.teamId}/projects`)
 }))
 
 
