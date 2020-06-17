@@ -1,19 +1,24 @@
-extends layout.pug
+extends ../layout.pug
 
-include utils.pug
+include ../utils.pug
 
 block content
   +validationErrorSummary(errors)
-  form(action='/user/register' method='post')
+  form(class='authForm' action='/users/register' method='post')
     h4.text-center.py-4.text-muted User Registration
     input(type='hidden' name='_csrf' value=token)
     +field('First Name', 'firstName', user.firstName)
     +field('Last Name', 'lastName', user.lastName)
     +field('Email Address', 'email', user.email)
-    +field('Password', 'password', user.hashedPassword, 'password')
+    +field('Password', 'password', '', 'password')
     +field('Confirm Password', 'confirmPassword', '', 'password')
+    div.form-group
+      label Team
+      select.custom-select.custom-select.mb-3(name='teamId')
+        each team in teams
+          option(value=team.id)= team.teamName
     div(class='py-4')
       button(type='submit' class='btn btn-secondary') Register
       a(href='/' class='btn btn-secondary ml-2') Cancel
     div
-      a.text-decoration-none.text-muted(href='/user/login') Already have an account?
+      a.text-decoration-none.text-muted(href='/users/login') Already have an account?

@@ -1,0 +1,15 @@
+extends ../layout.pug
+
+include ../utils.pug
+
+block content
+  +validationErrorSummary(errors)
+  form(class='authForm' action='/users/register' method='post')
+    h4.text-center.py-4.text-muted Welcome! Please select a team.
+    input(type='hidden' name='_csrf' value=token)
+    select.selectpicker(name='teamId')
+      each team in teams
+        option(value=team.id)= team.teamName
+    div(class='py-4')
+      button(type='submit' class='btn btn-secondary') Select
+      a(href='/' class='btn btn-secondary ml-2') Cancel

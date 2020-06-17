@@ -1,0 +1,14 @@
+extends ../layout.pug
+include task-utils.pug
+
+block content
+  h3 Create New Task
+
+  body
+    +error(error)
+    form(action=`/teams/${teamId}/projects/${projectId}/columns/${columnId}/tasks/create` method='post')
+      include task-form-fields.pug
+      div
+          button(type='submit') Create
+      div
+        a(href=`/teams/${teamId}/projects/${projectId}/columns/${columnId}/tasks` role='button') Cancel
