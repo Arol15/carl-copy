@@ -85,8 +85,8 @@ app.use((err, req, res, next) => {
   const isProduction = process.env.NODE_ENV === 'production'
   res.render('error', {
     title: 'Server Error',
-    message: isProduction ? null : err.message,
-    stack: isProduction ? null : err.stack,
+    message: isProduction ? err.message : err.message,
+    stack: isProduction ? err.stack : err.stack,
   })
 })
 
