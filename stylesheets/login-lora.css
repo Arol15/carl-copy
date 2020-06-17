@@ -36,17 +36,15 @@ body {
     align-items: center; 
 }
 
-
-
-
 .form-container {
     width: 90%; 
+    margin: auto; 
     max-width: 45rem;
     height: 45rem;
     background-color: #fff;
     /* display: flex;  */
-    justify-content: center; 
-    align-items: center;  
+    /* justify-content: center; 
+    align-items: center;   */
     padding: 10rem 5rem; 
     box-shadow: 0 1px 3px 0 rgba(21,27,38,.15); 
     border-radius: 4px; 
@@ -118,6 +116,17 @@ body {
     font-size: 2rem; 
     cursor: pointer; 
     border-radius: 3rem; 
+
+}
+
+.input-group a {
+    margin: .5rem;  
+    padding: .5rem 3rem; 
+    border: 1px solid gray; 
+    color: gray; 
+    font-size: 1rem; 
+    cursor: pointer; 
+    border-radius: 1rem; 
 
 }
 
