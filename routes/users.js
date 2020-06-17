@@ -16,26 +16,29 @@ router.get('/users', asyncHandler(async (req, res) => {
 router.get('/users/register', csrfProtection, asyncHandler(async (req, res) => {
   const user = db.User.build()
   const teams = await db.Team.findAll()
+  console.log("teams", teams);
   res.render('users/user-register', { user, teams, token: req.csrfToken() })
 }))
 
 
 router.post('/users/register', csrfProtection, asyncHandler(async (req, res) => {
   const { firstName, lastName, email, password, confirmPassword, teamId } = req.body
+
   const user = db.User.build({ firstName, lastName, email, hashedPassword: password, teamId })
   // TODO: add confirm password validation
   try {
     await user.save()
     loginUser(req, res, user)
+    res.redirect(`/teams/${user.teamId}/projects`)
   } catch (err) {
     const errors = err.errors.map(error => error.message)
-    res.render('users/user-register', {
-      errors,
-      user,
-      token: req.csrfToken()
-    })
+    // res.render('users/user-register', {
+    //   errors,
+    //   user,
+    //   token: req.csrfToken()
+    // })
+    res.redirect('/users/register')
   }
-  res.redirect(`/teams/${user.teamId}/projects`)
 }))
 
 
