@@ -18,8 +18,6 @@ const dataRouter = require('./routes/data')
 // express configurations
 app.set('view engine', 'pug')
 app.use(express.static(__dirname + "/public"))
-// app.use(express.static(path.join(__dirname, "public/assets/videos")))
-// app.use(express.static(path.join(__dirname, "public/js")))
 app.use(morgan('dev'))
 app.use(cookieParser(sessionSecret))
 app.use(express.urlencoded({ extended: false }))
@@ -30,13 +28,6 @@ app.use(session({
   resave: false,
   saveUninitialized: false,     // TODO: Add cookie security options
 }))
-
-// app.use(session({
-//   name: 'asana-clone.sid',
-//   secret: sessionSecret,
-//   resave: false,
-//   saveUninitialized: false,     // TODO: Add cookie security options
-// }))
 
 app.use(restoreUser)
 // routers
