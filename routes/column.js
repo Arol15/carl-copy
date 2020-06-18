@@ -13,14 +13,28 @@ router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req
 
   const columns = await Column.findAll({
     where: { projectId },
-    include: {
-      model: Project,
-      include: {
-        model: Team
-      }
+    attribute: 'id',
+  })
+  const columnIds = columns.map(column => column.dataValues.id)
+
+  const tasks = await Task.findAll({
+    where: {
+      columnId: columnIds,
+    },
+    order: [['columnIndx', 'ASC']],
+  })
+
+  const taskObj = tasks.reduce((accum, current) => {
+    const colId = current.dataValues.columnId.toString()
+    if (Object.keys(accum).includes(colId)) {
+      accum[colId].push(current)
+    } else {
+      accum[colId] = [current]
     }
-  });
-  res.render('columns/columns', { columns, teamId, projectId });
+    return accum
+  }, {})
+
+  res.render('columns/columns', { columns, teamId, projectId, taskObj });
 }));
 
 // get column creation form
