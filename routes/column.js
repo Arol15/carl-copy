@@ -13,8 +13,9 @@ router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req
 
   const columns = await Column.findAll({
     where: { projectId },
-    attribute: 'id',
+    attributes: ['id', 'columnName'],
   })
+  console.log(columns)
   const columnIds = columns.map(column => column.dataValues.id)
 
   const tasks = await Task.findAll({
