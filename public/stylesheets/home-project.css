@@ -6,7 +6,6 @@ body {
 }
 
 .modal {
-  display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   padding-top: 100px; /* Location of the box */
@@ -23,9 +22,8 @@ body {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
-  border: 1px solid #888;
   width: 50%;
-  height: 200px;
+  height: 270px;
   display: grid;
   grid-template-rows: 30% 70%;
   border-radius: 10px;

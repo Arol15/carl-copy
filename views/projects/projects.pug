@@ -23,19 +23,20 @@
 //-     div
 //-       a.btn.btn-secondary.ml-2(href=`/teams/${team.id}/projects-create` role='button') Add Project
 doctype html
+include project-utils.pug
 head
   meta(charset='UTF-8')
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   link(rel='stylesheet' href='/stylesheets/home-project.css')
   title SandBox
 body
-  #myModal.modal
-    .modal-container
-      .modal-header Create a New Project
-      form.modal-form
-        label
-          input(placeholder='Enter Project Name' type='text' value='')
-        button.modal-button Create Project
+  
+  if error
+    #myModal.modal(style="display: block")
+      include create-modal.pug
+  else
+    #myModal.modal(style="display: none")
+      include create-modal.pug
   .main
     // side-bar__isCollapsed
     .side-bar.side-bar__isCollapsed
@@ -64,9 +65,8 @@ body
       .project-label
         div YOUR PROJECTS
       .main-page-body
-        each project in projects
-          .project-square= project.projectName
-        a.btn.btn-secondary.ml-2(href=`/teams/${team.id}/projects-create` role='button')
-          .project-square.project-new +
+        each existingProject in projects
+          .project-square= existingProject.projectName
+        .project-square.project-new +
     // <div class='body-page'>dsf</div>
   script(src='/js/index.js')
