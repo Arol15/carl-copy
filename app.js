@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const { sessionSecret } = require('./config')
 const { restoreUser } = require('./auth')
-const path = require('path')
+// const path = require('path')
 
 const rootRouter = require('./routes/root')
 const userRouter = require('./routes/users')

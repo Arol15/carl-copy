@@ -1,23 +1,11 @@
 extends ../layout.pug
 
 block content
-  div
-    a(href=`/teams/${teamId}/projects/${projectId}/columns/create` role='button') Add Task
-
   div.wrapper
-    table.table
-      thead
-        tr
-          th Column ID
-          th Column Name
-          th Project ID
-      tbody
-        each column in columns
-          tr
-            td= column.id
-            td= column.columnName
-            td= column.projectId
-            td
-              a(href=`/teams/${column.Project.Team.id}/projects/${column.Project.id}/columns/${column.id}/edit` role='button') Edit
-            td
-              a(href=`/teams/${column.Project.Team.id}/projects/${column.Project.id}/columns/${column.id}/delete` role='button') Delete
+    h4.pb-4.text-muted Columns
+    div.d-flex
+      each column in columns
+        .card.m-4(style='width: 20rem;')
+          div.card-header= column.columnName
+          each task in taskObj[column.id]
+            li.list-group-item= task.taskDescription
