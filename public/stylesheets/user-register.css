@@ -33,7 +33,7 @@ body {
     width: 90%; 
     margin: 2rem auto; 
     max-width: 45rem;
-    height: 45rem;
+    height: auto;
     background-color: #fff;
     padding: 10rem 5rem; 
     box-shadow: 0 1px 3px 0 rgba(21,27,38,.15); 
@@ -132,4 +132,27 @@ p {
 .input-group input:focus + .bar::before {
     width: 100%; 
 }
+
+.team {
+   color: #273240;   
+}
+
+.input-option {
+    display: flex; 
+    padding: 1rem; 
+    justify-content: space-between; 
+    align-items: baseline;
+}
+
+.select {
+    padding: 8px 16px; 
+    border: 0.5px solid gray;
+    border-radius: 3px;
+    width: 15rem; 
+}
+
+
+
+
+
 

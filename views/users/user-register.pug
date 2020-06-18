@@ -16,22 +16,28 @@ html(lang="en")
         form(class='authForm' action='/users/register' method='post')
           input(type='hidden' name='_csrf' value=token)
           div(class="input-group")
-            input(type="text" class="input-field" name='firstName' placeholder="First Name")
+            input(type="text" class="input-field" id="firstName" name='firstName' value=user.firstName placeholder="First Name")
             span(class='bar')
           div(class="input-group")
-            input(type='text' class="input-field" name='lastName' placeholder="Last Name")
+            input(type='text' class="input-field" id="lastName" name='lastName' value=user.lastName placeholder="Last Name")
             span(class='bar')
           div(class="input-group") 
-            input(type='email' class="input-field" name='email' placeholder="Email Address")
+            input(type='email' class="input-field" id="email" name='email' value=user.email placeholder="Email Address")
             span(class='bar')
           div(class="input-group")  
-            input(type="password" class="input-field" name='password' placeholder="Password")
+            input(type="password" class="input-field" id="password" name='password' placeholder="Password")
             span(class='bar') 
           div(class="input-group")
             input(type="password" class="input-field" name='confirmPassword' placeholder="Confirm Password")
-            span(class='bar')  
-        div(class="input-group")
-          button(type='submit' class='submit-button') Register
+            span(class='bar')
+          div(class='input-option')
+            //- p(class='team') Choose your team 
+            select(class='select' name="teamId")
+              option(disabled selected value) - Choose Your Team -
+              each team in teams
+                option(class='select-item' value=team.id)= team.teamName    
+          div(class="input-group")
+            button(type='submit' class='submit-button') Register
       div(class="switch-login")
         p Already have an account?
         a(href='/users/login') Log In 
