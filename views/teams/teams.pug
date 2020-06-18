@@ -1,21 +1,21 @@
 extends ../layout.pug
 
 block content
-  div
-    a(href=`/teams/create` role='button') Create Team
-
   div.wrapper
+    h4.pb-4.text-muted Teams
     table.table
       thead
         tr
           th Team ID
           th Team Name
+          th
       tbody
         each team in teams
           tr
             td= team.id
             td= team.teamName
-            td
-              a(href=`/teams/${team.id}/edit` role='button') Edit
-            td
-              a(href=`/teams/${team.id}/delete` role='button') Delete
+            td: .d-flex.justify-content-end
+              a.btn.btn-secondary.ml-2(href=`/teams/${team.id}/projects` role='button') Select
+              a.btn.btn-secondary.ml-2(href=`/teams/${team.id}/edit` role='button') Edit
+              a.btn.btn-secondary.ml-2(href=`/teams/${team.id}/delete` role='button') Delete
+    a.btn.btn-secondary.ml-2(href=`/teams/create` role='button') Create Team

@@ -10,6 +10,13 @@ block content
     +field('First Name', 'firstName', user.firstName)
     +field('Last Name', 'lastName', user.lastName)
     +field('Email Address', 'email', user.email)
+    div.form-group
+          label Team
+          select.custom-select.custom-select.mb-3(name='teamId')
+            option(disabled selected value) Select an option
+            each team in teams
+              option(value=team.id)= team.teamName
+            option(value='remove') Remove Team
     div(class='py-4')
       button(type='submit' class='btn btn-secondary') Update Profile
       a(href='/users' class='btn btn-secondary ml-2') Cancel
