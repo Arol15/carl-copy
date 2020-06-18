@@ -1,24 +1,37 @@
-extends ../layout.pug
-
 include ../utils.pug
 
-block content
-  +validationErrorSummary(errors)
-  form(class='authForm' action='/users/register' method='post')
-    h4.text-center.py-4.text-muted User Registration
-    input(type='hidden' name='_csrf' value=token)
-    +field('First Name', 'firstName', user.firstName)
-    +field('Last Name', 'lastName', user.lastName)
-    +field('Email Address', 'email', user.email)
-    +field('Password', 'password', '', 'password')
-    +field('Confirm Password', 'confirmPassword', '', 'password')
-    div.form-group
-      label Team
-      select.custom-select.custom-select.mb-3(name='teamId')
-        each team in teams
-          option(value=team.id)= team.teamName
-    div(class='py-4')
-      button(type='submit' class='btn btn-secondary') Register
-      a(href='/' class='btn btn-secondary ml-2') Cancel
-    div
-      a.text-decoration-none.text-muted(href='/users/login') Already have an account?
+doctype html 
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title CARL - Register
+        link(rel='stylesheet' type='text/css' href='/stylesheets/user-register.css')
+    body
+      div(class="login-page")
+      a(href="/" class="logo-header") CARL 
+      div(class='form-container')
+        h2(class='form-heading') User Registration
+        +validationErrorSummary(errors)
+        form(class='authForm' action='/users/register' method='post')
+          input(type='hidden' name='_csrf' value=token)
+          div(class="input-group")
+            input(type="text" class="input-field" name='firstName' placeholder="First Name")
+            span(class='bar')
+          div(class="input-group")
+            input(type='text' class="input-field" name='lastName' placeholder="Last Name")
+            span(class='bar')
+          div(class="input-group") 
+            input(type='email' class="input-field" name='email' placeholder="Email Address")
+            span(class='bar')
+          div(class="input-group")  
+            input(type="password" class="input-field" name='password' placeholder="Password")
+            span(class='bar') 
+          div(class="input-group")
+            input(type="password" class="input-field" name='confirmPassword' placeholder="Confirm Password")
+            span(class='bar')  
+        div(class="input-group")
+          button(type='submit' class='submit-button') Register
+      div(class="switch-login")
+        p Already have an account?
+        a(href='/users/login') Log In 

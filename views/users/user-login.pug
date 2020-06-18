@@ -1,16 +1,28 @@
-extends ../layout.pug
-
 include ../utils.pug
 
-block content
-  +validationErrorSummary(errors)
-  form(class='authForm' action='/users/login' method='post')
-    h4.text-center.py-4.text-muted Login
-    input(type='hidden' name='_csrf' value=token)
-    +field('Email Address', 'email')
-    +field('Password', 'password', null, 'password')
-    div(class='py-4')
-      button(type='submit' class='btn btn-secondary') Login
-      a(href='/' class='btn btn-secondary ml-2') Cancel
-    div
-      a.text-decoration-none.text-muted(href='/users/register') Don't have an account?
+doctype html 
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel='stylesheet' type='text/css' href="/stylesheets/user-login.css")
+        title CARL - Log In 
+    body
+      div(class='login-page')
+      a(href="/" class='logo-header') CARL
+      div(class='form-container')
+          h2(class='form-heading') Log In
+          +validationErrorSummary(errors)
+          form(class='authForm' action='/users/login' method='post')
+            input(type='hidden' name='_csrf' value=token)
+            div(class='input-group')
+                input(type="email" class='input-field' name='email' placeholder="Email Address")
+                span(class='bar')    
+            div(class='input-group')
+                input(type="password" class='input-field' name='password' placeholder="Password")
+                span(class='bar')
+            div(class='input-group')
+                button(type='submit' class='login') Login         
+      div(class="switch-group")
+        p Don't have an account yet?         
+        a(href='/users/register') Sign up 
