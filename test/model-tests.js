@@ -74,7 +74,7 @@ function columnValues(o) {
 function projectValues(o) {
   return {
     projectName: str(75),
-    teamId: Math.floor(Math.random() * 3),
+    teamId: 1,
     ...o
   };
 }
@@ -83,7 +83,7 @@ function taskValues(o) {
   return {
     taskDescription: str(255),
     dueDate: new Date(),
-    columnId: 1,
+    columnId: 3,
     columnIndx: Math.floor(Math.random() * 5),
     ...o
   };
@@ -120,7 +120,26 @@ describe('The model', () => {
         // await pause(0.25);
       } catch (e) {
         console.error(e);
-        errorMessage = `Error running migrations or seeds. See stack trace above for more details. Error message: ${e.message}`;
+        errorMessage = `Error running migrations or seeds in before hook. See stack trace above for more details. Error message: ${e.message}`;
+      }
+    } else {
+      errorMessage = moduleInitializationErrorMessage;
+    }
+  });
+
+  after(async () => {
+    if (migrationsConfig && seedsConfig) {
+      const migrator = new Runner(migrationsConfig);
+      const seeder = new Runner(seedsConfig);
+      try {
+        await seeder.down({ to: 0 });
+        await pause(0.25);
+        await migrator.down({ to: 0 });
+        await pause(0.25);
+        await migrator.up();
+      } catch (e) {
+        console.error(e);
+        errorMessage = `Error running migrations or seeds in after hook. See stack trace above for more details. Error message: ${e.message}`;
       }
     } else {
       errorMessage = moduleInitializationErrorMessage;
@@ -174,13 +193,17 @@ describe('The model', () => {
 
       const { Team, Project } = models;
 
+      let succeeded;
+
+      succeeded = await createModel(Project, projectValues({ teamId: 1 }));
+
       const records = await Team
         .findAll({ where: { id: 1 }, include: Project })
         .map(x => ({
           numberOfProject: x.Projects.length
         }));
 
-      expect(records[0]).to.have.property('numberOfProject', 0);
+      expect(records[0]).to.have.property('numberOfProject', 1);
     });
   });
 
@@ -277,15 +300,12 @@ describe('The model', () => {
         .map(x => ({
           firstName: x.firstName,
           lastName: x.lastName,
-          hashedPassword: x.hashedPassword,
           email: x.email,
           teamId: x.teamId,
-          createdAt: formatDate(x.createdAt),
-          updatedAt: formatDate(x.updatedAt),
         }));
 
       expect(records).to.eql([
-        { firstName: 'test4test4test4test4', lastName: 'test5test5test5test5', hashedPassword: '$2a$04$qAtZ3v70A6pt7PktFhSjAunA4n6XKqwBFHwtoZQ7xpepkaJBqMAZ6', email: 'test6@example.com', teamId: 2, createdAt: '2020-06-17', updatedAt: '2020-06-17'  }
+        { firstName: 'test5test5test5test5', lastName: 'test6test6test6test6', email: 'test7@example.com', teamId: 2 }
       ]);
     });
 
@@ -296,13 +316,12 @@ describe('The model', () => {
       const { Team, User } = models;
 
       const records = await User
-        .findAll({ order: ['firstName'], where: { id: [1, 2] }, include: Team })
+        .findAll({ where: { id: 1 }, include: Team })
         .map(x => ({
           teamName: x.Team.teamName,
         }));
 
-      expect(records[0]).to.eql({ teamName: 'test1test1test1test1test1test1test1test1test1test1' });
-      expect(records[1]).to.eql({ teamName: 'test29test29test29test29test29test29test29test29te' });
+      expect(records[0]).to.eql({ teamName: 'test4test4test4test4test4test4test4test4test4test4' });
     });
   });
 
@@ -390,18 +409,14 @@ describe('The model', () => {
       const { Project } = models;
 
       const records = await Project
-        .findAll({ order: ['projectName'], where: { id: [1, 2, 3] } })
+        .findAll({ order: ['projectName'], where: { id: 1 } })
         .map(x => ({
           projectName: x.projectName,
-          teamId: x.teamId,
-          createdAt: formatDate(x.createdAt),
-          updatedAt: formatDate(x.updatedAt),
+          teamId: x.teamId
         }));
 
       expect(records).to.eql([
-        { projectName: 'Tasty Concrete Tuna', teamId: 1, createdAt: '2020-06-15', updatedAt: '2020-06-15' },
-        { projectName: 'Generic Metal Computer', teamId: 1, createdAt: '2020-06-15', updatedAt: '2020-06-15' },
-        { projectName: 'Gorgeous Fresh Bacon', teamId: 2, createdAt: '2020-06-15', updatedAt: '2020-06-15' },
+        { projectName: 'test3test3test3test3test3test3test3test3test3test3test3test3test3test3test3', teamId: 1}
       ]);
     });
 
@@ -412,14 +427,12 @@ describe('The model', () => {
       const { Project, Team } = models;
 
       const records = await Project
-        .findAll({ order: ['projectName'], where: { id: [1, 2, 3] }, include: Team })
+        .findAll({ order: ['projectName'], where: { id: 1 }, include: Team })
         .map(x => ({
           teamName: x.Team.teamName,
         }));
 
-      expect(records[0]).to.eql({ teamName: 'Outdoors' });
-      expect(records[1]).to.eql({ teamName: 'Outdoors' });
-      expect(records[2]).to.eql({ teamName: 'Automotive' });
+      expect(records[0]).to.eql({ teamName: 'test1test1test1test1test1test1test1test1test1test1' });
     });
   });
 
@@ -505,19 +518,20 @@ describe('The model', () => {
       if (stopTest(errorMessage || columnError || error)) return;
 
       const { Column } = models;
+      let succeeded;
+
+      const values = columnValues({ projectId: 1 });
+      succeeded = await createModel(Column, values);
 
       const records = await Column
-        .findAll({ order: ['columnName'], where: { id: [1, 2] } })
+        .findAll({ where: { id: 3 } })
         .map(x => ({
           columnName: x.columnName,
           projectId: x.projectId,
-          createdAt: formatDate(x.createdAt),
-          updatedAt: formatDate(x.updatedAt),
         }));
 
       expect(records).to.eql([
-        { columnName: 'overriding', projectId: 1, createdAt: '2020-06-15', updatedAt: '2020-06-15' },
-        { columnName: 'navigating', projectId: 1, createdAt: '2020-06-15', updatedAt: '2020-06-15' },
+        { columnName: 'test37test37test37test37test37test37test37test37test37test37test37test37tes', projectId: 1 }
       ]);
     });
 
@@ -527,17 +541,22 @@ describe('The model', () => {
 
       const { Column, Task } = models;
 
+      let succeeded;
+      let values;
+
+      values = columnValues({ projectId: 1 });
+      succeeded = await createModel(Column, values);
+
+      values = taskValues({ columnId: 4 });
+      succeeded = await createModel(Task, values);
+
       const records = await Column
-        .findAll({ order: ['columnName'], where: { id: [1, 2] }, include: Task })
+        .findAll({ where: { id: 4 }, include: Task })
         .map(x => ({
-          taskName: x.Task.taskName,
+          numberOfTasks: x.Tasks.length,
         }));
 
-      expect(records[0]).to.eql({ taskName: 'Diverse needs-based encryption' });
-      expect(records[1]).to.eql({ taskName: 'Visionary leading edge local area network' });
-      expect(records[2]).to.eql({ taskName: 'Decentralized real-time secured line' });
-      expect(records[3]).to.eql({ taskName: 'Assimilated solution-oriented strategy' });
-      expect(records[4]).to.eql({ taskName: 'User-centric holistic synergy' });
+      expect(records[0]).to.eql({ numberOfTasks: 1 });
     });
   });
 
@@ -615,19 +634,14 @@ describe('The model', () => {
       const { Task } = models;
 
       const records = await Task
-        .findAll({ where: { id: [1, 2] } })
+        .findAll({ where: { id: 1 } })
         .map(x => ({
           taskDescription: x.taskDescription,
-          dueDate: x.dueDate,
-          columnId: x.columnId,
-          columnIndx: x.columnIndx,
-          createdAt: formatDate(x.createdAt),
-          updatedAt: formatDate(x.updatedAt),
+          columnId: x.columnId
         }));
 
       expect(records).to.eql([
-        { taskDescription: 'Diverse needs-based encryption', dueDate: '2021-05-10', columnId: 1, columnIndx: 0, createdAt: '2020-06-15', updatedAt: '2020-06-15' },
-        { taskDescription: 'Visionary leading edge local area network', dueDate: '2020-10-29', columnId: 1, columnIndx: 1, createdAt: '2020-06-15', updatedAt: '2020-06-15' },
+        { taskDescription: 'test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39test39tes', columnId: 4 }
       ]);
     });
 
@@ -638,13 +652,12 @@ describe('The model', () => {
       const { Column, Task } = models;
 
       const records = await Task
-        .findAll({ where: { id: [1, 2] }, include: Column })
+        .findAll({ where: { id: 1 }, include: Column })
         .map(x => ({
           columnName: x.Column.columnName,
         }));
 
-      expect(records[0]).to.eql({ columnName: 'overriding' });
-      expect(records[1]).to.eql({ columnName: 'overriding' });
+      expect(records[0]).to.eql({ columnName: 'test38test38test38test38test38test38test38test38test38test38test38test38tes' });
     });
   });
 
