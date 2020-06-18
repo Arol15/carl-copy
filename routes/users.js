@@ -7,7 +7,7 @@ const { loginUser, logoutUser, requireAuth } = require('../auth')
 
 
 router.get('/users', asyncHandler(async (req, res) => {
-  const users = await db.User.findAll()
+  const users = await db.User.findAll({ order: [['id', 'ASC']] })
   res.render('users/users', { users })
 
 }))
@@ -56,7 +56,7 @@ router.post('/users/login', csrfProtection, asyncHandler(async (req, res) => {
       const passwordMatch = await user.validatePassword(password)
       if (passwordMatch) {
         loginUser(req, res, user)
-        return res.redirect('/users')
+        return res.redirect(`/teams/${user.teamId}/projects`)
       }
     }
 
@@ -81,17 +81,20 @@ router.post('/users/logout', (req, res) => {
 router.get('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const userId = parseInt(req.params.id, 10)
   const user = await db.User.findByPk(userId)
-  res.render('users/user-edit', { user, token: req.csrfToken() })
+  const teams = await db.Team.findAll({ attributes: ['id','teamName'] })
+  res.render('users/user-edit', { user, teams, token: req.csrfToken() })
 }))
 
 
 router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
-  const { firstName, lastName, email } = req.body
+  const { firstName, lastName, email, teamId } = req.body
   const userId = parseInt(req.params.id, 10)
   const user = await db.User.findByPk(userId)
   user.firstName = firstName
   user.lastName = lastName
   user.email = email
+  if (teamId === 'remove') user.teamId = null
+  else user.teamId = teamId
 
   try {
     await user.save()
