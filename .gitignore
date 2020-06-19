@@ -106,3 +106,6 @@ dist
 
 # .vscode settings file
 .vscode
+
+# created test database
+.env.spec 
