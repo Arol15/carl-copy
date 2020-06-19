@@ -1,7 +1,6 @@
-include layout.pug
-  .nav-bar
-    .nav-bar-item.side-bar-opener &rAarr;
-    h3(onclick=`location.href='/teams/${teamId}/projects';`) HOME
+extends ./layout.pug
+
+block content
   .project-label
     div YOUR PROJECTS
   .main-page-body
