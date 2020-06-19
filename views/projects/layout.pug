@@ -1,0 +1,31 @@
+doctype html
+include project-utils.pug
+head
+  script(src='/js/index.js')
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  link(rel='stylesheet' href='/stylesheets/home-project.css')
+  title SandBox
+body
+  .main
+    // side-bar__isCollapsed
+    .side-bar.side-bar__isCollapsed
+      .tabs.home-tasks
+        h1 CARL
+        div &#x1F3E0; Home
+        div &#x2714;  My Tasks
+      .tabs.favorites
+        h2 Favorites
+        p click on the &star; next to a project
+      .tabs.projects
+        h2 Projects
+        each existingProject in projects
+          .project-list
+            a(href=`/teams/${teamId}/projects/${existingProject.id}`)
+              span.project-name= existingProject.projectName
+              span.favorite-click &star;
+      .tabs.invite
+        #button
+          p Invite to CARL
+    .main-page
+     .emptyVoid

@@ -124,9 +124,18 @@ router.get(
       include: { model: Team },
     });
 
+    const projects = await Project.findAll({
+      where: {
+        teamId,
+      },
+      order: [["id", "ASC"]],
+      include: { model: Team },
+    });
+
     const allTeams = await Team.findAll();
 
     res.render("projects/project-edit", {
+      projects,
       project,
       allTeams,
       teamId,
@@ -142,18 +151,28 @@ router.post(
   asyncHandler(async (req, res, next) => {
     const projectId = parseInt(req.params.projectId, 10);
     const projectToUpdate = await Project.findByPk(projectId);
-
     const { projectName, teamId } = req.body;
 
     const project = { projectName, teamId };
+    const allTeams = await Team.findAll();
+    const projects = await Project.findAll({
+      where: {
+        teamId,
+      },
+      order: [["id", "ASC"]],
+      include: { model: Team },
+    });
 
     try {
       await projectToUpdate.update(project);
       res.redirect(`/teams/${teamId}/projects`);
     } catch (err) {
       if (err.name === "SequelizeValidationError") {
-        const error = e.errors.map((error) => error.message);
+        const error = err.errors.map((error) => error.message);
         res.render("projects/project-edit", {
+          allTeams,
+          teamId: parseInt(req.params.teamId),
+          projects,
           project: { ...project, id: projectId },
           error,
           csrfToken: req.csrfToken(),
@@ -171,8 +190,16 @@ router.get(
     const teamId = parseInt(req.params.teamId, 10);
     const projectId = parseInt(req.params.projectId, 10);
     const projectToDelete = await Project.findByPk(projectId);
+    const projects = await Project.findAll({
+      where: {
+        teamId,
+      },
+      order: [["id", "ASC"]],
+      include: { model: Team },
+    });
 
     res.render("projects/project-delete", {
+      projects,
       projectToDelete,
       teamId,
       csrfToken: req.csrfToken(),

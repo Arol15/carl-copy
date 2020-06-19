@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/ColeRutledge/Asana-Clone#readme",
   "dependencies": {
+    "3": "^2.1.0",
     "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
     "cheerio": "^1.0.0-rc.3",
@@ -45,6 +46,7 @@
     "pg": "^8.2.1",
     "pug": "^2.0.4",
     "sequelize": "^5.21.12",
+    "sqlite": "^4.0.11",
     "sqlite3": "^4.2.0",
     "supertest": "^4.0.2",
     "umzug": "^2.3.0"
