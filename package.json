@@ -13,11 +13,7 @@
     "test-04": "dotenv -e .env.spec mocha test/04-*.test.js; exit 0",
     "test-05": "dotenv -e .env.spec mocha test/05-*.test.js; exit 0",
     "test-06": "dotenv -e .env.spec mocha test/06-*.test.js; exit 0",
-    "test-07": "dotenv -e .env.spec mocha test/07-*.test.js; exit 0",
-    "test-08": "dotenv -e .env.spec mocha test/08-*.test.js; exit 0",
-    "test-09": "dotenv -e .env.spec mocha test/09-*.test.js; exit 0",
-    "test-10": "dotenv -e .env.spec mocha test/10-*.test.js; exit 0",
-    "test-11": "dotenv -e .env.spec mocha test/11-*.test.js; exit 0"
+    "test-07": "dotenv -e .env.spec mocha test/07-*.test.js; exit 0"
   },
   "repository": {
     "type": "git",
