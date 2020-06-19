@@ -15,8 +15,8 @@ router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req
     where: { projectId },
     attributes: ['id', 'columnName'],
   })
-  console.log(columns)
-  const columnIds = columns.map(column => column.dataValues.id)
+
+  const columnIds = columns.map(column => column.id)
 
   const tasks = await Task.findAll({
     where: {
@@ -26,7 +26,7 @@ router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req
   })
 
   const taskObj = tasks.reduce((accum, current) => {
-    const colId = current.dataValues.columnId.toString()
+    const colId = current.columnId.toString()
     if (Object.keys(accum).includes(colId)) {
       accum[colId].push(current)
     } else {
@@ -34,6 +34,8 @@ router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req
     }
     return accum
   }, {})
+
+  console.log(taskObj)
 
   res.render('columns/columns', { columns, teamId, projectId, taskObj });
 }));
