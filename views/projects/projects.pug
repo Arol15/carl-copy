@@ -41,7 +41,7 @@ body
         div YOUR PROJECTS
       .main-page-body
         each existingProject in projects
-          .project-square
+          .project-square(onclick=`location.href='/teams/${teamId}/projects/${existingProject.id}';` )
             .project-options
               a.delete-button(href=`/teams/${teamId}/projects/${existingProject.id}/delete`) &#x1D5EB
               a.edit-button(href=`/teams/${teamId}/projects/${existingProject.id}/edit`) EDIT
