@@ -45,7 +45,6 @@ const ColumnContainer = styled.div`
   display: flex;
   flex-direction: column;
   `
-// border: 2px solid lightgrey;
 
 const Title = styled.h3`
   padding: 8px;
@@ -204,9 +203,6 @@ class App extends React.Component {
   }
 
   render() {
-    if (this.state.liked) {
-      return 'You liked this.';
-    }
     return (
       <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
         <Droppable droppableId='all-columns' direction='horizontal' type='column'>
