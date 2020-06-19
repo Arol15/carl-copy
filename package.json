@@ -5,7 +5,15 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./bin/www",
-    "start:development": "nodemon -r dotenv/config ./bin/www"
+    "start:development": "nodemon -r dotenv/config ./bin/www",
+    "test": "dotenv -e .env.spec mocha test",
+    "test-01": "dotenv -e .env.spec mocha test/01-*.test.js; exit 0",
+    "test-02": "dotenv -e .env.spec mocha test/02-*.test.js; exit 0",
+    "test-03": "dotenv -e .env.spec mocha test/03-*.test.js; exit 0",
+    "test-04": "dotenv -e .env.spec mocha test/04-*.test.js; exit 0",
+    "test-05": "dotenv -e .env.spec mocha test/05-*.test.js; exit 0",
+    "test-06": "dotenv -e .env.spec mocha test/06-*.test.js; exit 0",
+    "test-07": "dotenv -e .env.spec mocha test/07-*.test.js; exit 0"
   },
   "repository": {
     "type": "git",
@@ -20,6 +28,8 @@
   "homepage": "https://github.com/ColeRutledge/Asana-Clone#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "chai": "^4.2.0",
+    "cheerio": "^1.0.0-rc.3",
     "connect-pg-simple": "^6.1.0",
     "cookie-parser": "^1.4.5",
     "csurf": "^1.11.0",
@@ -27,12 +37,17 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "faker": "^4.1.0",
+    "mocha": "^8.0.1",
+    "moment": "^2.26.0",
     "morgan": "^1.10.0",
     "path": "^0.12.7",
     "per-env": "^1.0.2",
     "pg": "^8.2.1",
     "pug": "^2.0.4",
-    "sequelize": "^5.21.12"
+    "sequelize": "^5.21.12",
+    "sqlite3": "^4.2.0",
+    "supertest": "^4.0.2",
+    "umzug": "^2.3.0"
   },
   "devDependencies": {
     "dotenv-cli": "^3.1.0",

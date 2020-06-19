@@ -24,6 +24,7 @@ module.exports = {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         hashedPassword: bcrypt.hashSync(faker.internet.password()),
+        teamId: teams[0].id,
         email: faker.internet.email(),
         createdAt: new Date(),
         updatedAt: new Date(),
