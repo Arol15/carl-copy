@@ -1,37 +1,52 @@
 doctype html
 html
   head
-    title Asana Clone
+    title C.A.R.L.
     link(rel="stylesheet" type="text/css" href="/stylesheets/home-page.css")
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
     link(href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet")
   body
     nav.navbar
-      //- a.navbar-brand(href='/') CARL
       img.navbar-brand(src="/images/new-logo.png")
-      div.navbar-nav
-        a.nav-item.nav-link.nav-1(href='/users/login') Log In
-    .body-paragraph
-      h1 Keep your team coordinated, wherever you are 
-      p With C.A.R.L., you and your team members can keep your projects/tasks/priorities organized and get the job done!
-      a.nav-item.nav-link.nav-2(href='/users/register') Try for free
+      a.nav-item.nav-link.nav-1(href='/users/login') Log In
+    section.body-paragraph
+      h1 Let your team work more collaboratively and get more done, wherever you are 
+      h2 C.A.R.L. powers you to keep your teams/projects/tasks/priorities organized and deliver better work faster 
+      a.nav-item.nav-link.nav-2(href='/users/register') Get Started Now
       //- Will have to move video src to the final link
+    section.body-2 
+      h4 TRUSTED BY THE WORLD’S BEST TEAMS
+      div.body-paragraph-2
+        img(src="/images/comcast.png")
+        img(src="/images/Deloitte.png")
+        img(src="/images/mealsonwheels.png")
+        img(src="/images/salesforce.png")
+        img(src="/images/nasa.png")
+        img(src="/images/timbuk.png")
     .body-video
-      video(src="/assets/videos/board-demo.mp4" width="750" height="500" autoplay="" loop="")
+      video(src="/assets/videos/board-demo.mp4" autoplay="" loop="")
     .body-video
-      video(src="/assets/videos/board-demo-2.mp4" width="750" height="500" autoplay="" loop="")
-    .information
-      .message
-        h1 Get Organized
+      video(src="/assets/videos/board-demo-2.mp4" autoplay="" loop="")
+    section.cards
+      section.message
+        h3 Get Organized
         p Organize work in a way that’s best for you and your team. Set priorities and deadlines. Share info and assign tasks. All in one place.
-      .message
-        h1 Stay on Track
+      section.message
+        h3 Stay on Track
         p Follow projects and tasks through every stage. You'll know when tasks should be finished and can keep every team member on track.
-      .message
-        h1 Hit Deadlines
+      section.message
+        h3 Hit Deadlines
         p Create visual project ideas to vision how every step occurs over time. Determine risks. Exterminate roadblocks. Even when ideas or plans were revised.
   footer
-      a(href='https://github.com')
-        i.fa.fa-github-square
-      a(href='https://linkedin.com')
-        i.fa.fa-linkedin
+    section.footer-text
+      div(class='footer-text') C.A.R.L. presented by: 
+      i.fa.fa-github-square 
+        a(href='https://github.com/ColeRutledge') Cole 
+      i.fa.fa-github-square 
+        a(href='https://github.com/aromjhee') Arom 
+      i.fa.fa-github-square 
+        a(href="https://github.com/rockyboyyang") Rocky
+      i.fa.fa-github-square 
+        a(href="https://github.com/Arol15") Lora
+
+

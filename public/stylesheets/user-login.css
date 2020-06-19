@@ -107,6 +107,7 @@ body {
     font-size: 1.5rem; 
     cursor: pointer; 
     border-radius: 3rem; 
+    outline: none; 
 
 }
 
