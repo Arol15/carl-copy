@@ -54,8 +54,8 @@ const passwordSample = 'Abc1!'
 
 function userValues(o) {
   return {
-    firstName: str(20),
-    lastName: str(20),
+    firstName: str(20), 
+    lastName: str(20), 
     hashedPassword: passwordSample,
     email: email(200),
     teamId: Math.floor(Math.random() * 2),
