@@ -6,13 +6,6 @@ head
   link(rel='stylesheet' href='/stylesheets/home-project.css')
   title SandBox
 body
-  
-  if error
-    #createModal.modal(style="display: block")
-      include create-modal.pug
-  else
-    #createModal.modal(style="display: none")
-      include create-modal.pug
   .main
     // side-bar__isCollapsed
     .side-bar.side-bar__isCollapsed
@@ -49,3 +42,9 @@ body
         .project-square.project-new +
                       // <div class='body-page'>dsf</div>
   script(src='/js/index.js')
+  if error
+    #createModal.modal(style="display: block")
+      include create-modal.pug
+  else
+    #createModal.modal(style="display: none")
+      include create-modal.pug
