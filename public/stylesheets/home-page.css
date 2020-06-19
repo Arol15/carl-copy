@@ -69,7 +69,8 @@ h2 {
   display: flex;
   background-color: rgb(255, 255, 255);
   flex-direction: column;
-
+  justify-content: center;
+  align-items: center;
   width: auto; 
   height: auto;
   overflow: hidden;  
@@ -79,8 +80,8 @@ video {
   padding: 15px; 
   min-width: 50%; 
   min-height: 50%; 
-  width: auto; 
-  width: auto; 
+  width: 80%; 
+  width: 80%; 
   text-align: center; 
 }
 
@@ -136,10 +137,11 @@ footer {
 }
 
 
-.fa:hover {
+.fa a:hover {
     opacity: 0.7;
     transition: 0.3s;
     cursor: pointer;
+    font-size: 20px; 
 }
 
 .fa a {
