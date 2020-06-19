@@ -24,7 +24,8 @@ body {
     color: whitesmoke; 
     text-align: center;
     font-size: 32px; 
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    /* font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif; */
+    font-family: 'Michroma', sans-serif;
     padding: 3rem; 
     text-decoration: none; 
 }
@@ -80,6 +81,7 @@ body {
     font-size: 1.5rem; 
     cursor: pointer; 
     border-radius: 3rem; 
+    outline: none; 
 
 }
 
