@@ -13,7 +13,6 @@ body
   else
     #createModal.modal(style="display: none")
       include create-modal.pug
-  #deleteModal.modal
   .main
     // side-bar__isCollapsed
     .side-bar.side-bar__isCollapsed
@@ -42,17 +41,11 @@ body
         div YOUR PROJECTS
       .main-page-body
         each existingProject in projects
-          a(href=`/teams/${teamId}/projects/${existingProject.id}`)
-            .project-square= existingProject.projectName
-              .delete-button &#x1D5EB
-                .delete-confirmation
-                  div
-                    p Proceed with deleting this project?
-                  div
-                    form(action=`/teams/${teamId}/projects/${existingProject.id}/delete` method='post')
-                        input(type='hidden' name='_csrf' value=csrfToken)
-                        button(class='btn btn-danger' type='submit') Delete Project
-                        a(class='btn btn-warning ml-2' href=`/teams/${teamId}/projects` role='button') Cancel
+          .project-square
+            .project-options
+              a.delete-button(href=`/teams/${teamId}/projects/${existingProject.id}/delete`) &#x1D5EB
+              a.edit-button(href=`/teams/${teamId}/projects/${existingProject.id}/edit`) EDIT
+            .project-title=existingProject.projectName
         .project-square.project-new +
                       // <div class='body-page'>dsf</div>
   script(src='/js/index.js')

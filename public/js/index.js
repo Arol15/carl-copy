@@ -49,17 +49,28 @@ window.addEventListener("DOMContentLoaded", (e) => {
   });
 
   // Deletes Project
-  const deleteConfirmation = document.querySelector('.delete-confirmation')
-  const deleteButtons = document.querySelectorAll('.delete-button')
-  const deleteModal = document.getElementById('deleteModal');
-  for (const deleteButton of deleteButtons) {
-    deleteButton.addEventListener('click', e => {
-      e.target.nextSibling.style.display = "block"
-      e.preventDefault();
-    })
-  }
+  // const deleteConfirmation = document.querySelector('.delete-confirmation')
+  // const deleteButtons = document.querySelectorAll('.delete-button')
+  // const deleteModal = document.getElementById('deleteModal');
+  // for (const deleteButton of deleteButtons) {
+  //   deleteButton.addEventListener('click', e => {
+  //     e.target.nextSibling.style.display = "block"
+  //     console.log(e.target)
+  //     console.log(e.target.nextSibling)
+  //     e.preventDefault();
+  //   })
+  // }
 
-  // View project
+  // // Edit project
+  // const editConfirmation = document.querySelector('.edit-confirmation')
+  // const editButtons = document.querySelectorAll('.edit-button')
+  // for (const editButton of editButtons) {
+  //   editButton.addEventListener('click', e => {
+  //     e.target.nextSibling.style.display = "block"
+
+  //     e.preventDefault();
+  //   })
+  // }
 });
 
 
