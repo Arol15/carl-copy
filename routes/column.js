@@ -25,17 +25,38 @@ router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req
     order: [['columnIndx', 'ASC']],
   })
 
-  const taskObj = tasks.reduce((accum, current) => {
-    const colId = current.columnId.toString()
-    if (Object.keys(accum).includes(colId)) {
-      accum[colId].push(current)
-    } else {
-      accum[colId] = [current]
-    }
-    return accum
-  }, {})
+  // const taskObj = tasks.reduce((accum, current) => {
+  //   const colId = current.columnId.toString()
+  //   if (Object.keys(accum).includes(colId)) {
+  //     accum[colId].push(current)
+  //   } else {
+  //     accum[colId] = [current]
+  //   }
+  //   return accum
+  // }, {})
 
-  console.log(taskObj)
+  const taskState = {}
+
+  for (let task of tasks) {
+    taskState[task.id] = { id: task.id, content: task.taskDescription }
+  }
+
+  const columnState = {}
+  let columnTasks;
+
+  for (let column of columns) {
+    columnState[column.id] = { id: column.id, title: column.columnName }
+    columnTasks = tasks.filter(task => task.columnId === column.id )
+    columnTasks.sort((first, second) => first.columnIndx - second.columnIndx)
+    columnState[column.id].taskIds = columnTasks.map(task => task.id)
+  }
+
+  // TODO: Implement column ordering
+
+  console.log(taskState)
+  console.log(columnState)
+
+  // console.log(taskObj)
 
   res.render('columns/columns', { columns, teamId, projectId, taskObj });
 }));
