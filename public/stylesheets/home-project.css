@@ -6,6 +6,7 @@ body {
 }
 
 .modal {
+  display: none;
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   padding-top: 100px; /* Location of the box */
@@ -221,7 +222,7 @@ body {
   flex-direction: row-reverse;
 }
 
-.project-square > span {
+.delete-button {
   text-align: center;
   background-color: rgb(247, 247, 247);
   border: solid 0.5px rgb(114, 114, 114);
@@ -231,10 +232,11 @@ body {
   margin-right: 10px;
   margin-top: 10px;
   border-radius: 50%;
+  position: absolute;
   /* display: none; */
 }
 
-.project-square > span:hover {
+.delete-button:hover {
   transform: scale(1.1);
   cursor: pointer;
   background-color: black;
@@ -255,4 +257,12 @@ body {
   justify-content: center;
   background-color: white;
   border: 5px dashed black;
+}
+
+.delete-confirmation {
+  display: none;
+  background: white;
+  position: absolute;
+  height: 100px;
+  width: 150px;
 }

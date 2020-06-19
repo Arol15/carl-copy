@@ -26,6 +26,8 @@ router.get(
       include: { model: Team },
     });
 
+    console.log(projects)
+
 
     const project = await Project.build();
     const allTeams = await Team.findAll();
@@ -61,7 +63,6 @@ router.post(
   "/teams/:teamId/projects",
   csrfProtection,
   asyncHandler(async (req, res, next) => {
-    console.log(req.params.teamId)
     const { projectName, teamId } = req.body;
 
     const project = Project.build({ projectName, teamId });

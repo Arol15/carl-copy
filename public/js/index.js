@@ -4,8 +4,6 @@ window.addEventListener("DOMContentLoaded", (e) => {
   let sideBar = document.querySelector(".side-bar");
   let favoriteButtons = document.querySelectorAll("span.favorite-click");
   let favoriteDiv = document.querySelector(".favorites");
-  let createProjectBtn = document.querySelector(".project-new");
-  let modal = document.getElementById("myModal");
   // Hides side bar
   sideBarOpener.addEventListener("click", (e) => {
     if (sideBar.getAttribute("class") === "side-bar") {
@@ -41,8 +39,27 @@ window.addEventListener("DOMContentLoaded", (e) => {
     });
   }
 
+
+
   // Creates project
+  let createProjectBtn = document.querySelector(".project-new");
+  let createModal = document.getElementById("createModal");
   createProjectBtn.addEventListener("click", (e) => {
-    modal.style.display = "block";
+    createModal.style.display = "block";
   });
+
+  // Deletes Project
+  const deleteConfirmation = document.querySelector('.delete-confirmation')
+  const deleteButtons = document.querySelectorAll('.delete-button')
+  const deleteModal = document.getElementById('deleteModal');
+  for (const deleteButton of deleteButtons) {
+    deleteButton.addEventListener('click', e => {
+      e.target.nextSibling.style.display = "block"
+      e.preventDefault();
+    })
+  }
+
+  // View project
 });
+
+
