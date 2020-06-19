@@ -2,6 +2,21 @@
 const React = window.React;
 const ReactDOM = window.ReactDOM;
 const { DragDropContext, Draggable, Droppable } = window.ReactBeautifulDnd;
+const styled = window.styled
+
+const TaskContainer = styled.div`
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px 0 rgba(21,27,38,.15);
+
+  padding: 16px;
+  margin-bottom: 8px;
+  background-color: ${props => (props.isDragging ? 'skyblue' : 'white')};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 class Task extends React.Component {
   render() {
@@ -10,16 +25,39 @@ class Task extends React.Component {
 
         {(provided, snapshot) => (
 
-          <div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} isDragging={snapshot.isDragging}>
+          <TaskContainer {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} isDragging={snapshot.isDragging}>
 
             {this.props.task.content}
 
-          </div>
+          </TaskContainer>
         )}
       </Draggable>
     )
   }
 }
+
+const ColumnContainer = styled.div`
+  margin: 8px;
+  background-color: #f6f8f9;
+  border-radius: 7px;
+  width: 280px;
+
+  display: flex;
+  flex-direction: column;
+  `
+// border: 2px solid lightgrey;
+
+const Title = styled.h3`
+  padding: 8px;
+  text-align: center;
+`
+const TaskList = styled.div`
+  padding: 8px;
+  background-color: ${props => (props.isDraggingOver ? '#f0f3f6' : 'inherit')};
+
+  flex-grow: 1;
+  min-height: 100px;
+  `
 
 class Column extends React.Component {
   render() {
@@ -27,30 +65,36 @@ class Column extends React.Component {
       <Draggable draggableId={this.props.column.id} index={this.props.index}>
         {(provided) => (
 
-          <div {...provided.draggableProps} ref={provided.innerRef}>
-            <h1 {...provided.dragHandleProps}>{this.props.column.title}</h1>
+          <ColumnContainer {...provided.draggableProps} ref={provided.innerRef}>
+            <Title {...provided.dragHandleProps}>{this.props.column.title}</Title>
 
             <Droppable type='task' droppableId={this.props.column.id}>
               {(provided, snapshot) => (
 
-                <div ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}>
+                <TaskList ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}>
 
                   {this.props.tasks.map((task, index) => (
                     <Task key={task.id} task={task} index={index} />
                   ))}
 
                   {provided.placeholder}
-                </div>
+                </TaskList>
               )}
             </Droppable>
 
-          </div>
+          </ColumnContainer>
 
         )}
       </Draggable>
     )
   }
 }
+
+const BoardContainer = styled.div`
+  display: flex;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  background-color: #f6f8f9;
+`
 
 class App extends React.Component {
   state = {
@@ -168,16 +212,16 @@ class App extends React.Component {
         <Droppable droppableId='all-columns' direction='horizontal' type='column'>
           {(provided) => (
 
-            <div {...provided.droppableProps} ref={provided.innerRef}>
+            <BoardContainer {...provided.droppableProps} ref={provided.innerRef}>
 
-              {this.state.columnOrder.map((columnId, index) => {
-                const column = this.state.columns[columnId]
-                const tasks = column.taskIds.map(taskId => this.state.tasks[taskId])
-                return <Column key={column.id} column={column} tasks={tasks} index={index} />
-              })}
+                {this.state.columnOrder.map((columnId, index) => {
+                  const column = this.state.columns[columnId]
+                  const tasks = column.taskIds.map(taskId => this.state.tasks[taskId])
+                  return <Column key={column.id} column={column} tasks={tasks} index={index}/>
+                })}
 
-              {provided.placeholder}
-            </div>
+                {provided.placeholder}
+            </BoardContainer>
           )}
         </Droppable>
       </DragDropContext>
