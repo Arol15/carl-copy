@@ -66,9 +66,22 @@ h2 {
 }
 
 .body-video {
+  display: flex;
   background-color: rgb(255, 255, 255);
-  text-align: center;
-  width: auto;  
+  flex-direction: column;
+
+  width: auto; 
+  height: auto;
+  overflow: hidden;  
+}
+
+video {
+  padding: 15px; 
+  min-width: 50%; 
+  min-height: 50%; 
+  width: auto; 
+  width: auto; 
+  text-align: center; 
 }
 
 .cards {
