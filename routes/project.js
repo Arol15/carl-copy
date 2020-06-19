@@ -26,9 +26,6 @@ router.get(
       include: { model: Team },
     });
 
-    console.log(projects)
-
-
     const project = await Project.build();
     const allTeams = await Team.findAll();
     const team = await Team.findOne({ where: teamId });

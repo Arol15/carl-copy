@@ -102,7 +102,7 @@ describe("Projects create form", () => {
     }
 
     res = await request(app)
-      .get("/teams/1/projects-create")
+      .get("/teams/1/projects")
       .expect("Content-type", /html/)
       .expect(200);
     $ = cheerio.load(res.text);
@@ -130,7 +130,7 @@ describe("Projects create form", () => {
   it("renders a form that posts to create projects", () => {
     const form = $("form");
     expect(form.length).to.equal(1);
-    expect(form.attr("action")).to.equal("/teams/1/projects-create");
+    expect(form.attr("action")).to.equal("/teams/1/projects");
     expect(form.attr("method")).to.equal("post");
   });
 
@@ -143,7 +143,7 @@ describe("Projects create form", () => {
   });
 
   it("renders a submit button", () => {
-    expect($("button[type='submit']").text()).to.equal("Create");
+    expect($("button[type='submit']").text()).to.equal("Create Project");
   });
 
   it("renders a hidden input for the csrfToken", () => {
@@ -324,7 +324,7 @@ describe("User Registration form", () => {
   });
 
   it("renders a Email input field", () => {
-    expect($("input[type='text'][name='email']").length).to.equal(1);
+    expect($("input[type='email'][name='email']").length).to.equal(1);
   });
 
   it("renders a Password input field", () => {
