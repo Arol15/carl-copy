@@ -18,6 +18,11 @@ body
         p click on the &star; next to a project
       .tabs.projects
         h2 Projects
+        each existingProject in projects
+          .project-list
+            a(href=`/teams/${teamId}/projects/${existingProject.id}`)
+              span.project-name= existingProject.projectName
+              span.favorite-click &star;
       .tabs.invite
         #button
           p Invite to CARL
