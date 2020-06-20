@@ -40,6 +40,33 @@ router.post('/users/register', csrfProtection, asyncHandler(async (req, res) => 
   }
 }))
 
+router.post('/users/register-demo', csrfProtection, asyncHandler(async (req, res) => {
+  const email = "test@test.com";
+  const password = "1Az@"
+  let errors = []
+
+  try {
+    const user = await db.User.findOne({ where: { email: { [Op.iLike]: email } } })
+    if (user !== null) {
+      const passwordMatch = await user.validatePassword(password)
+      if (passwordMatch) {
+        loginUser(req, res, user)
+        return res.redirect(`/teams/${user.teamId}/projects`)
+      }
+    }
+
+    errors.push('Login failed for the provided email address and password')
+  } catch (err) {
+    errors = err.errors.map(error => error.message)
+  }
+
+  res.render('users/user-login', {
+    errors,
+    email,
+    token: req.csrfToken()
+  })
+}))
+
 
 router.get('/users/login', csrfProtection, asyncHandler(async (req, res) => {
   res.render('users/user-login', { token: req.csrfToken() })
@@ -52,6 +79,33 @@ router.post('/users/login', csrfProtection, asyncHandler(async (req, res) => {
 
   try {
     const user = await db.User.findOne({ where: { email: { [Op.iLike]: email } }})
+    if (user !== null) {
+      const passwordMatch = await user.validatePassword(password)
+      if (passwordMatch) {
+        loginUser(req, res, user)
+        return res.redirect(`/teams/${user.teamId}/projects`)
+      }
+    }
+
+    errors.push('Login failed for the provided email address and password')
+  } catch (err) {
+    errors = err.errors.map(error => error.message)
+  }
+
+  res.render('users/user-login', {
+    errors,
+    email,
+    token: req.csrfToken()
+  })
+}))
+
+router.post('/users/login-demo', csrfProtection, asyncHandler(async (req, res) => {
+  const email = "test@test.com";  
+  const password = "1Az@" 
+  let errors = []
+
+  try {
+    const user = await db.User.findOne({ where: { email: { [Op.iLike]: email } } })
     if (user !== null) {
       const passwordMatch = await user.validatePassword(password)
       if (passwordMatch) {

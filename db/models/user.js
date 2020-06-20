@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         len: {
           args: [4, 100],
-          msg: 'Password must not be more than 100 characters.'
+          msg: 'Password must be between 4 and 100 characters long.'
         },
       },
     },
@@ -70,8 +70,19 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     teamId: {
+      allowNull: false, 
       type: DataTypes.INTEGER,
-      references: { model: 'Teams' }
+      references: { model: 'Teams' },
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: "Please choose your team."
+        },
+        notNull: {
+          args: true,
+          msg: "Please choose your team."
+        },
+      }
     }
   }, {});
 

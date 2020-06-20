@@ -29,7 +29,9 @@ body
     .main-page
       .nav-bar
         .nav-bar-item.side-bar-opener &rAarr;
-        h3 HOME
+        h3(onclick=`location.href='/teams/${teamId}/projects';`) HOME
+        h3= team.teamName
+        h3(onclick=`location.href='/users/edit/${userId}';`) Edit Profile
       .project-label
         div YOUR PROJECTS
       .main-page-body

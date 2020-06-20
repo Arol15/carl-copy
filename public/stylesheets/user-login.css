@@ -39,6 +39,7 @@ body {
     padding: 10rem 5rem; 
     box-shadow: 0 1px 3px 0 rgba(21,27,38,.15); 
     border-radius: 4px; 
+    /* position: relative; */
 }
 
 .form-heading {
@@ -49,9 +50,10 @@ body {
 
 .authForm {
     padding: 2rem 0; 
+    padding-bottom: 0; 
     display: flex; 
     flex-direction: column;
-    margin: 0px auto;    
+    margin: 0px auto;  
 }
 
 .input-group {
@@ -108,6 +110,9 @@ body {
     cursor: pointer; 
     border-radius: 3rem; 
     outline: none; 
+    margin-bottom: 0; 
+    
+
 
 }
 
@@ -139,6 +144,18 @@ p {
     color: white; 
     font-size: 1.2rem; 
 }
+
+.authForm-2 {
+    box-sizing: border-box;
+    padding-top: 0; 
+    margin: 0; 
+    width: auto;   
+}
+
+.button-2 button {
+    background: #796eff;
+}
+
 
 
 
