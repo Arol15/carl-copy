@@ -91,7 +91,6 @@ router.get('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(as
     include: { model: db.Team },
   });
   const teams = await db.Team.findAll({ attributes: ['id', 'teamName'] })
-  console.log(teams)
 
   res.render('users/user-edit', { user, userId, projects, team, teamId, teams, token: req.csrfToken() })
 }))
@@ -101,7 +100,7 @@ router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(a
   const { firstName, lastName, email, teamId } = req.body
   const userId = parseInt(req.params.id, 10)
   const user = await db.User.findByPk(userId)
-  const team = await db.Team.findOne({ where: { teamId: user.teamId } });
+  const team = await db.Team.findOne({ where: { id: user.teamId } });
   const projects = await db.Project.findAll({
     where: {
       teamId: user.teamId,
