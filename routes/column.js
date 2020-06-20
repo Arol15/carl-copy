@@ -1,5 +1,6 @@
 const express = require('express');
 const csrf = require('csurf');
+const fetch = require('node-fetch')
 
 const { asyncHandler } = require('./utils');
 const { Project, Team, Column, Task } = require('../db/models');
@@ -8,6 +9,17 @@ const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
 
 router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req, res) => {
+  const teamId = parseInt(req.params.teamId, 10);
+  const projectId = parseInt(req.params.projectId, 10);
+
+  // TODO: Update the fetch URL for production to the heroku URL
+  const response = await fetch(`http://localhost:8080/teams/${teamId}/projects/${projectId}/columns/board`)
+  const state = await response.json()
+  res.render('columns/columns', { state: JSON.stringify(state) });
+}));
+
+// handles fetch request to get state for react component
+router.get('/teams/:teamId/projects/:projectId/columns/board', asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
 
@@ -25,40 +37,35 @@ router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req
     order: [['columnIndx', 'ASC']],
   })
 
-  // const taskObj = tasks.reduce((accum, current) => {
-  //   const colId = current.columnId.toString()
-  //   if (Object.keys(accum).includes(colId)) {
-  //     accum[colId].push(current)
-  //   } else {
-  //     accum[colId] = [current]
-  //   }
-  //   return accum
-  // }, {})
-
   const taskState = {}
+  const columnState = {}
 
   for (let task of tasks) {
-    taskState[task.id] = { id: task.id, content: task.taskDescription }
+    taskState[`task-${task.id}`] = { id: `task-${task.id}`, content: task.taskDescription }
   }
 
-  const columnState = {}
   let columnTasks;
 
   for (let column of columns) {
-    columnState[column.id] = { id: column.id, title: column.columnName }
+    columnState[`column-${column.id}`] = { id: `column-${column.id}`, title: column.columnName }
     columnTasks = tasks.filter(task => task.columnId === column.id )
     columnTasks.sort((first, second) => first.columnIndx - second.columnIndx)
-    columnState[column.id].taskIds = columnTasks.map(task => task.id)
+    columnState[`column-${column.id}`].taskIds = columnTasks.map(task => `task-${task.id}`)
   }
 
   // TODO: Implement column ordering
 
+  const state = {
+    tasks: taskState,
+    columns: columnState,
+    columnOrder: Object.keys(columnState)
+  }
+
   // console.log(taskState)
   // console.log(columnState)
+  // console.log(state)
+  res.json({ state })
 
-  // console.log(taskObj)
-
-  res.render('columns/columns', { columns, teamId, projectId });
 }));
 
 // get column creation form
