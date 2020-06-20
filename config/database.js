@@ -5,6 +5,7 @@ const username = db.username;
 const password = db.password;
 const database = db.database;
 const host = db.host;
+const logging = false;
 
 module.exports = {
   development: {
@@ -12,6 +13,14 @@ module.exports = {
     password,
     database,
     host,
+    dialect: "postgres",
+  },
+  test: {
+    username,
+    password,
+    database,
+    host,
+    logging,
     dialect: "postgres",
   },
   production: {

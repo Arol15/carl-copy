@@ -76,7 +76,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   User.beforeCreate(async user => {
-    return user.hashedPassword = await bcrypt.hash(user.hashedPassword, 15)
+    return user.hashedPassword = await bcrypt.hash(user.hashedPassword, 1)
   });
 
   User.associate = function(models) {
