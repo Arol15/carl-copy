@@ -1,3 +1,5 @@
+
+
 // root js file for client side js
 window.addEventListener("DOMContentLoaded", (e) => {
   let sideBarOpener = document.querySelector(".side-bar-opener");
