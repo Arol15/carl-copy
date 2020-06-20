@@ -15,10 +15,13 @@ block content
         div.form-group
               label Team
               select.custom-select.custom-select.mb-3(name='teamId')
-                option(disabled selected value) Select an option
                 each existingTeam in teams
                   option(value=existingTeam.id)= existingTeam.teamName
                 option(value='remove') Remove Team
         div(class='py-4')
           button(type='submit' class='btn btn-secondary') Update Profile
-          a(href=`/teams/${teamId}/projects` class='btn btn-secondary ml-2') Cancel
+          if user.teamId
+            a(href=`/teams/${teamId}/projects` class='btn btn-secondary ml-2') Cancel
+          else 
+            a(href=`/users/${userId}/noteam` class='btn btn-secondary ml-2') Cancel
+

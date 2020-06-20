@@ -18,18 +18,16 @@ body
         p click on the &star; next to a project
       .tabs.projects
         h2 Projects
-        each existingProject in projects
-          .project-list
-            a(href=`/teams/${teamId}/projects/${existingProject.id}`)
-              span.project-name= existingProject.projectName
-              span.favorite-click &star;
       .tabs.invite
         #button
           p Invite to CARL
     .main-page
       .nav-bar
         .nav-bar-item.side-bar-opener &rAarr;
-        h3(onclick=`location.href='/teams/${teamId}/projects';`) HOME
-        h3= team.teamName
+        if team
+          h3(onclick=`location.href='/teams/${teamId}/projects';`) HOME
+          h3= team.teamName
+        else 
+          h3(onclick=`location.href='/users/${userId}/noteam';`) HOME
         h3(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
       block content
