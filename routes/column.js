@@ -11,7 +11,14 @@ const csrfProtection = csrf({ cookie: true });
 router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
-  const projects = await Project.findAll()
+  const projects = await Project.findAll({ 
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team }, 
+    
+  })
   const team = await Team.findOne({ where: teamId });
   const userId = req.session.auth.userId
 
