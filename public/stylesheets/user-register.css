@@ -27,6 +27,7 @@ body {
     /* font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif; */
     font-family: 'Michroma', sans-serif;
     padding: 3rem; 
+    padding-bottom: 0; 
     text-decoration: none; 
 }
 
@@ -37,6 +38,7 @@ body {
     height: auto;
     background-color: #fff;
     padding: 10rem 5rem; 
+    padding-bottom: 2em; 
     box-shadow: 0 1px 3px 0 rgba(21,27,38,.15); 
     border-radius: 4px; 
 }
@@ -74,6 +76,7 @@ body {
 
 .input-group button {
     margin: 2rem auto; 
+    margin-bottom: 0; 
     padding: .5rem 3rem; 
     background: linear-gradient(to right, #FF5F6D, #FFC371); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     border: none; 
@@ -151,6 +154,11 @@ p {
     border: 0.5px solid gray;
     border-radius: 3px;
     width: 15rem; 
+}
+
+.button-2 button {
+    background: #796eff;
+    padding: .5rem 1.8rem;
 }
 
 
