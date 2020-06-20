@@ -26,6 +26,7 @@ module.exports = {
         unique: true,
       },
       teamId: {
+        allowNull: false, 
         type: Sequelize.INTEGER,
         references: { model: 'Teams' },
       },
