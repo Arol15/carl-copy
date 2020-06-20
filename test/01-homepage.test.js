@@ -65,15 +65,15 @@ const runSpecs = () => {
       });
 
       it('should render a "Login" <a> element with an `href` attribute set to "/users/login" in the top navbar', () => {
-        const loginHyperlink = $('div a[href="/users/login"]');
+        const loginHyperlink = $('a[href="/users/login"]');
         expect(loginHyperlink.length).to.equal(1);
-        expect(loginHyperlink.text()).to.equal('Login');
+        expect(loginHyperlink.text()).to.equal('Log In');
       });
 
       it('should render a "Register" <a> element with an `href` attribute set to "/users/register" in the top navbar', () => {
-        const registerHyperlink = $('div a[href="/users/register"]');
+        const registerHyperlink = $('a[href="/users/register"]');
         expect(registerHyperlink.length).to.equal(1);
-        expect(registerHyperlink.text()).to.equal('Register');
+        expect(registerHyperlink.text()).to.equal('Get Started Now');
       });
 
       // checkHeading('Home');
