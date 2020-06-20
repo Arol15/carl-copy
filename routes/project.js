@@ -27,7 +27,7 @@ router.get(
       order: [["id", "ASC"]],
       include: { model: Team },
     });
-
+    console.log(projects)
     const user = await User.findOne({ where: userId });
     const project = await Project.build();
     const allTeams = await Team.findAll();
@@ -102,7 +102,16 @@ router.get(
   "/teams/:teamId/projects/:projectId",
   asyncHandler(async (req, res) => {
     const projectId = parseInt(req.params.projectId, 10);
-
+    const teamId = parseInt(req.params.teamId, 10);
+    const team = await Team.findOne({ where: teamId });
+    const userId = req.session.auth.userId
+    const projects = await Project.findAll({
+      where: {
+        teamId,
+      },
+      order: [["id", "ASC"]],
+      include: { model: Team },
+    });
     const project = await Project.findByPk(projectId, {
       include: {
         model: Column,
@@ -110,7 +119,7 @@ router.get(
       },
     });
 
-    res.render("projects/project-detail", { project });
+    res.render("projects/project-detail", { projects, project, teamId, userId, team });
   })
 );
 
