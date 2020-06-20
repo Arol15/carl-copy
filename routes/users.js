@@ -78,7 +78,7 @@ router.post('/users/login', csrfProtection, asyncHandler(async (req, res) => {
   let errors = []
 
   try {
-    const user = await db.User.findOne({ where: { email: { [Op.iLike]: email } }})
+    const user = await db.User.findOne({ where: { email: { [Op.iLike]: email } } })
     if (user !== null) {
       const passwordMatch = await user.validatePassword(password)
       if (passwordMatch) {
@@ -135,8 +135,19 @@ router.post('/users/logout', (req, res) => {
 router.get('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const userId = parseInt(req.params.id, 10)
   const user = await db.User.findByPk(userId)
-  const teams = await db.Team.findAll({ attributes: ['id','teamName'] })
-  res.render('users/user-edit', { user, teams, token: req.csrfToken() })
+  const teamId = user.teamId
+  const team = await db.Team.findOne({ where: teamId });
+  const projects = await db.Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: db.Team },
+  });
+  const teams = await db.Team.findAll({ attributes: ['id', 'teamName'] })
+  console.log(team)
+
+  res.render('users/user-edit', { user, userId, projects, team, teamId, teams, token: req.csrfToken() })
 }))
 
 
@@ -144,6 +155,15 @@ router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(a
   const { firstName, lastName, email, teamId } = req.body
   const userId = parseInt(req.params.id, 10)
   const user = await db.User.findByPk(userId)
+  const team = await db.Team.findOne({ where: { id: user.teamId } });
+  const projects = await db.Project.findAll({
+    where: {
+      teamId: user.teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: db.Team },
+  });
+  const teams = await db.Team.findAll({ attributes: ['id', 'teamName'] })
   user.firstName = firstName
   user.lastName = lastName
   user.email = email
@@ -152,18 +172,37 @@ router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(a
 
   try {
     await user.save()
-    res.redirect('/users')
+    if (user.teamId === null) res.redirect(`/users/${userId}/noteam`)
+    else res.redirect(`/teams/${teamId}/projects`)
   } catch (err) {
     const errors = err.errors.map(error => error.message)
     res.render('users/user-edit', {
-        errors,
-        user,
-        token: req.csrfToken()
-      })
+      errors,
+      projects,
+      team,
+      teamId: user.teamId,
+      teams,
+      user,
+      userId,
+      token: req.csrfToken()
+    })
   }
 }))
 
-
+router.get('/users/:id/noteam/', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
+  const userId = parseInt(req.params.id, 10)
+  const user = await db.User.findByPk(userId)
+  const projects = await db.Project.findAll({
+    where: {
+      teamId: user.teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: db.Team },
+  });
+  const team = await db.Team.findOne({ where: { id: user.teamId } });
+  console.log('team:  ', team)
+  res.render(`users/user-noteam`, { userId, user, projects })
+}))
 // TODO: add user-delete.pug confirmation
 // router.get('/users/delete/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
 //     const userId = parseInt(req.params.id, 10)
@@ -176,13 +215,13 @@ router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(a
 
 
 router.post('/users/delete/:id(\\d+)', requireAuth, asyncHandler(async (req, res) => {
-    const userId = parseInt(req.params.id, 10)
-    const user = await db.User.findByPk(userId)
-    if (req.session.auth.userId === userId) {
-      logoutUser(req, res)
-    }
-    await user.destroy()
-    res.redirect('/users')
-  }))
+  const userId = parseInt(req.params.id, 10)
+  const user = await db.User.findByPk(userId)
+  if (req.session.auth.userId === userId) {
+    logoutUser(req, res)
+  }
+  await user.destroy()
+  res.redirect('/users')
+}))
 
 module.exports = router
