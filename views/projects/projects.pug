@@ -1,47 +1,16 @@
-doctype html
+extends ../layout.pug
 include project-utils.pug
-head
-  meta(charset='UTF-8')
-  meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  link(rel='stylesheet' href='/stylesheets/home-project.css')
-  title SandBox
-body
-  .main
-    // side-bar__isCollapsed
-    .side-bar.side-bar__isCollapsed
-      .tabs.home-tasks
-        h1 CARL
-        div &#x1F3E0; Home
-        div &#x2714;  My Tasks
-      .tabs.favorites
-        h2 Favorites
-        p click on the &star; next to a project
-      .tabs.projects
-        h2 Projects
-        each existingProject in projects
-          .project-list
-            a(href=`/teams/${teamId}/projects/${existingProject.id}`)
-              span.project-name= existingProject.projectName
-              span.favorite-click &star;
-      .tabs.invite
-        #button
-          p Invite to CARL
-    .main-page
-      .nav-bar
-        .nav-bar-item.side-bar-opener &rAarr;
-        h3 HOME
-      .project-label
-        div YOUR PROJECTS
-      .main-page-body
-        each existingProject in projects
-          .project-square(onclick=`location.href='/teams/${teamId}/projects/${existingProject.id}/columns';` )
-            .project-options
-              a.delete-button(href=`/teams/${teamId}/projects/${existingProject.id}/delete`) &#x1D5EB
-              a.edit-button(href=`/teams/${teamId}/projects/${existingProject.id}/edit`) EDIT
-            .project-title=existingProject.projectName
-        .project-square.project-new +
-                      // <div class='body-page'>dsf</div>
-  script(src='/js/index.js')
+block content
+  .project-label
+    div YOUR PROJECTS
+  .main-page-body
+    each existingProject in projects
+      .project-square(onclick=`location.href='/teams/${teamId}/projects/${existingProject.id}/columns'` )
+        .project-options
+          a.delete-button(href=`/teams/${teamId}/projects/${existingProject.id}/delete`) &#x1D5EB
+          a.edit-button(href=`/teams/${teamId}/projects/${existingProject.id}/edit`) EDIT
+        .project-title=existingProject.projectName
+    .project-square.project-new +
   if error
     #createModal.modal(style="display: block")
       include create-modal.pug

@@ -1,5 +1,5 @@
 body {
-  display: inline-flex;
+  display: flex;
   width: 100%;
   height: auto;
   margin: auto;
@@ -79,6 +79,9 @@ body {
   background-color: rgba(235, 235, 235, 0.7);
 }
 
+.emptyVoid { 
+  position: absolute;
+}
 .side-bar {
   background-color: rgb(50, 50, 78);
   display: grid;
