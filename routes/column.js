@@ -11,11 +11,14 @@ const csrfProtection = csrf({ cookie: true });
 router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
+  const projects = await Project.findAll()
+  const team = await Team.findOne({ where: teamId });
+  const userId = req.session.auth.userId
 
   // TODO: Update the fetch URL for production to the heroku URL
   const response = await fetch(`http://localhost:8080/teams/${teamId}/projects/${projectId}/columns/board`)
   const state = await response.json()
-  res.render('columns/columns', { state: JSON.stringify(state) });
+  res.render('columns/columns', { state: JSON.stringify(state), projects, team, userId, teamId });
 }));
 
 // handles fetch request to get state for react component
@@ -48,7 +51,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/board', asyncHandler(asyn
 
   for (let column of columns) {
     columnState[`column-${column.id}`] = { id: `column-${column.id}`, title: column.columnName }
-    columnTasks = tasks.filter(task => task.columnId === column.id )
+    columnTasks = tasks.filter(task => task.columnId === column.id)
     columnTasks.sort((first, second) => first.columnIndx - second.columnIndx)
     columnState[`column-${column.id}`].taskIds = columnTasks.map(task => `task-${task.id}`)
   }
@@ -72,10 +75,14 @@ router.get('/teams/:teamId/projects/:projectId/columns/board', asyncHandler(asyn
 router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
-
+  const projects = await Project.findAll()
+  const team = await Team.findOne({ where: teamId });
+  const userId = req.session.auth.userId
   const column = await Column.build();
 
-  res.render('columns/columns-create', { column, teamId, projectId, csrfToken: req.csrfToken() })
+  //added projects, team, userId so we can pass them through rendering.
+
+  res.render('columns/columns-create', { column, teamId, projectId, projects, team, userId, csrfToken: req.csrfToken() })
 }));
 
 // post new column
@@ -128,7 +135,7 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfPro
   try {
     await columnToUpdate.update(column);
     res.redirect(`/teams/${teamId}/projects/${projectId}/columns`)
-  } catch(err) {
+  } catch (err) {
     if (err.name === 'SequelizeValidationError') {
       const error = e.errors.map(error => error.message);
       res.render('projects/project-edit', {
