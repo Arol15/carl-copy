@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const { sessionSecret } = require('./config')
 const { restoreUser } = require('./auth')
-// const path = require('path')
+const path = require('path')
 
 const rootRouter = require('./routes/root')
 const userRouter = require('./routes/users')
@@ -17,7 +17,8 @@ const dataRouter = require('./routes/data')
 
 // express configurations
 app.set('view engine', 'pug')
-app.use(express.static(__dirname + "/public"))
+app.use(express.static(path.join(__dirname, "public")))
+// app.use(express.static("public"))
 app.use(morgan('dev'))
 app.use(cookieParser(sessionSecret))
 app.use(express.urlencoded({ extended: false }))

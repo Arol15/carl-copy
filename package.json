@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node ./bin/www",
-    "start:development": "nodemon -r dotenv/config ./bin/www"
+    "start:development": "nodemon -r dotenv/config ./bin/www",
+    "start:react": "react-scripts start"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,6 @@
   "bugs": {
     "url": "https://github.com/ColeRutledge/Asana-Clone/issues"
   },
-  "homepage": "https://github.com/ColeRutledge/Asana-Clone#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "connect-pg-simple": "^6.1.0",
@@ -32,11 +32,29 @@
     "per-env": "^1.0.2",
     "pg": "^8.2.1",
     "pug": "^2.0.4",
-    "sequelize": "^5.21.12"
+    "sequelize": "^5.21.12",
+    "react": "^16.13.1",
+    "react-beautiful-dnd": "^13.0.0",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
+    "babel-plugin-transform-react-pug": "^7.0.1",
     "dotenv-cli": "^3.1.0",
     "nodemon": "^2.0.4",
     "sequelize-cli": "^5.5.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

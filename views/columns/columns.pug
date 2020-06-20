@@ -1,11 +1,21 @@
 extends ../layout.pug
 
 block content
-  div.wrapper
-    h4.pb-4.text-muted Columns
-    div.d-flex
-      each column in columns
-        .card.m-4(style='width: 20rem;')
-          div.card-header= column.columnName
-          each task in taskObj[column.id]
-            li.list-group-item= task.taskDescription
+  #board
+  script(src="https://unpkg.com/@babel/standalone@7.10.2/babel.min.js")
+  script(src="https://unpkg.com/react@16.8.6/umd/react.development.js" crossorigin)
+  script(src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.development.js" crossorigin)
+  script(src="https://unpkg.com/styled-components@4.1.1/dist/styled-components.js")
+  script(src="https://unpkg.com/react-beautiful-dnd@13.0.0/dist/react-beautiful-dnd.js")
+  script(src='../../../../src/index.js' type="text/babel")
+
+
+
+  //- div.wrapper
+  //-   h4.pb-4.text-muted Columns
+  //-   div.d-flex
+  //-     each column in columns
+  //-       .card.m-4(style='width: 20rem;')
+  //-         div.card-header= column.columnName
+  //-         each task in taskObj[column.id]
+  //-           li.list-group-item= task.taskDescription

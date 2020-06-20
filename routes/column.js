@@ -53,12 +53,12 @@ router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req
 
   // TODO: Implement column ordering
 
-  console.log(taskState)
-  console.log(columnState)
+  // console.log(taskState)
+  // console.log(columnState)
 
   // console.log(taskObj)
 
-  res.render('columns/columns', { columns, teamId, projectId, taskObj });
+  res.render('columns/columns', { columns, teamId, projectId });
 }));
 
 // get column creation form
