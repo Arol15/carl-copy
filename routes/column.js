@@ -11,14 +11,13 @@ const csrfProtection = csrf({ cookie: true });
 router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
-  const projects = await Project.findAll({ 
+  const projects = await Project.findAll({
     where: {
       teamId,
     },
     order: [["id", "ASC"]],
-    include: { model: Team }, 
-    
-  })
+    include: { model: Team },
+  });
   const team = await Team.findOne({ where: teamId });
   const userId = req.session.auth.userId
 
@@ -82,7 +81,13 @@ router.get('/teams/:teamId/projects/:projectId/columns/board', asyncHandler(asyn
 router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
-  const projects = await Project.findAll()
+  const projects = await Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
   const team = await Team.findOne({ where: teamId });
   const userId = req.session.auth.userId
   const column = await Column.build();
@@ -121,10 +126,18 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfProt
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
-
+  const projects = await Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
+  const team = await Team.findOne({ where: teamId });
+  const userId = req.session.auth.userId
   const column = await Column.findByPk(columnId);
 
-  res.render('columns/columns-edit', { column, teamId, projectId, columnId, csrfToken: req.csrfToken() })
+  res.render('columns/columns-edit', { column, team, teamId, userId, projectId, projects, columnId, csrfToken: req.csrfToken() })
 }));
 
 // post edit
@@ -132,7 +145,15 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfPro
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
-
+  const team = await Team.findOne({ where: teamId });
+  const userId = req.session.auth.userId
+  const projects = await Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
   const columnToUpdate = await Column.findByPk(columnId);
 
   const { columnName } = req.body;
@@ -147,6 +168,11 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfPro
       const error = e.errors.map(error => error.message);
       res.render('projects/project-edit', {
         column: { ...column, id: columnId },
+        team,
+        teamId,
+        userId,
+        projectId,
+        projects,
         error,
         csrfToken: req.csrfToken()
       })
@@ -159,10 +185,19 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/delete', csrfPr
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
-
+  const team = await Team.findOne({ where: teamId });
+  const userId = req.session.auth.userId
+  const projects = await Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
+  // added extra keys to pass into delete view - Rocky
   const columnToDelete = await Column.findByPk(columnId)
 
-  res.render('columns/columns-delete', { columnToDelete, teamId, projectId, columnId, csrfToken: req.csrfToken() })
+  res.render('columns/columns-delete', { columnToDelete, team, userId, projects, teamId, projectId, columnId, csrfToken: req.csrfToken() })
 }));
 
 // delete column
