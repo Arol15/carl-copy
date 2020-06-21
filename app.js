@@ -19,6 +19,7 @@ const dataRouter = require('./routes/data')
 app.set('view engine', 'pug')
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(morgan('dev'))
+app.use(express.json())
 app.use(cookieParser(sessionSecret))
 app.use(express.urlencoded({ extended: false }))
 app.use(session({
