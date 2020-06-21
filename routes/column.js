@@ -18,6 +18,51 @@ router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req
   res.render('columns/columns', { state: JSON.stringify(state) });
 }));
 
+// TODO: Persist new task/column layout to the database
+router.post('/columns/update', asyncHandler(async (req, res) => {
+  // console.log(req.body)
+  const { source, destination, draggableId } = req.body
+//  console.log(source.droppableId.match(/\d+/)[0])
+//  console.log(destination.droppableId.match(/\d+/)[0])
+  // console.log(source, destination)
+  const sourceColId = parseInt(source.droppableId.match(/\d+/)[0], 10)
+  const sourceColIndx = source.index
+  const destColId = parseInt(destination.droppableId.match(/\d+/)[0], 10)
+  const destColIndx = destination.index
+  const taskId = parseInt(draggableId.match(/\d+/)[0], 10)
+  // console.log(sourceColId)
+  // console.log(destColId)
+  // console.log(sourceColIndx)
+  // console.log(destColIndx)
+  // console.log(taskId)
+  const task = await Task.findByPk(taskId)
+  task.columnId = destColId
+  task.columnIndx = destColIndx
+  await task.save()
+
+
+  const taskSort = await Task.findAll({
+    where: { columnId: [ sourceColId, destColId ] },
+    order: [['columnIndx', 'ASC']],
+  })
+
+
+  for (let task of taskSort) {
+    if (task.columnId === sourceColId) {
+      if (task.columnIndx > sourceColIndx) {
+        task.columnIndx--
+        await task.save()
+      }
+    } else if (task.columnId === destColId) {
+      if (task.columnIndx >= destColIndx && task.id !== taskId) {
+        task.columnIndx++
+        await task.save()
+      }
+    }
+  }
+  res.end()
+}))
+
 // handles fetch request to get state for react component
 router.get('/teams/:teamId/projects/:projectId/columns/board', asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);

@@ -44,7 +44,7 @@ const ColumnContainer = styled.div`
 
   display: flex;
   flex-direction: column;
-  `
+`
 
 const Title = styled.h3`
   padding: 8px;
@@ -56,7 +56,7 @@ const TaskList = styled.div`
 
   flex-grow: 1;
   min-height: 100px;
-  `
+`
 
 class Column extends React.Component {
   render() {
@@ -116,6 +116,11 @@ class App extends React.Component {
 
     const { destination, source, draggableId, type } = result
 
+    // console.log('destination: ', destination)
+    // console.log('source: ', source)
+    // console.log('draggableId: ', draggableId)
+    // console.log('type: ', type)
+
     if (!destination) { return }
 
     if (destination.droppableId === source.droppableId && destination.index === source.index) { return }
@@ -128,6 +133,15 @@ class App extends React.Component {
       const newState = { ...this.state, columnOrder: newColumnOrder }
 
       this.setState(newState)
+
+      // TODO: persist order state to database here
+      fetch('http://localhost:8080/columns/update', {
+        method: 'POST',
+        body: JSON.stringify(result),
+        headers: { 'Content-Type': 'application/json'}
+        })
+        .catch(err => console.log(err))
+
       return
     }
 
@@ -150,7 +164,15 @@ class App extends React.Component {
       }
 
       this.setState(newState)
+
       // TODO: persist order state to database here
+      fetch('http://localhost:8080/columns/update', {
+        method: 'POST',
+        body: JSON.stringify(result),
+        headers: { 'Content-Type': 'application/json'}
+        })
+        .catch(err => console.log(err))
+
       return
     }
 
@@ -179,7 +201,14 @@ class App extends React.Component {
     }
 
     this.setState(newState)
+
     // TODO: persist order state to database here
+    fetch('http://localhost:8080/columns/update', {
+      method: 'POST',
+      body: JSON.stringify(result),
+      headers: { 'Content-Type': 'application/json'}
+      })
+      .catch(err => console.log(err))
   }
 
   render() {
@@ -193,7 +222,7 @@ class App extends React.Component {
               {this.state.columnOrder.map((columnId, index) => {
                 const column = this.state.columns[columnId]
                 const tasks = column.taskIds.map(taskId => this.state.tasks[taskId])
-                return <Column key={column.id} column={column} tasks={tasks} index={index} />
+                return <Column key={column.id} column={column} tasks={tasks} index={index}/>
               })}
 
               {provided.placeholder}
@@ -204,5 +233,6 @@ class App extends React.Component {
     )
   }
 }
+
 const domContainer = document.querySelector('#board');
 ReactDOM.render(<App />, domContainer);

@@ -8,14 +8,7 @@ block content
   script(src="https://unpkg.com/styled-components@4.1.1/dist/styled-components.js")
   script(src="https://unpkg.com/react-beautiful-dnd@13.0.0/dist/react-beautiful-dnd.js")
   script(src='../../../../js/react.js' type="text/babel" state=state)
-
-
-
-  //- div.wrapper
-  //-   h4.pb-4.text-muted Columns
-  //-   div.d-flex
-  //-     each column in columns
-  //-       .card.m-4(style='width: 20rem;')
-  //-         div.card-header= column.columnName
-  //-         each task in taskObj[column.id]
-  //-           li.list-group-item= task.taskDescription
+  style(type='text/css').
+    body {
+      background-color: #f6f8f9;
+    }
