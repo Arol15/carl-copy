@@ -1,38 +1,41 @@
 doctype html
-head
-  script(src='/js/index.js')
-  meta(charset='UTF-8')
-  meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  link(rel='stylesheet' href='/stylesheets/home-project.css')
-  title SandBox
-body
-  .main
-    // side-bar__isCollapsed
-    .side-bar.side-bar__isCollapsed
-      .tabs.home-tasks
-        h1 CARL
-        div &#x1F3E0; Home
-        div &#x2714;  My Tasks
-      .tabs.favorites
-        h2 Favorites
-        p click on the &star; next to a project
-      .tabs.projects
-        h2 Projects
-        each existingProject in projects
-          .project-list
-            a(href=`/teams/${teamId}/projects/${existingProject.id}`)
-              span.project-name= existingProject.projectName
-              span.favorite-click &star;
-      .tabs.invite
-        #button
-          p Invite to CARL
-    .main-page
-      .nav-bar
-        .nav-bar-item.side-bar-opener &rAarr;
-        if team
-          h3(onclick=`location.href='/teams/${teamId}/projects';`) HOME
-          h3= team.teamName
-        else 
-          h3(onclick=`location.href='/users/${userId}/noteam';`) HOME
-        h3(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
-      block content
+html 
+    head
+      script(src='/js/index.js')
+      meta(charset='UTF-8')
+      meta(name='viewport' content='width=device-width, initial-scale=1.0')
+      link(rel='stylesheet' href='/stylesheets/home-project.css')
+      link(href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet")
+      title Home - C.A.R.L.
+    body
+      div.main
+        //side-bar__isCollapsed
+        .side-bar.side-bar__isCollapsed
+          .tabs.home-tasks
+            h2
+              a(href="/") C.A.R.L.
+            div &#x1F3E0; Home
+            div &#x2714;  My Tasks
+          .tabs.favorites
+            h2 Favorites
+            p click on the &star; next to a project
+          .tabs.projects
+            h2 Projects
+            each existingProject in projects
+              .project-list
+                a(href=`/teams/${teamId}/projects/${existingProject.id}`)
+                  span.project-name= existingProject.projectName
+                  span.favorite-click &star;
+          .tabs.invite
+            #button
+              p Invite to CARL
+        .main-page
+          .nav-bar
+            .nav-bar-item.side-bar-opener &rAarr;
+            if team
+              h3(onclick=`location.href='/teams/${teamId}/projects';`) Home
+              h3= team.teamName
+            else 
+              h3(onclick=`location.href='/users/${userId}/noteam';`) Home
+            h3(onclick=`location.href='/users/edit/${userId}';`) Edit Profile
+          block content
