@@ -40,17 +40,11 @@ html
               h3(onclick=`location.href='/users/${userId}/noteam';`) Home
             h3 Welcome #{user.firstName}
             if userId
-<<<<<<< HEAD
-              h3(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
-            form.navbar-nav(action='/users/logout' method='post')
-              input.logout.nav-item.text-muted(type='submit' value='Logout')
-=======
               .initials-div #{initials}
                 .user-options(style="display: none")
                   div(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
                   div
                     form.navbar-nav(action='/users/logout' method='post')
                       input.logout.nav-item.text-muted(type='submit' value='Logout')
->>>>>>> 1e4e7c5f4b5a415cb731f04dadfb792760b5390b
           block content
 
