@@ -13,7 +13,7 @@ html
         .side-bar.side-bar__isCollapsed
           .tabs.home-tasks
             h2
-              a(href="/") C.A.R.L.
+              a(onclick=`location.href='/'`) C.A.R.L.
             div &#x1F3E0; Home
             div &#x2714;  My Tasks
           .tabs.favorites
@@ -21,11 +21,12 @@ html
             p click on the &star; next to a project
           .tabs.projects
             h2 Projects
-            each existingProject in projects
-              .project-list
-                a(href=`/teams/${teamId}/projects/${existingProject.id}`)
-                  span.project-name= existingProject.projectName
-                  span.favorite-click &star;
+            if projects
+              each existingProject in projects
+                .project-list
+                  a(href=`/teams/${teamId}/projects/${existingProject.id}`)
+                    span.project-name= existingProject.projectName
+                    span.favorite-click &star;
           .tabs.invite
             #button
               p Invite to CARL
@@ -37,5 +38,10 @@ html
               h3= team.teamName
             else 
               h3(onclick=`location.href='/users/${userId}/noteam';`) Home
-            h3(onclick=`location.href='/users/edit/${userId}';`) Edit Profile
-          block content
+            h3 Welcome #{user.firstName}
+            if userId
+              h3(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
+            form.navbar-nav(action='/users/logout' method='post')
+              input.logout.nav-item.text-muted(type='submit' value='Logout')
+        block content
+

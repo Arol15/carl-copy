@@ -8,7 +8,7 @@ const { Project, Team, Column, Task } = require('../db/models');
 const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
 
-router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req, res) => {
+router.get('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const projects = await Project.findAll({
@@ -20,11 +20,11 @@ router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req
   });
   const team = await Team.findOne({ where: teamId });
   const userId = req.session.auth.userId
-
+  const column = await Column.build();
   // TODO: Update the fetch URL for production to the heroku URL
   const response = await fetch(`http://localhost:8080/teams/${teamId}/projects/${projectId}/columns/board`)
   const state = await response.json()
-  res.render('columns/columns', { state: JSON.stringify(state), projects, team, userId, teamId });
+  res.render('columns/columns', { state: JSON.stringify(state), projectId, column, projects, team, userId, teamId, csrfToken: req.csrfToken() });
 }));
 
 // handles fetch request to get state for react component
@@ -89,7 +89,9 @@ router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, 
     include: { model: Team },
   });
   const team = await Team.findOne({ where: teamId });
-  const userId = req.session.auth.userId
+  let userId;
+  if (req.session.auth) userId = req.session.auth.userId
+  else userId = 5;
   const column = await Column.build();
 
   //added projects, team, userId so we can pass them through rendering.
@@ -98,9 +100,19 @@ router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, 
 }));
 
 // post new column
-router.post('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, asyncHandler(async (req, res, next) => {
+router.post('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHandler(async (req, res, next) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
+  const userId = req.session.auth.userId
+  // const project = Project.build({ projectName, teamId });
+  const allTeams = await Team.findAll();
+  const projects = await Project.findAll({
+    where: {
+      teamId: parseInt(req.params.teamId, 10),
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
 
   const { columnName } = req.body;
 
@@ -113,7 +125,12 @@ router.post('/teams/:teamId/projects/:projectId/columns/create', csrfProtection,
     if (err.name === 'SequelizeValidationError') {
       const error = err.errors.map(error => error.message);
       res.render('projects-create', {
-        project,
+        teamId,
+        projectId,
+        userId,
+        allTeams,
+        projects,
+        // project,
         error,
         csrfToken: req.csrfToken()
       })

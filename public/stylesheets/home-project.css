@@ -288,8 +288,8 @@ html, body {
   transform: scale(1.1);
   cursor: pointer;
 }
-.project-new {
-  font-size: 30px;
+.project-square.create-new {
+  font-size: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -304,6 +304,11 @@ html, body {
   align-items: center;
   height: 50px;
   width: 50px;
-  text-align: center;
-  /* background-color: white; */
+  background-color: white;
+}
+
+#new-column {
+  height: 50px;
+  width: 50px;
+  background-color: lawngreen;
 }

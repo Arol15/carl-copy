@@ -30,7 +30,7 @@ describe("form-submit", () => {
       await submit({});
     });
     it("render an unordered list of error messages ", () => {
-      expect($("p").text()).to.equal("The following error(s) occurred:");
+      expect($("p").text()).to.equal("The following error(s) occurred:Already have an account?");
       expect($("ul").length).to.equal(1);
     });
 

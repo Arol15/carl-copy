@@ -71,6 +71,7 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
+.env.spec
 .vscode
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -109,3 +110,5 @@ dist
 
 # created test database
 .env.spec 
+
+layout-lora.pug

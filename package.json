@@ -27,6 +27,8 @@
   },
   "dependencies": {
     "3": "^2.1.0",
+    "acorn": "^6.4.1",
+    "acorn-jsx": "^5.2.0",
     "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
     "cheerio": "^1.0.0-rc.3",
@@ -51,9 +53,11 @@
     "react-scripts": "3.4.1",
     "sequelize": "^5.21.12",
     "sqlite": "^4.0.11",
-    "styled-components": "^5.1.1",
     "sqlite3": "^4.2.0",
+    "styled-components": "^5.1.1",
     "supertest": "^4.0.2",
+    "tsutils": "^3.17.1",
+    "typescript": "^3.9.5",
     "umzug": "^2.3.0"
   },
   "devDependencies": {

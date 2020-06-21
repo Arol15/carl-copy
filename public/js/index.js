@@ -26,7 +26,7 @@ window.addEventListener("DOMContentLoaded", (e) => {
       node.appendChild(document.createTextNode(previousSiblingInnerHTML));
       node.setAttribute("class", `favorite-project`);
       node.setAttribute("id", previousSiblingInnerHTML);
-      console.log(node);
+      // console.log(node);
       if (favoriteButton.getAttribute("class") === "favorite-click favorited") {
         favoriteButton.setAttribute("class", "favorite-click");
         favoriteButton.innerHTML = "☆";
@@ -44,9 +44,9 @@ window.addEventListener("DOMContentLoaded", (e) => {
 
 
   // Creates project
-  let createProjectBtn = document.querySelector(".project-new");
+  let createNew = document.querySelector(".create-new");
   let createModal = document.getElementById("createModal");
-  createProjectBtn.addEventListener("click", (e) => {
+  createNew.addEventListener("click", (e) => {
     createModal.style.display = "block";
   });
 
