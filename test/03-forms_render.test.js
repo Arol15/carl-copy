@@ -7,53 +7,13 @@ const Runner = require('umzug');
 
 describe("Columns create form", () => {
   let res, $;
-  let errorMessage;
 
   before(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-        // await pause(0.25);
-        // await seeder.up();
-        // await pause(0.25);
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in before hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
-
     res = await request(app)
       .get("/teams/1/projects/1/columns/create")
       .expect("Content-type", /html/)
       .expect(200);
     $ = cheerio.load(res.text);
-  });
-
-  after(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in after hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
   });
 
   it("renders a form that posts to create columns", () => {
@@ -78,59 +38,19 @@ describe("Columns create form", () => {
 
 describe("Projects create form", () => {
   let res, $;
-  let errorMessage;
 
   before(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-        // await pause(0.25);
-        // await seeder.up();
-        // await pause(0.25);
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in before hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
-
     res = await request(app)
-      .get("/teams/1/projects-create")
+      .get("/teams/1/projects")
       .expect("Content-type", /html/)
       .expect(200);
     $ = cheerio.load(res.text);
   });
 
-  after(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in after hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
-  });
-
   it("renders a form that posts to create projects", () => {
     const form = $("form");
     expect(form.length).to.equal(1);
-    expect(form.attr("action")).to.equal("/teams/1/projects-create");
+    expect(form.attr("action")).to.equal("/teams/1/projects");
     expect(form.attr("method")).to.equal("post");
   });
 
@@ -143,7 +63,7 @@ describe("Projects create form", () => {
   });
 
   it("renders a submit button", () => {
-    expect($("button[type='submit']").text()).to.equal("Create");
+    expect($("button[type='submit']").text()).to.equal("Create Project");
   });
 
   it("renders a hidden input for the csrfToken", () => {
@@ -153,29 +73,8 @@ describe("Projects create form", () => {
 
 describe("Tasks create form", () => {
   let res, $;
-  let errorMessage;
 
   before(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-        // await pause(0.25);
-        // await seeder.up();
-        // await pause(0.25);
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in before hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
-
     res = await request(app)
       .get("/teams/1/projects/1/columns/1/tasks/create")
       .expect("Content-type", /html/)
@@ -183,24 +82,6 @@ describe("Tasks create form", () => {
     $ = cheerio.load(res.text);
   });
 
-  after(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in after hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
-  });
 
   it("renders a form that posts to create tasks", () => {
     const form = $("form");
@@ -228,29 +109,8 @@ describe("Tasks create form", () => {
 
 describe("Teams create form", () => {
   let res, $;
-  let errorMessage;
 
   before(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-        // await pause(0.25);
-        // await seeder.up();
-        // await pause(0.25);
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in before hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
-
     res = await request(app)
       .get("/teams/create")
       .expect("Content-type", /html/)
@@ -258,26 +118,7 @@ describe("Teams create form", () => {
     $ = cheerio.load(res.text);
   });
 
-  after(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in after hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
-  });
-
-  it("renders a form that posts to create tasks", () => {
+  it("renders a form that posts to create teams", () => {
     const form = $("form");
     expect(form.length).to.equal(1);
     expect(form.attr("action")).to.equal("/teams/create");
@@ -310,7 +151,7 @@ describe("User Registration form", () => {
 
   it("renders a form that posts to create new user", () => {
     const form = $("form");
-    expect(form.length).to.equal(1);
+    expect(form.length).to.equal(2);
     expect(form.attr("action")).to.equal("/users/register");
     expect(form.attr("method")).to.equal("post");
   });
@@ -324,7 +165,7 @@ describe("User Registration form", () => {
   });
 
   it("renders a Email input field", () => {
-    expect($("input[type='text'][name='email']").length).to.equal(1);
+    expect($("input[type='email'][name='email']").length).to.equal(1);
   });
 
   it("renders a Password input field", () => {
@@ -340,7 +181,7 @@ describe("User Registration form", () => {
   });
 
   it("renders a submit button", () => {
-    expect($("button[type='submit']").text()).to.equal("Register");
+    expect($("button[type='submit']").text().substring(0, 8)).to.equal("Register");
   });
 
   it("renders a hidden input for the csrfToken", () => {

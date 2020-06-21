@@ -89,7 +89,9 @@ router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, 
     include: { model: Team },
   });
   const team = await Team.findOne({ where: teamId });
-  const userId = req.session.auth.userId
+  let userId;
+  if (req.session.auth) userId = req.session.auth.userId
+  else userId = 5;
   const column = await Column.build();
 
   //added projects, team, userId so we can pass them through rendering.

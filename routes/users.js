@@ -145,7 +145,7 @@ router.get('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(as
     include: { model: db.Team },
   });
   const teams = await db.Team.findAll({ attributes: ['id', 'teamName'] })
-  console.log(team)
+  
 
   res.render('users/user-edit', { user, userId, projects, team, teamId, teams, token: req.csrfToken() })
 }))
@@ -200,7 +200,7 @@ router.get('/users/:id/noteam/', requireAuth, csrfProtection, asyncHandler(async
     include: { model: db.Team },
   });
   const team = await db.Team.findOne({ where: { id: user.teamId } });
-  console.log('team:  ', team)
+  
   res.render(`users/user-noteam`, { userId, user, projects })
 }))
 // TODO: add user-delete.pug confirmation
