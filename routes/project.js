@@ -27,7 +27,6 @@ router.get(
       order: [["id", "ASC"]],
       include: { model: Team },
     });
-    console.log(projects)
     const user = await User.findOne({ where: userId });
     const project = await Project.build();
     const allTeams = await Team.findAll();

@@ -44,9 +44,9 @@ window.addEventListener("DOMContentLoaded", (e) => {
 
 
   // Creates project
-  let createProjectBtn = document.querySelector(".project-new");
+  let createNew = document.querySelector(".create-new");
   let createModal = document.getElementById("createModal");
-  createProjectBtn.addEventListener("click", (e) => {
+  createNew.addEventListener("click", (e) => {
     createModal.style.display = "block";
   });
 
