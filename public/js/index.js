@@ -58,8 +58,13 @@ window.addEventListener("DOMContentLoaded", (e) => {
   let initials = document.querySelector(".initials-div");
   let openOptions = document.querySelector('.user-options');
   initials.addEventListener('click', e => {
-    console.log('cilck')
-    openOptions.style.display = 'block';
+    if (openOptions.style.display === 'none') openOptions.style.display = 'block';
+    else openOptions.style.display = 'none';
+    e.stopPropagation();
+  })
+
+  document.addEventListener('click', e => {
+    if (openOptions.style.display === 'block') openOptions.style.display = 'none';
   })
   // Deletes Project
   // const deleteConfirmation = document.querySelector('.delete-confirmation')
