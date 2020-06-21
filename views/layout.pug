@@ -34,5 +34,6 @@ body
           h3= team.teamName
         else 
           h3(onclick=`location.href='/users/${userId}/noteam';`) HOME
+        h3 Welcome #{user.firstName}
         h3(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
       block content
