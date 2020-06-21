@@ -43,6 +43,14 @@ nav {
   letter-spacing: .025em;
 }
 
+.nav-2:hover {
+  /* background: #796eff; */
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  font-size: 20px; 
+}
+
+
+
 
 h2 {
   margin-bottom: 50px; 

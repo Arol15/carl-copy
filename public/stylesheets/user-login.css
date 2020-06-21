@@ -153,8 +153,15 @@ p {
 }
 
 .button-2 button {
-    background: #796eff;
+    background: white;
     padding: .5rem 1.8rem;
+    border: 1px solid #796eff; 
+    color:  #796eff
+}
+
+.button-2 button:hover {
+    background:  #796eff; 
+    color: white;     
 }
 
 
