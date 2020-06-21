@@ -100,7 +100,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, 
 }));
 
 // post new column
-router.post('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHandler(async (req, res, next) => {
+router.post('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, asyncHandler(async (req, res, next) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const userId = req.session.auth.userId
@@ -124,7 +124,7 @@ router.post('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncH
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
       const error = err.errors.map(error => error.message);
-      res.render('projects-create', {
+      res.render('columns-create', {
         teamId,
         projectId,
         userId,
