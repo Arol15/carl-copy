@@ -277,7 +277,7 @@ describe("Teams create form", () => {
     }
   });
 
-  it("renders a form that posts to create tasks", () => {
+  it("renders a form that posts to create teams", () => {
     const form = $("form");
     expect(form.length).to.equal(1);
     expect(form.attr("action")).to.equal("/teams/create");
@@ -310,7 +310,7 @@ describe("User Registration form", () => {
 
   it("renders a form that posts to create new user", () => {
     const form = $("form");
-    expect(form.length).to.equal(1);
+    expect(form.length).to.equal(2);
     expect(form.attr("action")).to.equal("/users/register");
     expect(form.attr("method")).to.equal("post");
   });
@@ -340,7 +340,7 @@ describe("User Registration form", () => {
   });
 
   it("renders a submit button", () => {
-    expect($("button[type='submit']").text()).to.equal("Register");
+    expect($("button[type='submit']").text().substring(0, 8)).to.equal("Register");
   });
 
   it("renders a hidden input for the csrfToken", () => {
