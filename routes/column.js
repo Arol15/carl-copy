@@ -8,14 +8,23 @@ const { Project, Team, Column, Task } = require('../db/models');
 const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
 
-router.get('/teams/:teamId/projects/:projectId/columns', asyncHandler(async (req, res) => {
+router.get('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
-
+  const projects = await Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
+  const team = await Team.findOne({ where: teamId });
+  const userId = req.session.auth.userId
+  const column = await Column.build();
   // TODO: Update the fetch URL for production to the heroku URL
   const response = await fetch(`http://localhost:8080/teams/${teamId}/projects/${projectId}/columns/board`)
   const state = await response.json()
-  res.render('columns/columns', { state: JSON.stringify(state) });
+  res.render('columns/columns', { state: JSON.stringify(state), projectId, column, projects, team, userId, teamId, csrfToken: req.csrfToken() });
 }));
 
 // TODO: Persist new task/column layout to the database
@@ -107,7 +116,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/board', asyncHandler(asyn
 
   for (let column of columns) {
     columnState[`column-${column.id}`] = { id: `column-${column.id}`, title: column.columnName }
-    columnTasks = tasks.filter(task => task.columnId === column.id )
+    columnTasks = tasks.filter(task => task.columnId === column.id)
     columnTasks.sort((first, second) => first.columnIndx - second.columnIndx)
     columnState[`column-${column.id}`].taskIds = columnTasks.map(task => `task-${task.id}`)
   }
@@ -131,16 +140,38 @@ router.get('/teams/:teamId/projects/:projectId/columns/board', asyncHandler(asyn
 router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
-
+  const projects = await Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
+  const team = await Team.findOne({ where: teamId });
+  let userId;
+  if (req.session.auth) userId = req.session.auth.userId
+  else userId = 5;
   const column = await Column.build();
 
-  res.render('columns/columns-create', { column, teamId, projectId, csrfToken: req.csrfToken() })
+  //added projects, team, userId so we can pass them through rendering.
+
+  res.render('columns/columns-create', { column, teamId, projectId, projects, team, userId, csrfToken: req.csrfToken() })
 }));
 
 // post new column
-router.post('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, asyncHandler(async (req, res, next) => {
+router.post('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHandler(async (req, res, next) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
+  const userId = req.session.auth.userId
+  // const project = Project.build({ projectName, teamId });
+  const allTeams = await Team.findAll();
+  const projects = await Project.findAll({
+    where: {
+      teamId: parseInt(req.params.teamId, 10),
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
 
   const { columnName } = req.body;
 
@@ -154,7 +185,12 @@ router.post('/teams/:teamId/projects/:projectId/columns/create', csrfProtection,
     if (err.name === 'SequelizeValidationError') {
       const error = err.errors.map(error => error.message);
       res.render('projects-create', {
-        project,
+        teamId,
+        projectId,
+        userId,
+        allTeams,
+        projects,
+        // project,
         error,
         csrfToken: req.csrfToken()
       })
@@ -167,10 +203,18 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfProt
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
-
+  const projects = await Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
+  const team = await Team.findOne({ where: teamId });
+  const userId = req.session.auth.userId
   const column = await Column.findByPk(columnId);
 
-  res.render('columns/columns-edit', { column, teamId, projectId, columnId, csrfToken: req.csrfToken() })
+  res.render('columns/columns-edit', { column, team, teamId, userId, projectId, projects, columnId, csrfToken: req.csrfToken() })
 }));
 
 // post edit
@@ -178,7 +222,15 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfPro
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
-
+  const team = await Team.findOne({ where: teamId });
+  const userId = req.session.auth.userId
+  const projects = await Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
   const columnToUpdate = await Column.findByPk(columnId);
 
   const { columnName } = req.body;
@@ -188,11 +240,16 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfPro
   try {
     await columnToUpdate.update(column);
     res.redirect(`/teams/${teamId}/projects/${projectId}/columns`)
-  } catch(err) {
+  } catch (err) {
     if (err.name === 'SequelizeValidationError') {
       const error = e.errors.map(error => error.message);
       res.render('projects/project-edit', {
         column: { ...column, id: columnId },
+        team,
+        teamId,
+        userId,
+        projectId,
+        projects,
         error,
         csrfToken: req.csrfToken()
       })
@@ -205,10 +262,19 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/delete', csrfPr
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
-
+  const team = await Team.findOne({ where: teamId });
+  const userId = req.session.auth.userId
+  const projects = await Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
+  // added extra keys to pass into delete view - Rocky
   const columnToDelete = await Column.findByPk(columnId)
 
-  res.render('columns/columns-delete', { columnToDelete, teamId, projectId, columnId, csrfToken: req.csrfToken() })
+  res.render('columns/columns-delete', { columnToDelete, team, userId, projects, teamId, projectId, columnId, csrfToken: req.csrfToken() })
 }));
 
 // delete column

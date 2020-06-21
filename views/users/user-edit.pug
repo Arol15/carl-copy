@@ -3,20 +3,25 @@ extends ../layout.pug
 include ../utils.pug
 
 block content
-  +validationErrorSummary(errors)
-  form(class='authForm' action=`/users/edit/${user.id}` method='post')
-    h4.text-center.py-4.text-muted Edit Profile
-    input(type='hidden' name='_csrf' value=token)
-    +field('First Name', 'firstName', user.firstName)
-    +field('Last Name', 'lastName', user.lastName)
-    +field('Email Address', 'email', user.email)
-    div.form-group
-          label Team
-          select.custom-select.custom-select.mb-3(name='teamId')
-            option(disabled selected value) Select an option
-            each team in teams
-              option(value=team.id)= team.teamName
-            option(value='remove') Remove Team
-    div(class='py-4')
-      button(type='submit' class='btn btn-secondary') Update Profile
-      a(href='/users' class='btn btn-secondary ml-2') Cancel
+  .main-page-body
+    body
+      +validationErrorSummary(errors)
+      form(class='authForm' action=`/users/edit/${userId}` method='post')
+        h4.text-center.py-4.text-muted Edit Profile
+        input(type='hidden' name='_csrf' value=token)
+        +field('First Name', 'firstName', user.firstName)
+        +field('Last Name', 'lastName', user.lastName)
+        +field('Email Address', 'email', user.email)
+        div.form-group
+              label Team
+              select.custom-select.custom-select.mb-3(name='teamId')
+                each existingTeam in teams
+                  option(value=existingTeam.id)= existingTeam.teamName
+                option(value='remove') Remove Team
+        div(class='py-4')
+          button(type='submit' class='btn btn-secondary') Update Profile
+          if user.teamId
+            a(href=`/teams/${teamId}/projects` class='btn btn-secondary ml-2') Cancel
+          else 
+            a(href=`/users/${userId}/noteam` class='btn btn-secondary ml-2') Cancel
+

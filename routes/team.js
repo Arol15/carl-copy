@@ -10,6 +10,9 @@ const csrfProtection = csrf({ cookie: true });
 // teams overview
 router.get('/teams', asyncHandler(async (req, res) => {
   const teams = await Team.findAll()
+  const userId = req.session.auth.userId
+  const projects = await Project.findAll()
+  
   res.render('teams/teams', { teams })
 }))
 
@@ -63,7 +66,7 @@ router.post('/teams/:teamId/edit', csrfProtection, asyncHandler(async (req, res,
   try {
     await teamToUpdate.update(team);
     res.redirect(`/teams`)
-  } catch(err) {
+  } catch (err) {
     if (err.name === 'SequelizeValidationError') {
       const error = e.errors.map(error => error.message);
       res.render('projects/project-edit', {

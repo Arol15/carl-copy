@@ -7,11 +7,13 @@ html
     link(href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet")
   body
     nav.navbar
-      img.navbar-brand(src="/images/new-logo.png")
-      a.nav-item.nav-link.nav-1(href='/users/login') Log In
+      a.home-link(href="/")
+        img.navbar-brand(src="/images/new-logo.png") 
+      div.nav-item.nav-link.nav-1
+        a(href='/users/login') Log In
     section.body-paragraph
       h1 Let your team work more collaboratively and get more done, wherever you are 
-      h2 C.A.R.L. powers you to keep your teams/projects/tasks/priorities organized and deliver better work faster 
+      p C.A.R.L. powers you to keep your teams/projects/tasks/priorities organized and deliver better work faster 
       a.nav-item.nav-link.nav-2(href='/users/register') Get Started Now
       //- Will have to move video src to the final link
     section.body-2 
@@ -24,8 +26,10 @@ html
         img(src="/images/nasa.png")
         img(src="/images/timbuk.png")
     .body-video
-      video(src="/assets/videos/board-demo.mp4" autoplay="" loop="")
-      video(src="/assets/videos/board-demo-2.mp4" autoplay="" loop="")
+      div.video-1
+        video(src="/assets/videos/board-demo.mp4" autoplay="" loop="")
+      div.video-2
+        video(src="/assets/videos/board-demo-2.mp4" autoplay="" loop="")
     section.cards
       section.message
         h3 Get Organized
@@ -40,9 +44,9 @@ html
     section.footer-text
       div(class='footer-text') C.A.R.L. presented by: 
       i.fa.fa-github-square 
-        a(target="_blank" href='https://github.com/ColeRutledge' ) Cole 
+        a(target="_blank" href='https://github.com/ColeRutledge') Cole
       i.fa.fa-github-square 
-        a(target="_blank" href='https://github.com/aromjhee') Arom 
+        a(target="_blank" href='https://github.com/aromjhee') Arom
       i.fa.fa-github-square 
         a(target="_blank" href="https://github.com/rockyboyyang") Rocky
       i.fa.fa-github-square 

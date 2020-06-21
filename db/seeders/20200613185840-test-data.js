@@ -56,6 +56,15 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        firstName: "Demo",
+        lastName: "Account",
+        hashedPassword: bcrypt.hashSync("1Az@"),
+        email: "test@test.com",
+        teamId: teams[1].id,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ],{ returning: true })
 
     const projects = await queryInterface.bulkInsert('Projects', [
