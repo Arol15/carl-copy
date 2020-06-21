@@ -24,7 +24,7 @@ html
             if projects
               each existingProject in projects
                 .project-list
-                  a(href=`/teams/${teamId}/projects/${existingProject.id}/columns`)
+                  a(href=`/teams/${teamId}/projects/${existingProject.id}`)
                     span.project-name= existingProject.projectName
                     span.favorite-click &star;
           .tabs.invite
@@ -38,22 +38,16 @@ html
               h3= team.teamName
             else 
               h3(onclick=`location.href='/users/${userId}/noteam';`) Home
-            if (user)
+            if user
               h3 Welcome #{user.firstName}
             else
               h3 Welcome Test User!
             if userId
-<<<<<<< HEAD
-              h3(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
-            form.navbar-nav(action='/users/logout' method='post')
-              input.logout.nav-item.text-muted(type='submit' value='Logout')
-=======
               .initials-div #{initials}
                 .user-options(style="display: none")
                   div(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
                   div
                     form.navbar-nav(action='/users/logout' method='post')
                       input.logout.nav-item.text-muted(type='submit' value='Logout')
->>>>>>> 1e4e7c5f4b5a415cb731f04dadfb792760b5390b
           block content
 

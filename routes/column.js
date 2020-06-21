@@ -12,6 +12,9 @@ router.get('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHa
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   // created initials variable
+  let userId;
+  if (req.session.auth) userId = req.session.auth.userId
+  else userId = 5;
   const initials = user.firstName[0] + user.lastName[0];
   const projects = await Project.findAll({
     where: {
