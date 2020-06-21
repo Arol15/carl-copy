@@ -3,7 +3,7 @@ const csrf = require('csurf');
 const fetch = require('node-fetch')
 
 const { asyncHandler } = require('./utils');
-const { Project, Team, Column, Task } = require('../db/models');
+const { Project, Team, Column, Task, User } = require('../db/models');
 
 const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
@@ -12,7 +12,6 @@ router.get('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHa
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   // created initials variable
-  const initials = user.firstName[0] + user.lastName[0];
   const projects = await Project.findAll({
     where: {
       teamId,
@@ -22,6 +21,8 @@ router.get('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHa
   });
   const team = await Team.findOne({ where: teamId });
   const userId = req.session.auth.userId
+  const user = await User.findOne({ where: userId });
+  const initials = user.firstName[0] + user.lastName[0];
   const column = await Column.build();
   // TODO: Update the fetch URL for production to the heroku URL
   const response = await fetch(`http://localhost:8080/teams/${teamId}/projects/${projectId}/columns/board`)
@@ -144,7 +145,6 @@ router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, 
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   // created initials variable
-  const initials = user.firstName[0] + user.lastName[0];
   const projects = await Project.findAll({
     where: {
       teamId,
@@ -157,6 +157,8 @@ router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, 
   if (req.session.auth) userId = req.session.auth.userId
   else userId = 5;
   const column = await Column.build();
+  const user = await User.findOne({ where: userId });
+  const initials = user.firstName[0] + user.lastName[0];
 
   //added projects, team, userId so we can pass them through rendering.
 
@@ -168,6 +170,7 @@ router.post('/teams/:teamId/projects/:projectId/columns/create', csrfProtection,
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const userId = req.session.auth.userId
+  const user = await User.findOne({ where: userId });
   // created initials variable
   const initials = user.firstName[0] + user.lastName[0];
   // const project = Project.build({ projectName, teamId });
@@ -212,7 +215,6 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfProt
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
   // created initials variable
-  const initials = user.firstName[0] + user.lastName[0];
   const projects = await Project.findAll({
     where: {
       teamId,
@@ -223,6 +225,8 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfProt
   const team = await Team.findOne({ where: teamId });
   const userId = req.session.auth.userId
   const column = await Column.findByPk(columnId);
+  const user = await User.findOne({ where: userId });
+  const initials = user.firstName[0] + user.lastName[0];
 
   res.render('columns/columns-edit', { column, team, initials, teamId, userId, projectId, projects, columnId, csrfToken: req.csrfToken() })
 }));
@@ -234,6 +238,7 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfPro
   const columnId = parseInt(req.params.columnId, 10);
   const team = await Team.findOne({ where: teamId });
   const userId = req.session.auth.userId
+  const user = await User.findOne({ where: userId });
   // created initials variable
   const initials = user.firstName[0] + user.lastName[0];
   const projects = await Project.findAll({
@@ -277,8 +282,9 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/delete', csrfPr
   const columnId = parseInt(req.params.columnId, 10);
   const team = await Team.findOne({ where: teamId });
   // created initials variable
-  const initials = user.firstName[0] + user.lastName[0];
   const userId = req.session.auth.userId
+  const user = await User.findOne({ where: userId });
+  const initials = user.firstName[0] + user.lastName[0];
   const projects = await Project.findAll({
     where: {
       teamId,
