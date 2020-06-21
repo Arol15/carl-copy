@@ -91,36 +91,42 @@ module.exports = {
     const columns = await queryInterface.bulkInsert('Columns', [
       {
         projectId: projects[0].id,
+        columnPos: 0,
         columnName: faker.hacker.ingverb(),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         projectId: projects[0].id,
+        columnPos: 1,
         columnName: faker.hacker.ingverb(),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         projectId: projects[0].id,
+        columnPos: 2,
         columnName: faker.hacker.ingverb(),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         projectId: projects[1].id,
+        columnPos: 0,
         columnName: faker.hacker.ingverb(),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         projectId: projects[2].id,
+        columnPos: 0,
         columnName: faker.hacker.ingverb(),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         projectId: projects[2].id,
+        columnPos: 1,
         columnName: faker.hacker.ingverb(),
         createdAt: new Date(),
         updatedAt: new Date(),
