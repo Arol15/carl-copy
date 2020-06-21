@@ -26,7 +26,7 @@ window.addEventListener("DOMContentLoaded", (e) => {
       node.appendChild(document.createTextNode(previousSiblingInnerHTML));
       node.setAttribute("class", `favorite-project`);
       node.setAttribute("id", previousSiblingInnerHTML);
-      console.log(node);
+      // console.log(node);
       if (favoriteButton.getAttribute("class") === "favorite-click favorited") {
         favoriteButton.setAttribute("class", "favorite-click");
         favoriteButton.innerHTML = "☆";

@@ -14,7 +14,7 @@ let $ = null;
 const checkHeading = (headingText, level = 2) => {
   it(`should render an \`<h${level}>\` heading containing the text "${headingText}"`, () => {
     const heading = $(`h${level}`);
-    expect(heading.text()).to.equal(headingText);
+    expect(heading.eq(2).text()).to.equal(headingText);
   });
 };
 

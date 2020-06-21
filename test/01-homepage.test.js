@@ -58,10 +58,9 @@ const runSpecs = () => {
         $ = setDomElements(res);
       });
 
-      it('should render a `CARL` <a> element with an `href` attribute set to "/" in the top navbar', () => {
-        const homeHyperlink = $('nav a[href="/"]');
-        expect(homeHyperlink.length).to.equal(1);
-        expect(homeHyperlink.text()).to.equal('CARL');
+      it(`should render an \`<title>\` heading containing the text "Welcome to C.A.R.L."`, () => {
+        const heading = $(`title`);
+        expect(heading.text()).to.equal("Welcome to C.A.R.L.");
       });
 
       it('should render a "Login" <a> element with an `href` attribute set to "/users/login" in the top navbar', () => {
@@ -76,7 +75,14 @@ const runSpecs = () => {
         expect(registerHyperlink.text()).to.equal('Get Started Now');
       });
 
-      // checkHeading('Home');
+      it('should render Github icons linking to each project member\'s github', () => {
+        const homeHyperlink = $('i');
+        expect(homeHyperlink.length).to.equal(4);
+        expect(homeHyperlink.eq(0).text()).to.equal(' Cole');
+        expect(homeHyperlink.eq(1).text()).to.equal(' Arom');
+        expect(homeHyperlink.eq(2).text()).to.equal(' Rocky');
+        expect(homeHyperlink.eq(3).text()).to.equal(' Lora');
+      });
     });
   });
 

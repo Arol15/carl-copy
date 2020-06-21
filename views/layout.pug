@@ -4,13 +4,13 @@ head
   meta(charset='UTF-8')
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
   link(rel='stylesheet' href='/stylesheets/home-project.css')
-  title SandBox
+  title C.A.R.L
 body
   .main
     // side-bar__isCollapsed
     .side-bar.side-bar__isCollapsed
       .tabs.home-tasks
-        h1 CARL
+        h1(onclick=`location.href='/'`) CARL
         div &#x1F3E0; Home
         div &#x2714;  My Tasks
       .tabs.favorites
@@ -18,11 +18,12 @@ body
         p click on the &star; next to a project
       .tabs.projects
         h2 Projects
-        each existingProject in projects
-          .project-list
-            a(href=`/teams/${teamId}/projects/${existingProject.id}`)
-              span.project-name= existingProject.projectName
-              span.favorite-click &star;
+        if projects
+          each existingProject in projects
+            .project-list
+              a(href=`/teams/${teamId}/projects/${existingProject.id}/columns`)
+                span.project-name= existingProject.projectName
+                span.favorite-click &star;
       .tabs.invite
         #button
           p Invite to CARL
@@ -34,5 +35,6 @@ body
           h3= team.teamName
         else 
           h3(onclick=`location.href='/users/${userId}/noteam';`) HOME
-        h3(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
+        if userId
+          h3(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
       block content

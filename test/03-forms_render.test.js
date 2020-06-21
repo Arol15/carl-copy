@@ -7,53 +7,13 @@ const Runner = require('umzug');
 
 describe("Columns create form", () => {
   let res, $;
-  let errorMessage;
 
   before(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-        // await pause(0.25);
-        // await seeder.up();
-        // await pause(0.25);
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in before hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
-
     res = await request(app)
       .get("/teams/1/projects/1/columns/create")
       .expect("Content-type", /html/)
       .expect(200);
     $ = cheerio.load(res.text);
-  });
-
-  after(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in after hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
   });
 
   it("renders a form that posts to create columns", () => {
@@ -78,53 +38,13 @@ describe("Columns create form", () => {
 
 describe("Projects create form", () => {
   let res, $;
-  let errorMessage;
 
   before(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-        // await pause(0.25);
-        // await seeder.up();
-        // await pause(0.25);
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in before hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
-
     res = await request(app)
       .get("/teams/1/projects")
       .expect("Content-type", /html/)
       .expect(200);
     $ = cheerio.load(res.text);
-  });
-
-  after(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in after hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
   });
 
   it("renders a form that posts to create projects", () => {
@@ -153,29 +73,8 @@ describe("Projects create form", () => {
 
 describe("Tasks create form", () => {
   let res, $;
-  let errorMessage;
 
   before(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-        // await pause(0.25);
-        // await seeder.up();
-        // await pause(0.25);
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in before hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
-
     res = await request(app)
       .get("/teams/1/projects/1/columns/1/tasks/create")
       .expect("Content-type", /html/)
@@ -183,24 +82,6 @@ describe("Tasks create form", () => {
     $ = cheerio.load(res.text);
   });
 
-  after(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in after hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
-  });
 
   it("renders a form that posts to create tasks", () => {
     const form = $("form");
@@ -228,53 +109,13 @@ describe("Tasks create form", () => {
 
 describe("Teams create form", () => {
   let res, $;
-  let errorMessage;
 
   before(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-        // await pause(0.25);
-        // await seeder.up();
-        // await pause(0.25);
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in before hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
-
     res = await request(app)
       .get("/teams/create")
       .expect("Content-type", /html/)
       .expect(200);
     $ = cheerio.load(res.text);
-  });
-
-  after(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in after hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
   });
 
   it("renders a form that posts to create teams", () => {

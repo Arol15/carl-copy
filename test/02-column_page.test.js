@@ -7,53 +7,13 @@ const Runner = require('umzug');
 
 describe("columns display page?", () => {
   let res, $;
-  let errorMessage;
 
   before(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-        // await pause(0.25);
-        // await seeder.up();
-        // await pause(0.25);
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in before hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
-
     res = await request(app)
       .get("/teams/1/projects/1/columns")
       .expect("Content-type", /html/)
       .expect(200);
     $ = cheerio.load(res.text);
-  });
-
-  after(async () => {
-    if (migrationsConfig && seedsConfig) {
-      const migrator = new Runner(migrationsConfig);
-      const seeder = new Runner(seedsConfig);
-      try {
-        await seeder.down({ to: 0 });
-        await pause(0.25);
-        await migrator.down({ to: 0 });
-        await pause(0.25);
-        await migrator.up();
-      } catch (e) {
-        console.error(e);
-        errorMessage = `Error running migrations or seeds in after hook. See stack trace above for more details. Error message: ${e.message}`;
-      }
-    } else {
-      errorMessage = moduleInitializationErrorMessage;
-    }
   });
 
   // TODO: rewrite commented out tests once page layouts have been finalized
