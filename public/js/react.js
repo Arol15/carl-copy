@@ -134,10 +134,12 @@ class App extends React.Component {
 
       this.setState(newState)
 
+      const columnResult = { source, destination, draggableId, newColumnOrder }
+
       // TODO: persist order state to database here
       fetch('http://localhost:8080/columns/update', {
         method: 'POST',
-        body: JSON.stringify(result),
+        body: JSON.stringify(columnResult),
         headers: { 'Content-Type': 'application/json'}
         })
         .catch(err => console.log(err))
