@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Project.associate = function(models) {
     Project.belongsTo(models.Team, { foreignKey: 'teamId' });
-    Project.hasMany(models.Column, { foreignKey: 'projectId' });
+    Project.hasMany(models.Column, { foreignKey: 'projectId', onDelete: 'CASCADE', hooks: true });
   };
   return Project;
 };

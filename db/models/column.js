@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Column.associate = function(models) {
     Column.belongsTo(models.Project, { foreignKey: 'projectId' });
-    Column.hasMany(models.Task, { foreignKey: 'columnId' });
+    Column.hasMany(models.Task, { foreignKey: 'columnId', onDelete: 'CASCADE', hooks: true });
   };
   return Column;
 };

@@ -1,5 +1,5 @@
 doctype html
-html 
+html
     head
       script(src='/js/index.js')
       meta(charset='UTF-8')
@@ -36,12 +36,11 @@ html
             if team
               h3(onclick=`location.href='/teams/${teamId}/projects';`) Home
               h3= team.teamName
-            else 
+            else
               h3(onclick=`location.href='/users/${userId}/noteam';`) Home
             h3 Welcome #{user.firstName}
             if userId
               h3(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
             form.navbar-nav(action='/users/logout' method='post')
               input.logout.nav-item.text-muted(type='submit' value='Logout')
-        block content
-
+          block content

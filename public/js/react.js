@@ -40,7 +40,6 @@ const ColumnContainer = styled.div`
   margin: 8px;
   background-color: #f6f8f9;
   border-radius: 7px;
-  border: 2px solid black;
   width: 280px;
   display: flex;
   flex-direction: column;
