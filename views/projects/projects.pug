@@ -10,10 +10,11 @@ block content
           a.delete-button(href=`/teams/${teamId}/projects/${existingProject.id}/delete`) &#x1D5EB
           a.edit-button(href=`/teams/${teamId}/projects/${existingProject.id}/edit`) EDIT
         .project-title=existingProject.projectName
-    .project-square.project-new +
+    .project-square.create-new +
   if error
     #createModal.modal(style="display: block")
       include create-modal.pug
   else
     #createModal.modal(style="display: none")
       include create-modal.pug
+      

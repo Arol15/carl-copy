@@ -29,12 +29,11 @@ router.get(
       order: [["id", "ASC"]],
       include: { model: Team },
     });
-    
+
     const user = await User.findOne({ where: userId });
     const project = await Project.build();
     const allTeams = await Team.findAll();
     const team = await Team.findOne({ where: teamId });
-    console.log("==============", projects)
 
 
     res.render("projects/projects", { projects, user, userId, team, teamId, project, allTeams, csrfToken: req.csrfToken() });
