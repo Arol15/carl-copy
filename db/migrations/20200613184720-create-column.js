@@ -12,6 +12,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(75),
       },
+      columnPos: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       projectId: {
         allowNull: false,
         type: Sequelize.INTEGER,

@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING(75),
     },
+    columnPos: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
     projectId: {
       allowNull: false,
       type: DataTypes.INTEGER,

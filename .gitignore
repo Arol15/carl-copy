@@ -110,3 +110,5 @@ dist
 
 # created test database
 .env.spec 
+
+layout-lora.pug
