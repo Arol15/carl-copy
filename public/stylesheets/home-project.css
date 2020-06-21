@@ -228,6 +228,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
 }
 
 .user-options {
@@ -267,6 +268,7 @@ html, body {
   width: 100%;
   background-color: white;
   border: none;
+  padding: 0;
 }
 
 .logout:hover {

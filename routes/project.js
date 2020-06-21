@@ -78,6 +78,7 @@ router.post(
       order: [["id", "ASC"]],
       include: { model: Team },
     });
+    const user = await User.findOne({ where: userId });
     // created initials variable
     const initials = user.firstName[0] + user.lastName[0];
     try {
@@ -110,6 +111,7 @@ router.get(
     const teamId = parseInt(req.params.teamId, 10);
     const team = await Team.findOne({ where: teamId });
     const userId = req.session.auth.userId
+    const user = await User.findOne({ where: userId });
     // created initials variable
     const initials = user.firstName[0] + user.lastName[0];
     const projects = await Project.findAll({
@@ -142,6 +144,7 @@ router.get(
       include: { model: Team },
     });
     const userId = req.session.auth.userId
+    const user = await User.findOne({ where: userId });
     const projects = await Project.findAll({
       where: {
         teamId,
@@ -178,6 +181,7 @@ router.post(
     const project = { projectName, teamId };
     const allTeams = await Team.findAll();
     const userId = req.session.auth.userId
+    const user = await User.findOne({ where: userId });
     // created initials variable
     const initials = user.firstName[0] + user.lastName[0];
     const projects = await Project.findAll({
@@ -220,6 +224,7 @@ router.get(
     const projectId = parseInt(req.params.projectId, 10);
     const projectToDelete = await Project.findByPk(projectId);
     const team = await Team.findOne({ where: teamId });
+    const user = await User.findOne({ where: userId });
     const projects = await Project.findAll({
       where: {
         teamId,
