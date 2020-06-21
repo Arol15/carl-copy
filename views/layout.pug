@@ -24,7 +24,7 @@ html
             if projects
               each existingProject in projects
                 .project-list
-                  a(href=`/teams/${teamId}/projects/${existingProject.id}`)
+                  a(href=`/teams/${teamId}/projects/${existingProject.id}/columns`)
                     span.project-name= existingProject.projectName
                     span.favorite-click &star;
           .tabs.invite
@@ -43,5 +43,5 @@ html
               h3(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
             form.navbar-nav(action='/users/logout' method='post')
               input.logout.nav-item.text-muted(type='submit' value='Logout')
-        block content
+          block content
 
