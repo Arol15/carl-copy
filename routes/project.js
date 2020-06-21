@@ -34,9 +34,11 @@ router.get(
     const project = await Project.build();
     const allTeams = await Team.findAll();
     const team = await Team.findOne({ where: teamId });
+    // created initials variable
+    const initials = user.firstName[0] + user.lastName[0];
 
 
-    res.render("projects/projects", { projects, user, userId, team, teamId, project, allTeams, csrfToken: req.csrfToken() });
+    res.render("projects/projects", { projects, user, userId, team, teamId, project, allTeams, initials, csrfToken: req.csrfToken() });
     // next(projects)
   })
 );
@@ -76,7 +78,8 @@ router.post(
       order: [["id", "ASC"]],
       include: { model: Team },
     });
-
+    // created initials variable
+    const initials = user.firstName[0] + user.lastName[0];
     try {
       await project.save();
       res.redirect(`/teams/${teamId}/projects`);
@@ -90,6 +93,7 @@ router.post(
           teamId: parseInt(req.params.teamId, 10),
           project,
           error,
+          initials,
           csrfToken: req.csrfToken(),
         });
         // res.redirect(`/teams/${teamId}/projects`)
@@ -106,6 +110,8 @@ router.get(
     const teamId = parseInt(req.params.teamId, 10);
     const team = await Team.findOne({ where: teamId });
     const userId = req.session.auth.userId
+    // created initials variable
+    const initials = user.firstName[0] + user.lastName[0];
     const projects = await Project.findAll({
       where: {
         teamId,
@@ -120,7 +126,7 @@ router.get(
       },
     });
 
-    res.render("projects/project-detail", { projects, project, teamId, userId, team });
+    res.render("projects/project-detail", { projects, project, teamId, userId, team, initials });
   })
 );
 
@@ -143,7 +149,8 @@ router.get(
       order: [["id", "ASC"]],
       include: { model: Team },
     });
-
+    // created initials variable
+    const initials = user.firstName[0] + user.lastName[0];
     const allTeams = await Team.findAll();
 
     res.render("projects/project-edit", {
@@ -153,6 +160,7 @@ router.get(
       project,
       allTeams,
       teamId,
+      initials,
       csrfToken: req.csrfToken(),
     });
   })
@@ -170,6 +178,8 @@ router.post(
     const project = { projectName, teamId };
     const allTeams = await Team.findAll();
     const userId = req.session.auth.userId
+    // created initials variable
+    const initials = user.firstName[0] + user.lastName[0];
     const projects = await Project.findAll({
       where: {
         teamId,
@@ -188,6 +198,7 @@ router.post(
           userId,
           team,
           allTeams,
+          initials,
           teamId: parseInt(req.params.teamId),
           projects,
           project: { ...project, id: projectId },
@@ -216,9 +227,11 @@ router.get(
       order: [["id", "ASC"]],
       include: { model: Team },
     });
-
+    // created initials variable
+    const initials = user.firstName[0] + user.lastName[0];
     res.render("projects/project-delete", {
       userId,
+      initials,
       team,
       projects,
       projectToDelete,
