@@ -18,7 +18,9 @@ router.get(
   csrfProtection,
   asyncHandler(async (req, res) => {
     const teamId = parseInt(req.params.teamId, 10);
-    const userId = req.session.auth.userId
+    let userId;
+    if (req.session.auth) userId = req.session.auth.userId
+    else userId = 5;
 
     const projects = await Project.findAll({
       where: {
@@ -27,11 +29,11 @@ router.get(
       order: [["id", "ASC"]],
       include: { model: Team },
     });
+
     const user = await User.findOne({ where: userId });
     const project = await Project.build();
     const allTeams = await Team.findAll();
     const team = await Team.findOne({ where: teamId });
-    // console.log(allTeams)
 
 
     res.render("projects/projects", { projects, user, userId, team, teamId, project, allTeams, csrfToken: req.csrfToken() });

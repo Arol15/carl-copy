@@ -12,7 +12,7 @@ router.get('/teams', asyncHandler(async (req, res) => {
   const teams = await Team.findAll()
   const userId = req.session.auth.userId
   const projects = await Project.findAll()
-  console.log(userId)
+  
   res.render('teams/teams', { teams })
 }))
 

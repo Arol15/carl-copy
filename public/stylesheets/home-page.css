@@ -25,7 +25,7 @@ nav {
   display: block; 
   background: linear-gradient(to right, #FF5F6D, #FFC371); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: whitesmoke;
-  border-radius: 2px;
+  border-radius: 15px;
   line-height: 40px; 
   /* padding: 1em 0.5em;  */
   letter-spacing: .025em;
@@ -38,6 +38,10 @@ nav {
 
 h2 {
   margin-bottom: 50px; 
+}
+
+p {
+  margin-bottom: 40px; 
 }
 
 
