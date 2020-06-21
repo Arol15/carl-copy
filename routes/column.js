@@ -19,7 +19,7 @@ router.get('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHa
     include: { model: Team },
   });
   const team = await Team.findOne({ where: teamId });
-  const userId = req.session.auth.userId
+  const userId = req.session.auth
   const column = await Column.build();
   // TODO: Update the fetch URL for production to the heroku URL
   const response = await fetch(`http://localhost:8080/teams/${teamId}/projects/${projectId}/columns/board`)
