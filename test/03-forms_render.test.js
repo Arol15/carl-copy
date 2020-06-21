@@ -18,9 +18,9 @@ describe("Columns create form", () => {
 
   it("renders a form that posts to create columns", () => {
     const form = $("form");
-    expect(form.length).to.equal(1);
-    expect(form.attr("action")).to.equal("/teams/1/projects/1/columns/create");
-    expect(form.attr("method")).to.equal("post");
+    expect(form.length).to.equal(2);
+    expect(form.eq(1).attr("action")).to.equal("/teams/1/projects/1/columns/create");
+    expect(form.eq(1).attr("method")).to.equal("post");
   });
 
   it("renders a name input field", () => {
@@ -49,9 +49,9 @@ describe("Projects create form", () => {
 
   it("renders a form that posts to create projects", () => {
     const form = $("form");
-    expect(form.length).to.equal(1);
-    expect(form.attr("action")).to.equal("/teams/1/projects");
-    expect(form.attr("method")).to.equal("post");
+    expect(form.length).to.equal(2);
+    expect(form.eq(1).attr("action")).to.equal("/teams/1/projects");
+    expect(form.eq(1).attr("method")).to.equal("post");
   });
 
   it("renders a Project Name input field", () => {
@@ -85,9 +85,9 @@ describe("Tasks create form", () => {
 
   it("renders a form that posts to create tasks", () => {
     const form = $("form");
-    expect(form.length).to.equal(1);
-    expect(form.attr("action")).to.equal("/teams/1/projects/1/columns/1/tasks/create");
-    expect(form.attr("method")).to.equal("post");
+    expect(form.length).to.equal(2);
+    expect(form.eq(1).attr("action")).to.equal("/teams/1/projects/1/columns/1/tasks/create");
+    expect(form.eq(1).attr("method")).to.equal("post");
   });
 
   it("renders a Description textarea field", () => {
@@ -120,9 +120,9 @@ describe("Teams create form", () => {
 
   it("renders a form that posts to create teams", () => {
     const form = $("form");
-    expect(form.length).to.equal(1);
-    expect(form.attr("action")).to.equal("/teams/create");
-    expect(form.attr("method")).to.equal("post");
+    expect(form.length).to.equal(2);
+    expect(form.eq(1).attr("action")).to.equal("/teams/create");
+    expect(form.eq(1).attr("method")).to.equal("post");
   });
 
   it("renders a Team Name input field", () => {
@@ -174,10 +174,6 @@ describe("User Registration form", () => {
 
   it("renders a Confirm Password input field", () => {
     expect($("input[type='password'][name='confirmPassword']").length).to.equal(1);
-  });
-
-  it("renders a Team select field", () => {
-    expect($("select[name='teamId']").length).to.equal(1);
   });
 
   it("renders a submit button", () => {

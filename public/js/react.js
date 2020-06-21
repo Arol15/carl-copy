@@ -137,7 +137,7 @@ class App extends React.Component {
       const columnResult = { source, destination, draggableId, newColumnOrder }
 
       // TODO: persist order state to database here
-      fetch('http://localhost:8080/columns/update', {
+      fetch('https://hidden-fortress-08833.herokuapp.com//columns/update', {
         method: 'POST',
         body: JSON.stringify(columnResult),
         headers: { 'Content-Type': 'application/json'}
@@ -168,7 +168,7 @@ class App extends React.Component {
       this.setState(newState)
 
       // TODO: persist order state to database here
-      fetch('http://localhost:8080/columns/update', {
+      fetch('https://hidden-fortress-08833.herokuapp.com//columns/update', {
         method: 'POST',
         body: JSON.stringify(result),
         headers: { 'Content-Type': 'application/json'}
@@ -205,7 +205,7 @@ class App extends React.Component {
     this.setState(newState)
 
     // TODO: persist order state to database here
-    fetch('http://localhost:8080/columns/update', {
+    fetch('https://hidden-fortress-08833.herokuapp.com//columns/update', {
       method: 'POST',
       body: JSON.stringify(result),
       headers: { 'Content-Type': 'application/json'}
