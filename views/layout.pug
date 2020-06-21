@@ -10,7 +10,7 @@ html
     body
       div.main
         //side-bar__isCollapsed
-        .side-bar.side-bar__isCollapsed
+        .side-bar
           .tabs.home-tasks
             h2
               a(onclick=`location.href='/'`) C.A.R.L.
@@ -32,7 +32,7 @@ html
               p Invite to CARL
         .main-page
           .nav-bar
-            .nav-bar-item.side-bar-opener &rAarr;
+            .nav-bar-item.side-bar-opener ⇚
             if team
               h3(onclick=`location.href='/teams/${teamId}/projects';`) Home
               h3= team.teamName
@@ -43,8 +43,17 @@ html
             else
               h3 Welcome Test User!
             if userId
+<<<<<<< HEAD
               h3(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
             form.navbar-nav(action='/users/logout' method='post')
               input.logout.nav-item.text-muted(type='submit' value='Logout')
+=======
+              .initials-div #{initials}
+                .user-options(style="display: none")
+                  div(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
+                  div
+                    form.navbar-nav(action='/users/logout' method='post')
+                      input.logout.nav-item.text-muted(type='submit' value='Logout')
+>>>>>>> 1e4e7c5f4b5a415cb731f04dadfb792760b5390b
           block content
 

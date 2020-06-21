@@ -11,6 +11,8 @@ const csrfProtection = csrf({ cookie: true });
 router.get('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
+  // created initials variable
+  const initials = user.firstName[0] + user.lastName[0];
   const projects = await Project.findAll({
     where: {
       teamId,
@@ -24,7 +26,7 @@ router.get('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHa
   // TODO: Update the fetch URL for production to the heroku URL
   const response = await fetch(`http://localhost:8080/teams/${teamId}/projects/${projectId}/columns/board`)
   const state = await response.json()
-  res.render('columns/columns', { state: JSON.stringify(state), projectId, column, projects, team, userId, teamId, csrfToken: req.csrfToken() });
+  res.render('columns/columns', { state: JSON.stringify(state), projectId, column, projects, team, userId, teamId, initials, csrfToken: req.csrfToken() });
 }));
 
 // TODO: Persist new task/column layout to the database
@@ -65,7 +67,7 @@ router.post('/columns/update', asyncHandler(async (req, res) => {
 
 
   const taskSave = await Task.findAll({
-    where: { columnId: [ sourceColId, destColId ] },
+    where: { columnId: [sourceColId, destColId] },
     order: [['columnIndx', 'ASC']],
   })
 
@@ -137,9 +139,12 @@ router.get('/teams/:teamId/projects/:projectId/columns/board', asyncHandler(asyn
 }));
 
 // get column creation form
+// TODO: Not sure if we need this route anymore - Rocky
 router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
+  // created initials variable
+  const initials = user.firstName[0] + user.lastName[0];
   const projects = await Project.findAll({
     where: {
       teamId,
@@ -155,14 +160,16 @@ router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, 
 
   //added projects, team, userId so we can pass them through rendering.
 
-  res.render('columns/columns-create', { column, teamId, projectId, projects, team, userId, csrfToken: req.csrfToken() })
+  res.render('columns/columns-create', { column, teamId, initials, projectId, projects, team, userId, csrfToken: req.csrfToken() })
 }));
 
 // post new column
-router.post('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHandler(async (req, res, next) => {
+router.post('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, asyncHandler(async (req, res, next) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const userId = req.session.auth.userId
+  // created initials variable
+  const initials = user.firstName[0] + user.lastName[0];
   // const project = Project.build({ projectName, teamId });
   const allTeams = await Team.findAll();
   const projects = await Project.findAll({
@@ -175,7 +182,7 @@ router.post('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncH
 
   const { columnName } = req.body;
 
-  const columnPos = await Column.count({ where: { projectId }})
+  const columnPos = await Column.count({ where: { projectId } })
   const column = Column.build({ columnName, projectId, columnPos });
 
   try {
@@ -184,11 +191,12 @@ router.post('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncH
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
       const error = err.errors.map(error => error.message);
-      res.render('projects-create', {
+      res.render('columns-create', {
         teamId,
         projectId,
         userId,
         allTeams,
+        initials,
         projects,
         // project,
         error,
@@ -203,6 +211,8 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfProt
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
+  // created initials variable
+  const initials = user.firstName[0] + user.lastName[0];
   const projects = await Project.findAll({
     where: {
       teamId,
@@ -214,7 +224,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfProt
   const userId = req.session.auth.userId
   const column = await Column.findByPk(columnId);
 
-  res.render('columns/columns-edit', { column, team, teamId, userId, projectId, projects, columnId, csrfToken: req.csrfToken() })
+  res.render('columns/columns-edit', { column, team, initials, teamId, userId, projectId, projects, columnId, csrfToken: req.csrfToken() })
 }));
 
 // post edit
@@ -224,6 +234,8 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfPro
   const columnId = parseInt(req.params.columnId, 10);
   const team = await Team.findOne({ where: teamId });
   const userId = req.session.auth.userId
+  // created initials variable
+  const initials = user.firstName[0] + user.lastName[0];
   const projects = await Project.findAll({
     where: {
       teamId,
@@ -245,6 +257,7 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfPro
       const error = e.errors.map(error => error.message);
       res.render('projects/project-edit', {
         column: { ...column, id: columnId },
+        initials,
         team,
         teamId,
         userId,
@@ -263,6 +276,8 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/delete', csrfPr
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
   const team = await Team.findOne({ where: teamId });
+  // created initials variable
+  const initials = user.firstName[0] + user.lastName[0];
   const userId = req.session.auth.userId
   const projects = await Project.findAll({
     where: {
@@ -274,7 +289,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/delete', csrfPr
   // added extra keys to pass into delete view - Rocky
   const columnToDelete = await Column.findByPk(columnId)
 
-  res.render('columns/columns-delete', { columnToDelete, team, userId, projects, teamId, projectId, columnId, csrfToken: req.csrfToken() })
+  res.render('columns/columns-delete', { columnToDelete, initials, team, userId, projects, teamId, projectId, columnId, csrfToken: req.csrfToken() })
 }));
 
 // delete column
