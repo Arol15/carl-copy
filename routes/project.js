@@ -233,7 +233,7 @@ router.post(
     } catch (err) {
       if (err.name === "SequelizeValidationError") {
         const editError = err.errors.map((error) => error.message);
-        res.render("projects/project-edit", {
+        res.render("projects/projects", {
           userId,
           team,
           teammates,
