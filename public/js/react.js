@@ -1,7 +1,6 @@
 'use-strict'
 const React = window.React;
 const ReactDOM = window.ReactDOM;
-const { Link } = window.ReactRouter
 const { DragDropContext, Draggable, Droppable } = window.ReactBeautifulDnd;
 const styled = window.styled
 
