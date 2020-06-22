@@ -1,3 +1,38 @@
+//- extends ../layout.pug
+//- include project-utils.pug
+//- block content
+//-   .project-label
+//-     div Your Projects
+//-   .main-page-body-wrapper
+//-     .main-page-body
+//-       each existingProject in projects
+//-         div.square-and-title
+//-           div(class=`project-square` id=`project${existingProject.id}` onclick=`location.href='/teams/${teamId}/projects/${existingProject.id}/columns'` )
+//-             .project-options
+//-               a.edit-button ...
+//-               a.delete-button(href=`/teams/${teamId}/projects/${existingProject.id}/delete`)
+//-                 span.fa.fa-trash
+//-             div.icons-wrapper
+//-               div.icons-menu
+//-                 i.fa.fa-list-ul
+//-           .project-title=existingProject.projectName
+//-       .project-square.create-new +
+//-     if error
+//-       #createModal.modal(style="display: block")
+//-         include create-modal.pug
+//-     else
+//-       #createModal.modal(style="display: none")
+//-         include create-modal.pug
+//-     if editError
+//-       each existingProject in projects
+//-         div(class=`editModal modal` id=`project${existingProject.id}` style="display: block")
+//-           include edit-modal.pug
+//-     else
+//-       each existingProject in projects
+//-         div(class=`editModal modal` id=`project${existingProject.id}` style="display: none")
+//-           include edit-modal.pug
+
+      
 extends ../layout.pug
 include project-utils.pug
 block content
