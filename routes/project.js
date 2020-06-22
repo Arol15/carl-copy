@@ -67,13 +67,15 @@ router.post(
   "/teams/:teamId/projects",
   csrfProtection,
   asyncHandler(async (req, res, next) => {
-    const { projectName, teamId } = req.body;
+    const { projectName } = req.body;
+    const teamId = parseInt(req.params.teamId, 10)
     const userId = req.session.auth.userId
     const project = Project.build({ projectName, teamId });
     const allTeams = await Team.findAll();
+    const team = await Team.findOne({ where: teamId });
     const projects = await Project.findAll({
       where: {
-        teamId: parseInt(req.params.teamId, 10),
+        teamId,
       },
       order: [["id", "ASC"]],
       include: { model: Team },
@@ -88,10 +90,11 @@ router.post(
       if (err.name === "SequelizeValidationError") {
         const error = err.errors.map((error) => error.message);
         res.render("projects/projects", {
+          team,
           userId,
           allTeams,
           projects,
-          teamId: parseInt(req.params.teamId, 10),
+          teamId,
           project,
           error,
           initials,
@@ -175,9 +178,10 @@ router.post(
   csrfProtection,
   asyncHandler(async (req, res, next) => {
     const projectId = parseInt(req.params.projectId, 10);
+    const teamId = parseInt(req.params.teamId, 10);
     const projectToUpdate = await Project.findByPk(projectId);
-    const { projectName, teamId } = req.body;
-    const team = await Team.findOne({ where: { id: parseInt(req.params.teamId) } });
+    const { projectName } = req.body;
+    const team = await Team.findOne({ where: teamId });
     const project = { projectName, teamId };
     const allTeams = await Team.findAll();
     const userId = req.session.auth.userId
@@ -203,7 +207,7 @@ router.post(
           team,
           allTeams,
           initials,
-          teamId: parseInt(req.params.teamId),
+          teamId,
           projects,
           project: { ...project, id: projectId },
           error,

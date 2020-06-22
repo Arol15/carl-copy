@@ -130,7 +130,8 @@ html, body {
   margin-left: 20px; */
   /* margin: auto; */
   margin-left: 20px;
-  padding: 0 10px;
+  padding: 0 15px;
+  padding-bottom: 5px;
 }
 
 .tabs {
@@ -220,6 +221,11 @@ html, body {
   width: 100%
 }
 
+.nav-bar-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .initials-div {
   height: 35px;
   width: 35px;
@@ -228,7 +234,11 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 10px;
+  margin:0 15px;
+}
+
+.initials-div:hover {
+  cursor: pointer;
 }
 
 .user-options {
@@ -238,8 +248,8 @@ html, body {
   background-color: white;
   height: auto;
   width: 175px;
-  border: rgb(196, 196, 196) 1px solid;
-  box-shadow: 2px 2px 2px;
+  border: rgb(196, 196, 196) 2px solid;
+  box-shadow: 3px 3px 2px;
 }
 
 .user-options > div {
@@ -276,6 +286,7 @@ html, body {
   cursor: pointer;
   transition: .3s;
 }
+
 .main-page {
   width: 100%;
   display: flex;

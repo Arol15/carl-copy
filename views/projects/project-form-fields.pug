@@ -2,14 +2,7 @@ input(type='hidden' name='_csrf' value=csrfToken)
 div
   label Project Name:
   input(type='text' name='projectName' value=project.projectName)
-div
-  label Choose Team:
-  select(name='teamId')
-    each team in allTeams
-      if team.id == teamId
-        option(value=team.id selected)= team.teamName
-      else 
-        option(value=team.id)= team.teamName
+
 
 //- input(type='hidden' name='_csrf' value=csrfToken)
 //-         input(placeholder='Enter Project Name' type='text' name='projectName' value='project.projectName')

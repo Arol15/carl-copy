@@ -24,7 +24,7 @@ html
             if projects
               each existingProject in projects
                 .project-list
-                  a(href=`/teams/${teamId}/projects/${existingProject.id}`)
+                  a(href=`/teams/${teamId}/projects/${existingProject.id}/columns`)
                     span.project-name= existingProject.projectName
                     span.favorite-click &star;
           .tabs.invite
@@ -32,19 +32,18 @@ html
               p Invite to CARL
         .main-page
           .nav-bar
-            .nav-bar-item.side-bar-opener ⇚
-            if team
+            .nav-bar-div
+              .nav-bar-item.side-bar-opener ⇚
               h3(onclick=`location.href='/teams/${teamId}/projects';`) Home
-              h3= team.teamName
-            else 
-              h3(onclick=`location.href='/users/${userId}/noteam';`) Home
-            h3 Welcome #{user.firstName}
-            if userId
-              .initials-div #{initials}
-                .user-options(style="display: none")
-                  div(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
-                  div
-                    form.navbar-nav(action='/users/logout' method='post')
-                      input.logout.nav-item.text-muted(type='submit' value='Logout')
+            h3 Team: #{team.teamName}
+            .nav-bar-div
+              h3 Welcome #{user.firstName}
+              if userId
+                .initials-div #{initials}
+                  .user-options(style="display: none")
+                    div(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
+                    div
+                      form.navbar-nav(action='/users/logout' method='post')
+                        input.logout.nav-item.text-muted(type='submit' value='Logout')
           block content
 
