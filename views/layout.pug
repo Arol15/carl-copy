@@ -9,18 +9,16 @@ html
       title Home - C.A.R.L.
     body
       div.main
-        //side-bar__isCollapsed
-        .side-bar.side-bar__isCollapsed
+        .side-bar
           .tabs.home-tasks
             h2
               a(onclick=`location.href='/'`) C.A.R.L.
             div &#x1F3E0; Home
-            div &#x2714;  My Tasks
           .tabs.favorites
-            h2 Favorites
+            h3 Favorites
             p click on the &star; next to a project
           .tabs.projects
-            h2 Projects
+            h3 Projects
             if projects
               each existingProject in projects
                 .project-list
@@ -28,11 +26,13 @@ html
                     span.project-name= existingProject.projectName
                     span.favorite-click &star;
           .tabs.invite
-            #button
-              p Invite to CARL
+            div.for-button
+              img.invite-peeps(src="/images/invite_peeps.png")
+              p Invite your team and start collaborating!
+              #button Invite to C.A.R.L.
         .main-page
           .nav-bar
-            .nav-bar-item.side-bar-opener &rAarr;
+            .nav-bar-item.side-bar-opener ⇚
             if team
               h3(onclick=`location.href='/teams/${teamId}/projects';`) Home
               h3= team.teamName
