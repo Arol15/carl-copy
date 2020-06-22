@@ -6,6 +6,7 @@ html
       meta(name='viewport' content='width=device-width, initial-scale=1.0')
       link(rel='stylesheet' href='/stylesheets/home-project.css')
       link(href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet")
+      link(rel='icon' type='image/png' href='/images/favicon.png')
       title Home - C.A.R.L.
     body
       div.main
@@ -35,7 +36,7 @@ html
             .nav-bar-div
               .nav-bar-item.side-bar-opener ⇚
               h3(onclick=`location.href='/teams/${teamId}/projects';`) Home
-            h3 Team: #{team.teamName}
+            //- h3 Team: #{team.teamName}
             .nav-bar-div
               h3 Welcome #{user.firstName}
               if userId
