@@ -15,7 +15,7 @@ html
           .tabs.home-tasks
             h2
               a(onclick=`location.href='/'`) C.A.R.L.
-            div &#x1F3E0; Home
+            div(onclick=`location.href='/teams/${teamId}/projects'`) &#x1F3E0; Home
             div &#x2714;  My Tasks
           .tabs.favorites
             h2 Team Members
@@ -36,7 +36,7 @@ html
           .nav-bar
             .nav-bar-div
               .nav-bar-item.side-bar-opener ⇚
-              h3(onclick=`location.href='/teams/${teamId}/projects';`) Home
+              h3 Home
             h3 Team: #{team.teamName}
             .nav-bar-div
               h3 Welcome #{user.firstName}
