@@ -95,7 +95,7 @@ router.post('/users/login', asyncHandler(async (req, res) => {
   res.render('users/user-login', {
     errors,
     email,
-    // token: req.csrfToken()
+    token: req.csrfToken()
   })
 }))
 

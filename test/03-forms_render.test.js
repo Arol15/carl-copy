@@ -50,10 +50,8 @@ describe("Columns create form", () => {
       .get("/teams/1/projects/1/columns/create")
       // .expect("Content-Type", "text/plain; charset=utf-8")
       // .expect(200);
-    console.log(res.text)
     $ = cheerio.load(res.text);
     const form = $("form");
-    // console.log(form)
     expect(form.length).to.equal(2);
     expect(form.attr("action")).to.equal("/teams/1/projects/1/columns/create");
     expect(form.attr("method")).to.equal("post");

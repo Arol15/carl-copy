@@ -13,7 +13,6 @@ exports.login = function (request, done) {
       if (err) {
         throw err;
       }
-      console.log("+++++++++++++", agent)
       agent.saveCookies(res);
       done(agent);
     });
