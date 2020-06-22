@@ -20,13 +20,16 @@ block content
     if error
       #createModal.modal(style="display: block")
         include create-modal.pug
+    else
+      #createModal.modal(style="display: none")
+        include create-modal.pug
+    if editError
       each existingProject in projects
         div(class=`editModal modal` id=`project${existingProject.id}` style="display: block")
           include edit-modal.pug
     else
-      #createModal.modal(style="display: none")
-        include create-modal.pug
       each existingProject in projects
         div(class=`editModal modal` id=`project${existingProject.id}` style="display: none")
           include edit-modal.pug
+
       

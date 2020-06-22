@@ -1,7 +1,8 @@
 .modal-container
     .modal-header Create a New Project
     form.modal-form(action=`/teams/${teamId}/projects` method='post')
+        .edit-delete-elements
+            include project-form-fields.pug
+            button.modal-button(type='submit') Create Project
+            a(href=`/teams/${teamId}/projects` role='button') Cancel
         +error(error)
-        include project-form-fields.pug
-        button.modal-button(type='submit') Create Project
-        a(href=`/teams/${teamId}/projects` role='button') Cancel

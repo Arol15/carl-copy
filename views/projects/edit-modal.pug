@@ -1,8 +1,8 @@
 .modal-container
     .modal-header Edit your project
-    form.edit-project(action=`/teams/${teamId}/projects/${existingProject.id}` method='post')
-        +error(error)
-        include project-form-fields.pug
-        div
-            button(type='submit') Update Project
+    form.modal-form(action=`/teams/${teamId}/projects/${existingProject.id}` method='post')
+        .edit-delete-elements
+            include project-form-fields.pug
+            button.modal-button(type='submit') Update Project
             a(href=`/teams/${teamId}/projects` roll='button') Cancel
+        +error(editError)

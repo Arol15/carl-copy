@@ -47,10 +47,14 @@ html, body {
 }
 
 .modal-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+.edit-delete-elements {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
 }
-
 .modal-form > * {
   padding: 15px 0;
 }
@@ -72,6 +76,13 @@ html, body {
   transition: 0.3s;
   transform: scale(1.05);
   cursor: pointer;
+}
+
+.alert {
+  align-self: baseline;
+  border-left: 0.3px solid rgb(196, 196, 196);
+  margin: auto;
+  padding-left: 10px;
 }
 
 .modal-form a {
@@ -179,6 +190,11 @@ html, body {
   padding: 15px 0; 
   font-size: 15px; 
   height: 175px;
+  overflow: hidden;
+}
+
+.tabs.projects:hover {
+  transition: 2s;
   overflow: auto;
 }
 

@@ -232,7 +232,7 @@ router.post(
       res.redirect(`/teams/${teamId}/projects`);
     } catch (err) {
       if (err.name === "SequelizeValidationError") {
-        const error = err.errors.map((error) => error.message);
+        const editError = err.errors.map((error) => error.message);
         res.render("projects/project-edit", {
           userId,
           team,
@@ -242,7 +242,7 @@ router.post(
           teamId,
           projects,
           project: { ...project, id: projectId },
-          error,
+          editError,
           csrfToken: req.csrfToken(),
         });
       } else next(err);
