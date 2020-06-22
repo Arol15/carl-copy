@@ -174,7 +174,7 @@ router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(a
     order: [["id", "ASC"]],
     include: { model: db.Team },
   });
-  const teammates = await User.findAll({
+  const teammates = await db.User.findAll({
     where: {
       teamId: user.teamId,
     },

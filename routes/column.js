@@ -36,7 +36,7 @@ router.get('/teams/:teamId/projects/:projectId/columns', requireAuth, csrfProtec
     },
   })
 
-  console.log(teamId, projects, teammates)
+  // console.log(teamId, projects, teammates)
   // TODO: Update the fetch URL for production to the heroku URL
   const response = await fetch(`${url}/teams/${teamId}/projects/${projectId}/columns/board`)
   const state = await response.json()

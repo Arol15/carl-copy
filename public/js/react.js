@@ -5,8 +5,8 @@ const { DragDropContext, Draggable, Droppable } = window.ReactBeautifulDnd;
 const styled = window.styled
 
 let url;
-url = 'https://still-reef-05529.herokuapp.com'
-// url = 'http://localhost:8080'
+// url = 'https://still-reef-05529.herokuapp.com'
+url = 'http://localhost:8080'
 
 const TaskContainer = styled.div`
   border: 1px solid lightgrey;
@@ -87,7 +87,7 @@ class Column extends React.Component {
           <ColumnContainer {...provided.draggableProps} ref={provided.innerRef}>
 
             <Title {...provided.dragHandleProps}>{this.props.column.title}</Title>
-            {<TaskAdd href={`${window.location.pathname}/${this.props.column.id}/tasks/create`}>+</TaskAdd>}
+            {<TaskAdd href={`${window.location.pathname}/${parseInt(this.props.column.id.match(/\d+/)[0], 10)}/tasks/create`}>+</TaskAdd>}
 
             <Droppable type='task' droppableId={this.props.column.id}>
               {(provided, snapshot) => (
