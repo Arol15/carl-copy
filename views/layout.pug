@@ -16,6 +16,7 @@ html
           div.upper-part
             .tabs.home
               h2 C.A.R.L.
+              //- div(onclick=`location.href='/teams/${teamId}/projects'`)
               div Home
                 a(href=`/teams/${teamId}/projects`)
             .tabs.teammates
@@ -49,12 +50,15 @@ html
             if teamName
               h3 Your Team: #{team.teamName}
             .nav-bar-div
-              h3 Welcome #{user.firstName}
+              h3 Welcome #{user.firstName}!
               if userId
-                .initials-div #{initials}
+                .initials-div 
+                  p #{initials}
                   .user-options(style="display: none")
                     div(onclick=`location.href='/users/edit/${userId}';`) Edit Profile
                     div
-                      form.navbar-nav(action='/users/logout' method='post')
-                        input.logout.nav-item.text-muted(type='submit' value='Logout')
+                      form.navbar-nav#logoutForm(action='/users/logout' method='post')
+                        .logout(onClick="javascript:document.getElementById('logoutForm').submit();") 
+                          p Logout
+                        //- input.logout.nav-item.text-muted(type='submit' value='Logout')
           block content
