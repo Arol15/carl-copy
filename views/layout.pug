@@ -15,9 +15,10 @@ html
         .side-bar
           div.upper-part
             .tabs.home
-              h2 C.A.R.L.
-              div Home
-                a(href=`/teams/${teamId}/projects`)
+              div.name C.A.R.L.
+              div.home-icons 
+                i.fa.fa-home
+                a(href=`/teams/${teamId}/projects`) Home
             .tabs.teammates
               div.teammates-header Team Members
               div.teammate-index
@@ -40,21 +41,26 @@ html
             div.for-button
               img.invite-peeps(src="/images/invite_peeps.png")
               p Invite your team and start collaborating!
-              #button Invite to C.A.R.L.
-        .main-page
-          .nav-bar
+              #button 
+                p
+                  a(href='/users/register') Invite to C.A.R.L.
+        .main-page-none
+          .nav-nav-bar-1
             .nav-bar-div
               .nav-bar-item.side-bar-opener ⇚
               h3 Home
-            if teamName
+            if team
               h3 Your Team: #{team.teamName}
             .nav-bar-div
-              h3 Welcome #{user.firstName}
+              h3 Welcome #{user.firstName}!
               if userId
-                .initials-div #{initials}
+                .initials-div 
+                  p #{initials}
                   .user-options(style="display: none")
                     div(onclick=`location.href='/users/edit/${userId}';`) Edit Profile
                     div
-                      form.navbar-nav(action='/users/logout' method='post')
-                        input.logout.nav-item.text-muted(type='submit' value='Logout')
+                      form.navbar-nav#logoutForm(action='/users/logout' method='post')
+                        .logout(onClick="javascript:document.getElementById('logoutForm').submit();") 
+                          p Logout
+                        //- input.logout.nav-item.text-muted(type='submit' value='Logout')
           block content
