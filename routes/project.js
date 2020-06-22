@@ -34,9 +34,11 @@ router.get(
     const project = await Project.build();
     const allTeams = await Team.findAll();
     const team = await Team.findOne({ where: teamId });
+    // created initials variable
+    const initials = user.firstName[0] + user.lastName[0];
 
 
-    res.render("projects/projects", { projects, user, userId, team, teamId, project, allTeams, csrfToken: req.csrfToken() });
+    res.render("projects/projects", { projects, user, userId, team, teamId, project, allTeams, initials, csrfToken: req.csrfToken() });
     // next(projects)
   })
 );
@@ -65,18 +67,22 @@ router.post(
   "/teams/:teamId/projects",
   csrfProtection,
   asyncHandler(async (req, res, next) => {
-    const { projectName, teamId } = req.body;
+    const { projectName } = req.body;
+    const teamId = parseInt(req.params.teamId, 10)
     const userId = req.session.auth.userId
     const project = Project.build({ projectName, teamId });
     const allTeams = await Team.findAll();
+    const team = await Team.findOne({ where: teamId });
     const projects = await Project.findAll({
       where: {
-        teamId: parseInt(req.params.teamId, 10),
+        teamId,
       },
       order: [["id", "ASC"]],
       include: { model: Team },
     });
-
+    const user = await User.findOne({ where: userId });
+    // created initials variable
+    const initials = user.firstName[0] + user.lastName[0];
     try {
       await project.save();
       res.redirect(`/teams/${teamId}/projects`);
@@ -84,12 +90,14 @@ router.post(
       if (err.name === "SequelizeValidationError") {
         const error = err.errors.map((error) => error.message);
         res.render("projects/projects", {
+          team,
           userId,
           allTeams,
           projects,
-          teamId: parseInt(req.params.teamId, 10),
+          teamId,
           project,
           error,
+          initials,
           csrfToken: req.csrfToken(),
         });
         // res.redirect(`/teams/${teamId}/projects`)
@@ -106,6 +114,9 @@ router.get(
     const teamId = parseInt(req.params.teamId, 10);
     const team = await Team.findOne({ where: teamId });
     const userId = req.session.auth.userId
+    const user = await User.findOne({ where: userId });
+    // created initials variable
+    const initials = user.firstName[0] + user.lastName[0];
     const projects = await Project.findAll({
       where: {
         teamId,
@@ -120,7 +131,7 @@ router.get(
       },
     });
 
-    res.render("projects/project-detail", { projects, project, teamId, userId, team });
+    res.render("projects/project-detail", { projects, project, teamId, userId, team, initials });
   })
 );
 
@@ -136,6 +147,7 @@ router.get(
       include: { model: Team },
     });
     const userId = req.session.auth.userId
+    const user = await User.findOne({ where: userId });
     const projects = await Project.findAll({
       where: {
         teamId,
@@ -143,7 +155,8 @@ router.get(
       order: [["id", "ASC"]],
       include: { model: Team },
     });
-
+    // created initials variable
+    const initials = user.firstName[0] + user.lastName[0];
     const allTeams = await Team.findAll();
 
     res.render("projects/project-edit", {
@@ -153,6 +166,7 @@ router.get(
       project,
       allTeams,
       teamId,
+      initials,
       csrfToken: req.csrfToken(),
     });
   })
@@ -164,12 +178,16 @@ router.post(
   csrfProtection,
   asyncHandler(async (req, res, next) => {
     const projectId = parseInt(req.params.projectId, 10);
+    const teamId = parseInt(req.params.teamId, 10);
     const projectToUpdate = await Project.findByPk(projectId);
-    const { projectName, teamId } = req.body;
-    const team = await Team.findOne({ where: { id: parseInt(req.params.teamId) } });
+    const { projectName } = req.body;
+    const team = await Team.findOne({ where: teamId });
     const project = { projectName, teamId };
     const allTeams = await Team.findAll();
     const userId = req.session.auth.userId
+    const user = await User.findOne({ where: userId });
+    // created initials variable
+    const initials = user.firstName[0] + user.lastName[0];
     const projects = await Project.findAll({
       where: {
         teamId,
@@ -188,7 +206,8 @@ router.post(
           userId,
           team,
           allTeams,
-          teamId: parseInt(req.params.teamId),
+          initials,
+          teamId,
           projects,
           project: { ...project, id: projectId },
           error,
@@ -209,6 +228,7 @@ router.get(
     const projectId = parseInt(req.params.projectId, 10);
     const projectToDelete = await Project.findByPk(projectId);
     const team = await Team.findOne({ where: teamId });
+    const user = await User.findOne({ where: userId });
     const projects = await Project.findAll({
       where: {
         teamId,
@@ -216,9 +236,11 @@ router.get(
       order: [["id", "ASC"]],
       include: { model: Team },
     });
-
+    // created initials variable
+    const initials = user.firstName[0] + user.lastName[0];
     res.render("projects/project-delete", {
       userId,
+      initials,
       team,
       projects,
       projectToDelete,

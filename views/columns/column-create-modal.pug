@@ -1,6 +1,6 @@
 .modal-container
     .modal-header Create a New Column
-    form.modal-form(action=`/teams/${teamId}/projects/${projectId}/columns` method='post')
+    form.modal-form(action=`/teams/${teamId}/projects/${projectId}/columns/create` method='post')
         +error(error)
         include columns-form-fields.pug
         button.modal-button(type='submit') Create Column

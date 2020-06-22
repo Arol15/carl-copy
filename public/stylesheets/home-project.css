@@ -131,7 +131,8 @@ html, body {
   margin-left: 20px; */
   /* margin: auto; */
   margin-left: 20px;
-  padding: 0 10px;
+  padding: 0 15px;
+  padding-bottom: 5px;
 }
 
 .for-button {
@@ -240,12 +241,81 @@ html, body {
 .nav-bar {
   display: flex;
   background-color: white;
-
-  height: 70px; 
+  height: 75px; 
+  align-items: center;
+  justify-content: space-between;
   /* border-bottom: 0.2px solid rgba(150, 150, 150, 0.733); */
   box-shadow: 0 2px 12px 0 rgba(36,50,66,.075);
   /* box-shadow: 0 1px 3px 0 rgba(21, 27, 38, 0.15); */
+  width: 100%
 }
+
+.nav-bar-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.initials-div {
+  height: 35px;
+  width: 35px;
+  border: black 1px solid;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin:0 15px;
+}
+
+.initials-div:hover {
+  cursor: pointer;
+}
+
+.user-options {
+  position: absolute;
+  top: 60px;
+  right: 5px;
+  background-color: white;
+  height: auto;
+  width: 175px;
+  border: rgb(196, 196, 196) 2px solid;
+  box-shadow: 3px 3px 2px;
+}
+
+.user-options > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  height: 20px;
+}
+
+.user-options > div:hover {
+  background-color: rgba(203, 203, 203, 0.797);
+  cursor: pointer;
+  transition: .3s;
+}
+.user-options input {
+  font-size: 15px;
+}
+
+.navbar-nav {
+  border-top: 0.1px rgb(196, 196, 196) solid;
+  width: 100%;
+}
+.logout {
+  font-size: 15px;
+  width: 100%;
+  background-color: white;
+  border: none;
+  padding: 0;
+}
+
+.logout:hover {
+  background-color: rgba(203, 203, 203, 0.797);
+  cursor: pointer;
+  transition: .3s;
+}
+
 .main-page {
   width: 100%;
   display: flex;
