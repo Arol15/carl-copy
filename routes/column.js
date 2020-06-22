@@ -7,6 +7,12 @@ const { Project, Team, Column, Task, User } = require('../db/models');
 
 const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
+let url;
+if (process.env.NODE_ENV === 'production') {
+  url = 'https://still-reef-05529.herokuapp.com'
+} else {
+  url = 'http://localhost:8080'
+}
 
 router.get('/teams/:teamId/projects/:projectId/columns', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
@@ -29,8 +35,10 @@ router.get('/teams/:teamId/projects/:projectId/columns', requireAuth, csrfProtec
       teamId,
     },
   })
+
+  console.log(teamId, projects, teammates)
   // TODO: Update the fetch URL for production to the heroku URL
-  const response = await fetch(`http://localhost:8080/teams/${teamId}/projects/${projectId}/columns/board`)
+  const response = await fetch(`${url}/teams/${teamId}/projects/${projectId}/columns/board`)
   const state = await response.json()
   res.render('columns/columns', { state: JSON.stringify(state), projectId, teammates, column, projects, team, userId, teamId, initials, csrfToken: req.csrfToken() });
 }));

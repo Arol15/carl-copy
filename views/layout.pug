@@ -21,6 +21,7 @@ html
             .tabs.teammates
               div.teammates-header Team Members
               div.teammate-index
+              if teammates
                 each teammate in teammates
                   div.icons
                     i.fa.fa-user-o
@@ -45,7 +46,8 @@ html
             .nav-bar-div
               .nav-bar-item.side-bar-opener ⇚
               h3 Home
-            h3 Your Team: #{team.teamName}
+            if teamName
+              h3 Your Team: #{team.teamName}
             .nav-bar-div
               h3 Welcome #{user.firstName}
               if userId

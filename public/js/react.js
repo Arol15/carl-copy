@@ -1,8 +1,13 @@
 'use-strict'
 const React = window.React;
 const ReactDOM = window.ReactDOM;
+const { Link } = window.ReactRouter
 const { DragDropContext, Draggable, Droppable } = window.ReactBeautifulDnd;
 const styled = window.styled
+
+let url;
+// url = 'https://still-reef-05529.herokuapp.com'
+url = 'http://localhost:8080'
 
 const TaskContainer = styled.div`
   border: 1px solid lightgrey;
@@ -57,7 +62,9 @@ const TaskList = styled.div`
   min-height: 100px;
 `
 
-const TaskAdd = styled.button`
+const TaskAdd = styled.a`
+  text-decoration: none;
+  outline: none;
   font-size: 22px;
   padding: 3px;
   height: 32px;
@@ -81,8 +88,7 @@ class Column extends React.Component {
           <ColumnContainer {...provided.draggableProps} ref={provided.innerRef}>
 
             <Title {...provided.dragHandleProps}>{this.props.column.title}</Title>
-            <TaskAdd>+</TaskAdd>
-            {/* {console.log(this.props.column.id)} */}
+            {<TaskAdd href={`${window.location.pathname}/${this.props.column.id}/tasks/create`}>+</TaskAdd>}
 
             <Droppable type='task' droppableId={this.props.column.id}>
               {(provided, snapshot) => (
@@ -154,7 +160,7 @@ class App extends React.Component {
       const columnResult = { source, destination, draggableId, newColumnOrder }
 
       // TODO: persist order state to database here
-      fetch('http://localhost:8080/columns/update', {
+      fetch(`${url}/columns/update`, {
         method: 'POST',
         body: JSON.stringify(columnResult),
         headers: { 'Content-Type': 'application/json'}
@@ -185,7 +191,7 @@ class App extends React.Component {
       this.setState(newState)
 
       // TODO: persist order state to database here
-      fetch('http://localhost:8080/columns/update', {
+      fetch(`${url}/columns/update`, {
         method: 'POST',
         body: JSON.stringify(result),
         headers: { 'Content-Type': 'application/json'}
@@ -222,7 +228,7 @@ class App extends React.Component {
     this.setState(newState)
 
     // TODO: persist order state to database here
-    fetch('http://localhost:8080/columns/update', {
+    fetch(`${url}/columns/update`, {
       method: 'POST',
       body: JSON.stringify(result),
       headers: { 'Content-Type': 'application/json'}
