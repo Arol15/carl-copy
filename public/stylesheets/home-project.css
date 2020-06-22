@@ -161,6 +161,11 @@ html, body {
   padding-bottom: 5px;
 }
 
+.fa-trash,
+.fa-pencil-square-o {
+  font-size: 20px;
+}
+
 .for-button {
   display: flex; 
   flex-direction: column;
