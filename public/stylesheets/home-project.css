@@ -47,10 +47,14 @@ html, body {
 }
 
 .modal-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+.edit-delete-elements {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
 }
-
 .modal-form > * {
   padding: 15px 0;
 }
@@ -72,6 +76,13 @@ html, body {
   transition: 0.3s;
   transform: scale(1.05);
   cursor: pointer;
+}
+
+.alert {
+  align-self: baseline;
+  border-left: 0.3px solid rgb(196, 196, 196);
+  margin: auto;
+  padding-left: 10px;
 }
 
 .modal-form a {
@@ -107,6 +118,11 @@ html, body {
   padding-left: 10px; 
   text-decoration: none;
   color: white; 
+  width: 100%;
+}
+
+.home a:hover {
+  cursor: pointer;
 }
 
 .emptyVoid { 
@@ -170,6 +186,13 @@ html, body {
   flex-direction: column;
   padding: 15px 0; 
   font-size: 15px; 
+  height: 175px;
+  overflow: hidden;
+}
+
+.tabs.projects:hover {
+  transition: 2s;
+  overflow: auto;
 }
 
 .teammates-header {
@@ -247,18 +270,15 @@ i {
 .home-icons {
   padding-top: 5px;
   padding-bottom: 5px;
-  background: rgba(255,255,255,.16);
   font-size: 16px; 
   box-shadow: 0 2px 12px 0 rgba(255,255,255,.16);
-}
-
-.home-icons {
   display: flex; 
   flex-direction: row; 
   align-items: baseline;
 }
 
 .home-icons:hover {
+  background: rgba(255,255,255,.16);
   /* background-color: rgba(231, 231, 231, 1); */
   color: rgb(50, 50, 78);
   transition: 0.5s;
