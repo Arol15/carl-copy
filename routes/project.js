@@ -1,6 +1,6 @@
 const express = require("express");
 const csrf = require("csurf");
-const { loginUser } = require('../auth')
+const { loginUser, requireAuth } = require('../auth')
 const { asyncHandler } = require("./utils");
 const { Project, Team, Column, Task, User } = require("../db/models");
 
@@ -15,6 +15,7 @@ const csrfProtection = csrf({ cookie: true });
 // project overview
 router.get(
   "/teams/:teamId/projects",
+  requireAuth,
   csrfProtection,
   asyncHandler(async (req, res) => {
     const teamId = parseInt(req.params.teamId, 10);
@@ -69,6 +70,7 @@ router.get(
 // post new project
 router.post(
   "/teams/:teamId/projects",
+  requireAuth,
   csrfProtection,
   asyncHandler(async (req, res, next) => {
     const { projectName } = req.body;
@@ -119,6 +121,7 @@ router.post(
 // view one specific project
 router.get(
   "/teams/:teamId/projects/:projectId",
+  requireAuth,
   asyncHandler(async (req, res) => {
     const projectId = parseInt(req.params.projectId, 10);
     const teamId = parseInt(req.params.teamId, 10);
@@ -153,6 +156,7 @@ router.get(
 // edit project view
 router.get(
   "/teams/:teamId/projects/:projectId/edit",
+  requireAuth,
   csrfProtection,
   asyncHandler(async (req, res) => {
     const teamId = parseInt(req.params.teamId, 10);
@@ -196,6 +200,7 @@ router.get(
 // post edit
 router.post(
   "/teams/:teamId/projects/:projectId/edit",
+  requireAuth,
   csrfProtection,
   asyncHandler(async (req, res, next) => {
     const projectId = parseInt(req.params.projectId, 10);
@@ -248,6 +253,7 @@ router.post(
 // route to delete project view
 router.get(
   "/teams/:teamId/projects/:projectId/delete",
+  requireAuth,
   csrfProtection,
   asyncHandler(async (req, res) => {
     const userId = req.session.auth.userId
@@ -286,6 +292,7 @@ router.get(
 // delete project
 router.post(
   "/teams/:teamId/projects/:projectId/delete",
+  requireAuth,
   csrfProtection,
   asyncHandler(async (req, res) => {
     const userId = req.session.auth.userId

@@ -1,5 +1,5 @@
 doctype html
-html 
+html
     head
       script(src='/js/index.js')
       meta(charset='UTF-8')
@@ -22,6 +22,7 @@ html
             .tabs.teammates
               div.teammates-header Team Members
               div.teammate-index
+              if teammates
                 each teammate in teammates
                   div.icons
                     i.fa.fa-user-o
@@ -48,15 +49,18 @@ html
             .nav-bar-div
               .nav-bar-item.side-bar-opener ⇚
               h3 Home
-            h3 Your Team: #{team.teamName}
+            if team
+              h3 Your Team: #{team.teamName}
             .nav-bar-div
-              h3 Welcome #{user.firstName}
+              h3 Welcome #{user.firstName}!
               if userId
-                .initials-div #{initials}
+                .initials-div 
+                  p #{initials}
                   .user-options(style="display: none")
                     div(onclick=`location.href='/users/edit/${userId}';`) Edit Profile
                     div
-                      form.navbar-nav(action='/users/logout' method='post')
-                        input.logout.nav-item.text-muted(type='submit' value='Logout')
+                      form.navbar-nav#logoutForm(action='/users/logout' method='post')
+                        .logout(onClick="javascript:document.getElementById('logoutForm').submit();") 
+                          p Logout
+                        //- input.logout.nav-item.text-muted(type='submit' value='Logout')
           block content
-

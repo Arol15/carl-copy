@@ -1,14 +1,20 @@
 const express = require('express');
 const csrf = require('csurf');
 const fetch = require('node-fetch')
-
+const { requireAuth } = require('../auth')
 const { asyncHandler } = require('./utils');
 const { Project, Team, Column, Task, User } = require('../db/models');
 
 const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
+let url;
+if (process.env.NODE_ENV === 'production') {
+  url = 'https://still-reef-05529.herokuapp.com'
+} else {
+  url = 'http://localhost:8080'
+}
 
-router.get('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHandler(async (req, res) => {
+router.get('/teams/:teamId/projects/:projectId/columns', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   // created initials variable
@@ -29,14 +35,16 @@ router.get('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHa
       teamId,
     },
   })
+
+  // console.log(teamId, projects, teammates)
   // TODO: Update the fetch URL for production to the heroku URL
-  const response = await fetch(`http://localhost:8080/teams/${teamId}/projects/${projectId}/columns/board`)
+  const response = await fetch(`${url}/teams/${teamId}/projects/${projectId}/columns/board`)
   const state = await response.json()
   res.render('columns/columns', { state: JSON.stringify(state), projectId, teammates, column, projects, team, userId, teamId, initials, csrfToken: req.csrfToken() });
 }));
 
 // TODO: Persist new task/column layout to the database
-router.post('/columns/update', asyncHandler(async (req, res) => {
+router.post('/columns/update', requireAuth, asyncHandler(async (req, res) => {
 
   const { source, destination, draggableId, newColumnOrder } = req.body
 
@@ -145,8 +153,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/board', asyncHandler(asyn
 }));
 
 // get column creation form
-// TODO: Not sure if we need this route anymore - Rocky
-router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, asyncHandler(async (req, res) => {
+router.get('/teams/:teamId/projects/:projectId/columns/create', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   // created initials variable
@@ -176,7 +183,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, 
 }));
 
 // post new column
-router.post('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, asyncHandler(async (req, res, next) => {
+router.post('/teams/:teamId/projects/:projectId/columns/create', requireAuth, csrfProtection, asyncHandler(async (req, res, next) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const userId = req.session.auth.userId
@@ -225,7 +232,7 @@ router.post('/teams/:teamId/projects/:projectId/columns/create', csrfProtection,
 }));
 
 // edit column view
-router.get('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfProtection, asyncHandler(async (req, res) => {
+router.get('/teams/:teamId/projects/:projectId/columns/:columnId/edit', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
@@ -252,7 +259,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfProt
 }));
 
 // post edit
-router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfProtection, asyncHandler(async (req, res, next) => {
+router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', requireAuth, csrfProtection, asyncHandler(async (req, res, next) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
@@ -303,7 +310,7 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfPro
 }));
 
 // route to delete column view
-router.get('/teams/:teamId/projects/:projectId/columns/:columnId/delete', csrfProtection, asyncHandler(async (req, res) => {
+router.get('/teams/:teamId/projects/:projectId/columns/:columnId/delete', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
@@ -331,7 +338,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/delete', csrfPr
 }));
 
 // delete column
-router.post('/teams/:teamId/projects/:projectId/columns/:columnId/delete', csrfProtection, asyncHandler(async (req, res) => {
+router.post('/teams/:teamId/projects/:projectId/columns/:columnId/delete', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);

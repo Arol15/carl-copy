@@ -30,8 +30,8 @@ html, body {
   background-color: #f6f8f9;
   margin: auto;
   padding: 20px;
-  width: 50%;
-  height: 200px;
+  width: 500px;
+  height: 270px;
   display: grid;
   grid-template-rows: 30% 70%;
   border-radius: 10px;
@@ -348,12 +348,17 @@ i {
 .initials-div {
   height: 35px;
   width: 35px;
-  border: rebeccapurple 2px solid;
+  border: black 2px solid;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin:0 15px;
+  background-color: rgb(132, 13, 132);
+}
+
+.initials-div > p {
+  color: white;
 }
 
 .initials-div:hover {
@@ -365,20 +370,24 @@ i {
 .user-options {
   position: absolute;
   top: 60px;
-  right: 5px;
+  right: 10px;
   background-color: white;
   height: auto;
   width: 175px;
   border: rgb(196, 196, 196) 2px solid;
-  box-shadow: 3px 3px 2px;
+  box-shadow: 4px 4px 2px;
+  border-radius: 10px;
 }
 
+.user-options > div:first-child {
+   border-radius: 10px 10px 0 0;
+}
 .user-options > div {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 15px;
-  height: 20px;
+  height: 30px;
 }
 
 .user-options > div:hover {
@@ -386,13 +395,16 @@ i {
   cursor: pointer;
   transition: .3s;
 }
-.user-options input {
+/* .user-options input {
   font-size: 15px;
-}
+
+} */
 
 .navbar-nav {
   border-top: 0.1px rgb(196, 196, 196) solid;
-  width: 100%;  
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
 
 .logout {
@@ -401,6 +413,11 @@ i {
   background-color: white;
   border: none;
   padding: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0 0 10px 10px;
 }
 
 .logout:hover {
@@ -465,6 +482,8 @@ i {
   grid-template-rows: 34% 66%; */
 }
 
+
+
 .project-options {
   display: flex;
   justify-content: space-between;
@@ -506,6 +525,9 @@ i {
   justify-content: center;
   background-color: white;
   border: 2px dashed gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .edit-button {
@@ -558,6 +580,6 @@ i {
 .main-edit-project {
   display: flex;
   /* flex-direction: column; */
- 
+
 }
 
