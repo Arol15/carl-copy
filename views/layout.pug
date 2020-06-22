@@ -18,8 +18,9 @@ html
             div &#x1F3E0; Home
             div &#x2714;  My Tasks
           .tabs.favorites
-            h2 Favorites
-            p click on the &star; next to a project
+            h2 Team Members
+            each teammate in teammates
+              p #{teammate.firstName} #{teammate.lastName}
           .tabs.projects
             h2 Projects
             if projects
