@@ -6,7 +6,7 @@ const { asyncHandler, csrfProtection } = require('./utils')
 const { loginUser, logoutUser, requireAuth } = require('../auth')
 
 
-router.get('/users', asyncHandler(async (req, res) => {
+router.get('/users', requireAuth, asyncHandler(async (req, res) => {
   const users = await db.User.findAll({ order: [['id', 'ASC']] })
   res.render('users/users', { users })
 
@@ -100,8 +100,8 @@ router.post('/users/login', csrfProtection, asyncHandler(async (req, res) => {
 }))
 
 router.post('/users/login-demo', csrfProtection, asyncHandler(async (req, res) => {
-  const email = "test@test.com";  
-  const password = "1Az@" 
+  const email = "test@test.com";
+  const password = "1Az@"
   let errors = []
 
   try {
@@ -145,7 +145,7 @@ router.get('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(as
     include: { model: db.Team },
   });
   const teams = await db.Team.findAll({ attributes: ['id', 'teamName'] })
-  
+
 
   res.render('users/user-edit', { user, userId, projects, team, teamId, teams, token: req.csrfToken() })
 }))
@@ -200,7 +200,7 @@ router.get('/users/:id/noteam/', requireAuth, csrfProtection, asyncHandler(async
     include: { model: db.Team },
   });
   const team = await db.Team.findOne({ where: { id: user.teamId } });
-  
+
   res.render(`users/user-noteam`, { userId, user, projects })
 }))
 // TODO: add user-delete.pug confirmation

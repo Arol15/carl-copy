@@ -16,7 +16,7 @@ const requireAuth = (req, res, next) => {
   if (!res.locals.authenticated) {
     return res.redirect('/users/login')
   }
-  return next()
+  next()
 }
 
 // resource would be the item you're trying to edit: user, team, project, etc
@@ -37,6 +37,8 @@ const restoreUser = async (req, res, next) => {
 
   if (req.session.auth) {
     const { userId } = req.session.auth
+
+    if (!userId) { res.redirect('/users/login') }
 
     try {
       const user = await db.User.findByPk(userId)

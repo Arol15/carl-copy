@@ -38,7 +38,8 @@ html
               h3= team.teamName
             else
               h3(onclick=`location.href='/users/${userId}/noteam';`) Home
-            h3 Welcome #{user.firstName}
+            if locals.authenticated
+              h3 Welcome #{user.firstName}
             if userId
               h3(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
             form.navbar-nav(action='/users/logout' method='post')
