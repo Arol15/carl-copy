@@ -4,6 +4,10 @@ const ReactDOM = window.ReactDOM;
 const { DragDropContext, Draggable, Droppable } = window.ReactBeautifulDnd;
 const styled = window.styled
 
+let url;
+// url = 'https://still-reef-05529.herokuapp.com'
+url = 'http://localhost:8080'
+
 const TaskContainer = styled.div`
   border: 1px solid lightgrey;
   border-radius: 4px;
@@ -40,7 +44,6 @@ const ColumnContainer = styled.div`
   margin: 8px;
   background-color: #f6f8f9;
   border-radius: 7px;
-  border: 2px solid black;
   width: 280px;
   display: flex;
   flex-direction: column;
@@ -58,6 +61,23 @@ const TaskList = styled.div`
   min-height: 100px;
 `
 
+const TaskAdd = styled.a`
+  text-decoration: none;
+  outline: none;
+  font-size: 22px;
+  padding: 3px;
+  height: 32px;
+  margin: 8px;
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px 0 rgba(21,27,38,.15);
+  text-align: center;
+  align-items: center;
+`
+
+
+
 class Column extends React.Component {
   render() {
     return (
@@ -65,7 +85,9 @@ class Column extends React.Component {
         {(provided) => (
 
           <ColumnContainer {...provided.draggableProps} ref={provided.innerRef}>
+
             <Title {...provided.dragHandleProps}>{this.props.column.title}</Title>
+            {<TaskAdd href={`${window.location.pathname}/${parseInt(this.props.column.id.match(/\d+/)[0], 10)}/tasks/create`}>+</TaskAdd>}
 
             <Droppable type='task' droppableId={this.props.column.id}>
               {(provided, snapshot) => (
@@ -137,7 +159,7 @@ class App extends React.Component {
       const columnResult = { source, destination, draggableId, newColumnOrder }
 
       // TODO: persist order state to database here
-      fetch('http://localhost:8080/columns/update', {
+      fetch(`${url}/columns/update`, {
         method: 'POST',
         body: JSON.stringify(columnResult),
         headers: { 'Content-Type': 'application/json'}
@@ -168,7 +190,7 @@ class App extends React.Component {
       this.setState(newState)
 
       // TODO: persist order state to database here
-      fetch('http://localhost:8080/columns/update', {
+      fetch(`${url}/columns/update`, {
         method: 'POST',
         body: JSON.stringify(result),
         headers: { 'Content-Type': 'application/json'}
@@ -205,7 +227,7 @@ class App extends React.Component {
     this.setState(newState)
 
     // TODO: persist order state to database here
-    fetch('http://localhost:8080/columns/update', {
+    fetch(`${url}/columns/update`, {
       method: 'POST',
       body: JSON.stringify(result),
       headers: { 'Content-Type': 'application/json'}

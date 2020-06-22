@@ -1,50 +1,66 @@
 doctype html
-html 
+html
     head
       script(src='/js/index.js')
       meta(charset='UTF-8')
       meta(name='viewport' content='width=device-width, initial-scale=1.0')
       link(rel='stylesheet' href='/stylesheets/home-project.css')
       link(href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet")
+      link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
+      link(rel='icon' type='image/png' href='/images/favicons.png')
+      //- link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous")
       title Home - C.A.R.L.
     body
       div.main
-        //side-bar__isCollapsed
         .side-bar
-          .tabs.home-tasks
-            h2
-              a(onclick=`location.href='/'`) C.A.R.L.
-            div &#x1F3E0; Home
-            div &#x2714;  My Tasks
-          .tabs.favorites
-            h2 Favorites
-            p click on the &star; next to a project
-          .tabs.projects
-            h2 Projects
-            if projects
-              each existingProject in projects
-                .project-list
-                  a(href=`/teams/${teamId}/projects/${existingProject.id}`)
-                    span.project-name= existingProject.projectName
-                    span.favorite-click &star;
-          .tabs.invite
-            #button
-              p Invite to CARL
-        .main-page
-          .nav-bar
-            .nav-bar-item.side-bar-opener ⇚
+          div.upper-part
+            .tabs.home
+              div.name C.A.R.L.
+              div.home-icons 
+                i.fa.fa-home
+                a(href=`/teams/${teamId}/projects`) Home
+            .tabs.teammates
+              div.teammates-header Team Members
+              div.teammate-index
+              if teammates
+                each teammate in teammates
+                  div.icons
+                    i.fa.fa-user-o
+                    div.teams-row #{teammate.firstName} #{teammate.lastName}
+            .tabs.projects
+              div.projects-header Projects
+              div.projects-index
+              if projects
+                each existingProject in projects
+                  .project-list
+                    a(href=`/teams/${teamId}/projects/${existingProject.id}/columns`)
+                      div.icons-projects
+                        i.fa.fa-pencil-square-o
+                        div.project-name= existingProject.projectName
+          .tabs.footer
+            div.for-button
+              img.invite-peeps(src="/images/invite_peeps.png")
+              p Invite your team and start collaborating!
+              #button 
+                p
+                  a(href='/users/register') Invite to C.A.R.L.
+        .main-page-none
+          .nav-nav-bar-1
+            .nav-bar-div
+              .nav-bar-item.side-bar-opener ⇚
+              h3 Home
             if team
-              h3(onclick=`location.href='/teams/${teamId}/projects';`) Home
-              h3= team.teamName
-            else 
-              h3(onclick=`location.href='/users/${userId}/noteam';`) Home
-            h3 Welcome #{user.firstName}
-            if userId
-              .initials-div #{initials}
-                .user-options(style="display: none")
-                  div(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
-                  div
-                    form.navbar-nav(action='/users/logout' method='post')
-                      input.logout.nav-item.text-muted(type='submit' value='Logout')
+              h3 Your Team: #{team.teamName}
+            .nav-bar-div
+              h3 Welcome #{user.firstName}!
+              if userId
+                .initials-div 
+                  p #{initials}
+                  .user-options(style="display: none")
+                    div(onclick=`location.href='/users/edit/${userId}';`) Edit Profile
+                    div
+                      form.navbar-nav#logoutForm(action='/users/logout' method='post')
+                        .logout(onClick="javascript:document.getElementById('logoutForm').submit();") 
+                          p Logout
+                        //- input.logout.nav-item.text-muted(type='submit' value='Logout')
           block content
-

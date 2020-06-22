@@ -3,28 +3,29 @@ const csrf = require('csurf');
 
 const { asyncHandler } = require('./utils');
 const { Project, Team, Column, Task } = require('../db/models');
-
+const { requireAuth } = require('../auth.js');
+const app = require('../app');
 const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
 
 // teams overview
-router.get('/teams', asyncHandler(async (req, res) => {
+router.get('/teams', requireAuth, asyncHandler(async (req, res) => {
   const teams = await Team.findAll()
-  const userId = req.session.auth.userId
+  // const userId = req.session.auth.userId
   const projects = await Project.findAll()
-  
+
   res.render('teams/teams', { teams })
 }))
 
 // get team creation form
-router.get('/teams/create', csrfProtection, asyncHandler(async (req, res) => {
+router.get('/teams/create', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const team = await Team.build();
 
   res.render('teams/teams-create', { team, csrfToken: req.csrfToken() })
 }));
 
 // post new team
-router.post('/teams/create', csrfProtection, asyncHandler(async (req, res, next) => {
+router.post('/teams/create', requireAuth, csrfProtection, asyncHandler(async (req, res, next) => {
   const { teamName } = req.body;
 
   const team = Team.build({ teamName });
@@ -45,7 +46,7 @@ router.post('/teams/create', csrfProtection, asyncHandler(async (req, res, next)
 }));
 
 // edit team view
-router.get('/teams/:teamId/edit', csrfProtection, asyncHandler(async (req, res) => {
+router.get('/teams/:teamId/edit', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
 
   const team = await Team.findByPk(teamId);
@@ -54,7 +55,7 @@ router.get('/teams/:teamId/edit', csrfProtection, asyncHandler(async (req, res) 
 }));
 
 // post edit
-router.post('/teams/:teamId/edit', csrfProtection, asyncHandler(async (req, res, next) => {
+router.post('/teams/:teamId/edit', requireAuth, csrfProtection, asyncHandler(async (req, res, next) => {
   const teamId = parseInt(req.params.teamId, 10);
 
   const teamToUpdate = await Team.findByPk(teamId);
@@ -79,7 +80,7 @@ router.post('/teams/:teamId/edit', csrfProtection, asyncHandler(async (req, res,
 }));
 
 // route to delete team view
-router.get('/teams/:teamId/delete', csrfProtection, asyncHandler(async (req, res) => {
+router.get('/teams/:teamId/delete', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
 
   const teamToDelete = await Team.findByPk(teamId)
@@ -88,7 +89,7 @@ router.get('/teams/:teamId/delete', csrfProtection, asyncHandler(async (req, res
 }));
 
 // delete team
-router.post('/teams/:teamId/delete', csrfProtection, asyncHandler(async (req, res) => {
+router.post('/teams/:teamId/delete', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
 
   const teamToDelete = await Team.findByPk(teamId)
