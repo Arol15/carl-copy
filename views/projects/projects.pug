@@ -3,18 +3,24 @@ include project-utils.pug
 block content
   .project-label
     div Your Projects
-  .main-page-body
-    each existingProject in projects
-      .project-square(onclick=`location.href='/teams/${teamId}/projects/${existingProject.id}/columns'` )
-        .project-options
-          a.delete-button(href=`/teams/${teamId}/projects/${existingProject.id}/delete`) &#x1D5EB
-          a.edit-button(href=`/teams/${teamId}/projects/${existingProject.id}/edit`) EDIT
-        .project-title=existingProject.projectName
-    .project-square.create-new +
-  if error
-    #createModal.modal(style="display: block")
-      include create-modal.pug
-  else
-    #createModal.modal(style="display: none")
-      include create-modal.pug
+  .main-page-body-wrapper
+    .main-page-body
+      each existingProject in projects
+        div.square-and-title
+          .project-square(onclick=`location.href='/teams/${teamId}/projects/${existingProject.id}/columns'` )
+            .project-options
+              a.edit-button(href=`/teams/${teamId}/projects/${existingProject.id}/edit`) ...
+              a.delete-button(href=`/teams/${teamId}/projects/${existingProject.id}/delete`)
+                span.fa.fa-trash
+            div.icons-wrapper
+              div.icons-menu
+                i.fa.fa-list-ul
+          .project-title=existingProject.projectName
+      .project-square.create-new +
+    if error
+      #createModal.modal(style="display: block")
+        include create-modal.pug
+    else
+      #createModal.modal(style="display: none")
+        include create-modal.pug
       
