@@ -45,7 +45,9 @@ html
                   .user-options(style="display: none")
                     div(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
                     div
-                      form.navbar-nav(action='/users/logout' method='post')
-                        input.logout.nav-item.text-muted(type='submit' value='Logout')
+                      form.navbar-nav#logoutForm(action='/users/logout' method='post')
+                        .logout(onClick="javascript:document.getElementById('logoutForm').submit();") 
+                          p Logout
+                        //- input.logout.nav-item.text-muted(type='submit' value='Logout')
           block content
 
