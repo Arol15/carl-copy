@@ -50,7 +50,7 @@ body {
 }
 
 .authForm {
-    padding: 2rem 0; 
+    padding: 0; 
     display: flex; 
     flex-direction: column;
     margin: 0px auto;    
@@ -167,6 +167,7 @@ p {
     background:  #796eff; 
     color: white;     
 }
+
 
 
 

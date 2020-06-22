@@ -3,11 +3,14 @@ include project-utils.pug
 block content
   .project-label
     div YOUR PROJECTS
-  .main-page-body
+  .main-page-body-1
     body
       +error(error)
-      form(action=`/teams/${teamId}/projects/${project.id}/edit` method='post')
-        include project-form-fields.pug
-        div
-          button(type='submit') Update Project
-          a(href=`/teams/${teamId}/projects` roll='button') Cancel
+      div.wrapper-edit-project
+        div.main-edit-project
+          div.header-edit-project Edit Your Project
+          form.edit-project(action=`/teams/${teamId}/projects/${project.id}/edit` method='post')
+            include project-form-fields.pug
+            div
+              button(type='submit') Update Project
+              a(href=`/teams/${teamId}/projects` roll='button') Cancel
