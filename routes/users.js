@@ -6,7 +6,7 @@ const { asyncHandler, csrfProtection } = require('./utils')
 const { loginUser, logoutUser, requireAuth } = require('../auth')
 
 
-router.get('/users', asyncHandler(async (req, res) => {
+router.get('/users', requireAuth, asyncHandler(async (req, res) => {
   const users = await db.User.findAll({ order: [['id', 'ASC']] })
   res.render('users/users', { users })
 
@@ -148,6 +148,7 @@ router.get('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(as
   });
   const teams = await db.Team.findAll({ attributes: ['id', 'teamName'] })
 
+
   const teammates = await db.User.findAll({
     where: {
       teamId,
@@ -173,7 +174,7 @@ router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(a
     order: [["id", "ASC"]],
     include: { model: db.Team },
   });
-  const teammates = await User.findAll({
+  const teammates = await db.User.findAll({
     where: {
       teamId: user.teamId,
     },

@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Team.associate = function(models) {
     Team.hasMany(models.User, { foreignKey: 'teamId'}),
-    Team.hasMany(models.Project, { foreignKey: 'teamId' })
+    Team.hasMany(models.Project, { foreignKey: 'teamId', onDelete: 'CASCADE', hooks: true })
   };
   return Team;
 };
