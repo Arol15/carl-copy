@@ -24,10 +24,15 @@ router.get('/teams/:teamId/projects/:projectId/columns', csrfProtection, asyncHa
   const user = await User.findOne({ where: userId });
   const initials = user.firstName[0] + user.lastName[0];
   const column = await Column.build();
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
   // TODO: Update the fetch URL for production to the heroku URL
   const response = await fetch(`http://localhost:8080/teams/${teamId}/projects/${projectId}/columns/board`)
   const state = await response.json()
-  res.render('columns/columns', { state: JSON.stringify(state), projectId, column, projects, team, userId, teamId, initials, csrfToken: req.csrfToken() });
+  res.render('columns/columns', { state: JSON.stringify(state), projectId, teammates, column, projects, team, userId, teamId, initials, csrfToken: req.csrfToken() });
 }));
 
 // TODO: Persist new task/column layout to the database
@@ -159,10 +164,15 @@ router.get('/teams/:teamId/projects/:projectId/columns/create', csrfProtection, 
   const column = await Column.build();
   const user = await User.findOne({ where: userId });
   const initials = user.firstName[0] + user.lastName[0];
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
 
   //added projects, team, userId so we can pass them through rendering.
 
-  res.render('columns/columns-create', { column, teamId, initials, projectId, projects, team, userId, csrfToken: req.csrfToken() })
+  res.render('columns/columns-create', { column, teamId, initials, teammates, projectId, projects, team, userId, csrfToken: req.csrfToken() })
 }));
 
 // post new column
@@ -182,7 +192,11 @@ router.post('/teams/:teamId/projects/:projectId/columns/create', csrfProtection,
     order: [["id", "ASC"]],
     include: { model: Team },
   });
-
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
   const { columnName } = req.body;
 
   const columnPos = await Column.count({ where: { projectId } })
@@ -198,6 +212,7 @@ router.post('/teams/:teamId/projects/:projectId/columns/create', csrfProtection,
         teamId,
         projectId,
         userId,
+        teammates,
         allTeams,
         initials,
         projects,
@@ -227,8 +242,13 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfProt
   const column = await Column.findByPk(columnId);
   const user = await User.findOne({ where: userId });
   const initials = user.firstName[0] + user.lastName[0];
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
 
-  res.render('columns/columns-edit', { column, team, initials, teamId, userId, projectId, projects, columnId, csrfToken: req.csrfToken() })
+  res.render('columns/columns-edit', { column, team, initials, teammates, teamId, userId, projectId, projects, columnId, csrfToken: req.csrfToken() })
 }));
 
 // post edit
@@ -248,6 +268,12 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfPro
     order: [["id", "ASC"]],
     include: { model: Team },
   });
+
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
   const columnToUpdate = await Column.findByPk(columnId);
 
   const { columnName } = req.body;
@@ -267,6 +293,7 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', csrfPro
         teamId,
         userId,
         projectId,
+        teammates,
         projects,
         error,
         csrfToken: req.csrfToken()
@@ -292,10 +319,15 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/delete', csrfPr
     order: [["id", "ASC"]],
     include: { model: Team },
   });
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
   // added extra keys to pass into delete view - Rocky
   const columnToDelete = await Column.findByPk(columnId)
 
-  res.render('columns/columns-delete', { columnToDelete, initials, team, userId, projects, teamId, projectId, columnId, csrfToken: req.csrfToken() })
+  res.render('columns/columns-delete', { columnToDelete, initials, teammates, team, userId, projects, teamId, projectId, columnId, csrfToken: req.csrfToken() })
 }));
 
 // delete column
