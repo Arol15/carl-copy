@@ -37,16 +37,14 @@ nav {
   display: block; 
   background: linear-gradient(to right, #FF5F6D, #FFC371); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: whitesmoke;
-  border-radius: 2px;
+  border-radius: 10px;
   line-height: 40px;  
   padding: 0.5em 0.5em; 
   letter-spacing: .025em;
 }
 
 .nav-2:hover {
-  /* background: #796eff; */
-  background: linear-gradient(to right, #4e54c8, #8f94fb);
-  font-size: 20px; 
+  background: linear-gradient(to right, #4e54c8, #8f94fb); 
 }
 
 

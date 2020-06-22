@@ -137,6 +137,8 @@ router.get('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(as
   const user = await db.User.findByPk(userId)
   const teamId = user.teamId
   const team = await db.Team.findOne({ where: teamId });
+  // created initials variable
+  const initials = user.firstName[0] + user.lastName[0];
   const projects = await db.Project.findAll({
     where: {
       teamId,
@@ -147,7 +149,14 @@ router.get('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(as
   const teams = await db.Team.findAll({ attributes: ['id', 'teamName'] })
 
 
-  res.render('users/user-edit', { user, userId, projects, team, teamId, teams, token: req.csrfToken() })
+  const teammates = await db.User.findAll({
+    where: {
+      teamId,
+    },
+  })
+
+
+  res.render('users/user-edit', { user, userId, teammates, projects, team, teamId, initials, teams, token: req.csrfToken() })
 }))
 
 
@@ -156,6 +165,8 @@ router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(a
   const userId = parseInt(req.params.id, 10)
   const user = await db.User.findByPk(userId)
   const team = await db.Team.findOne({ where: { id: user.teamId } });
+  // created initials variable
+  const initials = user.firstName[0] + user.lastName[0];
   const projects = await db.Project.findAll({
     where: {
       teamId: user.teamId,
@@ -163,6 +174,11 @@ router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(a
     order: [["id", "ASC"]],
     include: { model: db.Team },
   });
+  const teammates = await User.findAll({
+    where: {
+      teamId: user.teamId,
+    },
+  })
   const teams = await db.Team.findAll({ attributes: ['id', 'teamName'] })
   user.firstName = firstName
   user.lastName = lastName
@@ -179,6 +195,8 @@ router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(a
     res.render('users/user-edit', {
       errors,
       projects,
+      initials,
+      teammates,
       team,
       teamId: user.teamId,
       teams,
@@ -189,9 +207,12 @@ router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(a
   }
 }))
 
+// TODO: Not sure if we need this anymore -Rocky
 router.get('/users/:id/noteam/', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const userId = parseInt(req.params.id, 10)
   const user = await db.User.findByPk(userId)
+  // created initials variable
+  const initials = user.firstName[0] + user.lastName[0];
   const projects = await db.Project.findAll({
     where: {
       teamId: user.teamId,
@@ -201,7 +222,7 @@ router.get('/users/:id/noteam/', requireAuth, csrfProtection, asyncHandler(async
   });
   const team = await db.Team.findOne({ where: { id: user.teamId } });
 
-  res.render(`users/user-noteam`, { userId, user, projects })
+  res.render(`users/user-noteam`, { userId, user, projects, initials })
 }))
 // TODO: add user-delete.pug confirmation
 // router.get('/users/delete/:id(\\d+)', csrfProtection, asyncHandler(async (req, res) => {

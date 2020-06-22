@@ -46,10 +46,26 @@ window.addEventListener("DOMContentLoaded", (e) => {
   // Creates project
   let createNew = document.querySelector(".create-new");
   let createModal = document.getElementById("createModal");
-  createNew.addEventListener("click", (e) => {
-    createModal.style.display = "block";
-  });
 
+  if (createModal) {
+    createNew.addEventListener("click", (e) => {
+      createModal.style.display = "block";
+    });
+  }
+
+
+  // user options when clicking on initials
+  let initials = document.querySelector(".initials-div");
+  let openOptions = document.querySelector('.user-options');
+  initials.addEventListener('click', e => {
+    if (openOptions.style.display === 'none') openOptions.style.display = 'block';
+    else openOptions.style.display = 'none';
+    e.stopPropagation();
+  })
+
+  document.addEventListener('click', e => {
+    if (openOptions.style.display === 'block') openOptions.style.display = 'none';
+  })
   // Deletes Project
   // const deleteConfirmation = document.querySelector('.delete-confirmation')
   // const deleteButtons = document.querySelectorAll('.delete-button')

@@ -3,7 +3,7 @@ const csrf = require('csurf');
 const fetch = require('node-fetch')
 const { requireAuth } = require('../auth')
 const { asyncHandler } = require('./utils');
-const { Project, Team, Column, Task } = require('../db/models');
+const { Project, Team, Column, Task, User } = require('../db/models');
 
 const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
@@ -11,6 +11,7 @@ const csrfProtection = csrf({ cookie: true });
 router.get('/teams/:teamId/projects/:projectId/columns', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
+  // created initials variable
   const projects = await Project.findAll({
     where: {
       teamId,
@@ -20,11 +21,18 @@ router.get('/teams/:teamId/projects/:projectId/columns', requireAuth, csrfProtec
   });
   const team = await Team.findOne({ where: teamId });
   const userId = req.session.auth.userId
+  const user = await User.findOne({ where: userId });
+  const initials = user.firstName[0] + user.lastName[0];
   const column = await Column.build();
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
   // TODO: Update the fetch URL for production to the heroku URL
   const response = await fetch(`http://localhost:8080/teams/${teamId}/projects/${projectId}/columns/board`)
   const state = await response.json()
-  res.render('columns/columns', { state: JSON.stringify(state), projectId, column, projects, team, userId, teamId, csrfToken: req.csrfToken() });
+  res.render('columns/columns', { state: JSON.stringify(state), projectId, teammates, column, projects, team, userId, teamId, initials, csrfToken: req.csrfToken() });
 }));
 
 // TODO: Persist new task/column layout to the database
@@ -65,7 +73,7 @@ router.post('/columns/update', requireAuth, asyncHandler(async (req, res) => {
 
 
   const taskSave = await Task.findAll({
-    where: { columnId: [ sourceColId, destColId ] },
+    where: { columnId: [sourceColId, destColId] },
     order: [['columnIndx', 'ASC']],
   })
 
@@ -140,6 +148,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/board', asyncHandler(asyn
 router.get('/teams/:teamId/projects/:projectId/columns/create', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
+  // created initials variable
   const projects = await Project.findAll({
     where: {
       teamId,
@@ -152,17 +161,27 @@ router.get('/teams/:teamId/projects/:projectId/columns/create', requireAuth, csr
   if (req.session.auth) userId = req.session.auth.userId
   else userId = 5;
   const column = await Column.build();
+  const user = await User.findOne({ where: userId });
+  const initials = user.firstName[0] + user.lastName[0];
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
 
   //added projects, team, userId so we can pass them through rendering.
 
-  res.render('columns/columns-create', { column, teamId, projectId, projects, team, userId, csrfToken: req.csrfToken() })
+  res.render('columns/columns-create', { column, teamId, initials, teammates, projectId, projects, team, userId, csrfToken: req.csrfToken() })
 }));
 
 // post new column
-router.post('/teams/:teamId/projects/:projectId/columns', requireAuth, csrfProtection, asyncHandler(async (req, res, next) => {
+router.post('/teams/:teamId/projects/:projectId/columns/create', requireAuth, csrfProtection, asyncHandler(async (req, res, next) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const userId = req.session.auth.userId
+  const user = await User.findOne({ where: userId });
+  // created initials variable
+  const initials = user.firstName[0] + user.lastName[0];
   // const project = Project.build({ projectName, teamId });
   const allTeams = await Team.findAll();
   const projects = await Project.findAll({
@@ -172,10 +191,14 @@ router.post('/teams/:teamId/projects/:projectId/columns', requireAuth, csrfProte
     order: [["id", "ASC"]],
     include: { model: Team },
   });
-
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
   const { columnName } = req.body;
 
-  const columnPos = await Column.count({ where: { projectId }})
+  const columnPos = await Column.count({ where: { projectId } })
   const column = Column.build({ columnName, projectId, columnPos });
 
   try {
@@ -184,11 +207,13 @@ router.post('/teams/:teamId/projects/:projectId/columns', requireAuth, csrfProte
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
       const error = err.errors.map(error => error.message);
-      res.render('projects-create', {
+      res.render('columns-create', {
         teamId,
         projectId,
         userId,
+        teammates,
         allTeams,
+        initials,
         projects,
         // project,
         error,
@@ -203,6 +228,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/edit', requireA
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
+  // created initials variable
   const projects = await Project.findAll({
     where: {
       teamId,
@@ -213,8 +239,15 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/edit', requireA
   const team = await Team.findOne({ where: teamId });
   const userId = req.session.auth.userId
   const column = await Column.findByPk(columnId);
+  const user = await User.findOne({ where: userId });
+  const initials = user.firstName[0] + user.lastName[0];
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
 
-  res.render('columns/columns-edit', { column, team, teamId, userId, projectId, projects, columnId, csrfToken: req.csrfToken() })
+  res.render('columns/columns-edit', { column, team, initials, teammates, teamId, userId, projectId, projects, columnId, csrfToken: req.csrfToken() })
 }));
 
 // post edit
@@ -224,6 +257,9 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', require
   const columnId = parseInt(req.params.columnId, 10);
   const team = await Team.findOne({ where: teamId });
   const userId = req.session.auth.userId
+  const user = await User.findOne({ where: userId });
+  // created initials variable
+  const initials = user.firstName[0] + user.lastName[0];
   const projects = await Project.findAll({
     where: {
       teamId,
@@ -231,6 +267,12 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', require
     order: [["id", "ASC"]],
     include: { model: Team },
   });
+
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
   const columnToUpdate = await Column.findByPk(columnId);
 
   const { columnName } = req.body;
@@ -245,10 +287,12 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/edit', require
       const error = e.errors.map(error => error.message);
       res.render('projects/project-edit', {
         column: { ...column, id: columnId },
+        initials,
         team,
         teamId,
         userId,
         projectId,
+        teammates,
         projects,
         error,
         csrfToken: req.csrfToken()
@@ -263,7 +307,10 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/delete', requir
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
   const team = await Team.findOne({ where: teamId });
+  // created initials variable
   const userId = req.session.auth.userId
+  const user = await User.findOne({ where: userId });
+  const initials = user.firstName[0] + user.lastName[0];
   const projects = await Project.findAll({
     where: {
       teamId,
@@ -271,10 +318,15 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/delete', requir
     order: [["id", "ASC"]],
     include: { model: Team },
   });
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
   // added extra keys to pass into delete view - Rocky
   const columnToDelete = await Column.findByPk(columnId)
 
-  res.render('columns/columns-delete', { columnToDelete, team, userId, projects, teamId, projectId, columnId, csrfToken: req.csrfToken() })
+  res.render('columns/columns-delete', { columnToDelete, initials, teammates, team, userId, projects, teamId, projectId, columnId, csrfToken: req.csrfToken() })
 }));
 
 // delete column
