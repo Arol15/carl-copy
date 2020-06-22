@@ -31,16 +31,19 @@ html, body {
   margin: auto;
   padding: 20px;
   width: 50%;
-  height: 270px;
+  height: 200px;
   display: grid;
   grid-template-rows: 30% 70%;
   border-radius: 10px;
-  border: 10px solid rgb(66, 66, 66);
+  border: 3px solid #151b26;
+
 }
 
 .modal-header {
+  display: flex;
+  align-items: center;
   border-bottom: 0.1px solid rgb(196, 196, 196);
-  font-size: 30px;
+  font-size: 24px;
 }
 
 .modal-form {
@@ -49,35 +52,49 @@ html, body {
   align-items: flex-end;
 }
 
-.modal-form > label > input {
+/* .modal-form > label > input {
   width: 400px;
   height: 40px;
   color: black;
   border: 1px solid rgb(196, 196, 196);
   margin: 10px 0px;
-}
+} */
 
 .modal-form > * {
-  padding: 15px;
+  padding: 15px 0;
 }
 
 .modal-button {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   color: rgba(226, 226, 226, 0.897);
   height: 50px;
-  width: 200px;
+  width: 160px;
   align-self: flex-end;
-  background-color: rgb(196, 109, 109);
-  border-radius: 2px;
+  background-color: lightseagreen;
+  border-radius: 4px;
+  border: none; 
 }
 
 .modal-button:hover {
   color: white;
-  background-color: rgb(194, 11, 11);
   transition: 0.3s;
   transform: scale(1.05);
   cursor: pointer;
+}
+
+.modal-form a {
+  text-decoration: none;
+}
+
+.project-form-fields label {
+  padding: 0 10px;  
+}
+
+.project-form-fields input {
+  padding: 5px; 
+  border: 1px solid rgb(196, 196, 196); 
+  border-radius: 3px; 
 }
 
 .main {
@@ -512,5 +529,20 @@ i {
   font-size: 14px; 
   color: #151b26; 
   font-weight: 500; 
+}
+
+.wrapper-edit-project {
+  display: flex; 
+  flex-direction: row;
+  justify-content: center;
+  width: 80%;  
+  border: 1px solid black; 
+  margin: 30px; 
+}
+
+.main-edit-project {
+  display: flex;
+  /* flex-direction: column; */
+ 
 }
 
