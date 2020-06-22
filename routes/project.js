@@ -199,7 +199,7 @@ router.get(
 
 // post edit
 router.post(
-  "/teams/:teamId/projects/:projectId/edit",
+  "/teams/:teamId/projects/:projectId",
   requireAuth,
   csrfProtection,
   asyncHandler(async (req, res, next) => {

@@ -53,6 +53,20 @@ window.addEventListener("DOMContentLoaded", (e) => {
     });
   }
 
+  //Edits project
+  let editButtons = document.querySelectorAll('.edit-button')
+  let editModals = document.querySelectorAll('.editModal')
+  if (editModals) {
+    for (const editButton of editButtons) {
+      editButton.addEventListener('click', e => {
+        let projectSquare = e.target.parentElement.parentElement
+        for (const editModal of editModals) {
+          if (editModal.id === projectSquare.id) editModal.style.display = "block"
+        }
+        e.stopPropagation()
+      })
+    }
+  }
 
   // user options when clicking on initials
   let initials = document.querySelector(".initials-div");

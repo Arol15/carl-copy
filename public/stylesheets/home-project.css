@@ -178,6 +178,8 @@ html, body {
   flex-direction: column;
   padding: 15px 0; 
   font-size: 15px; 
+  height: 175px;
+  overflow: auto;
 }
 
 .teammates-header {
@@ -255,7 +257,6 @@ i {
 .home-icons {
   padding-top: 5px;
   padding-bottom: 5px;
-  background: rgba(255,255,255,.16);
   font-size: 16px; 
   box-shadow: 0 2px 12px 0 rgba(255,255,255,.16);
   display: flex; 
@@ -264,6 +265,7 @@ i {
 }
 
 .home-icons:hover {
+  background: rgba(255,255,255,.16);
   /* background-color: rgba(231, 231, 231, 1); */
   color: rgb(50, 50, 78);
   transition: 0.5s;
