@@ -4,6 +4,12 @@ module.exports = (sequelize, DataTypes) => {
     columnName: {
       allowNull: false,
       type: DataTypes.STRING(75),
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'Please provide a value for Column Name.'
+        },
+      }
     },
     columnPos: {
       allowNull: false,

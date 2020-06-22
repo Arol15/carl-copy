@@ -39,6 +39,16 @@ const TaskOperation = styled.div`
   }
 `
 
+const TaskDeleteBtn = styled.button`
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  padding: 0px;
+`
+
 class Task extends React.Component {
   render() {
     return (
@@ -48,10 +58,16 @@ class Task extends React.Component {
 
           <TaskContainer {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} isDragging={snapshot.isDragging}>
             {this.props.task.content}
-            {<TaskEdit><a href={`${window.location.pathname}/${this.props.columnId}/tasks/${parseInt(this.props.task.id.match(/\d+/)[0], 10)}/delete`}>
-              <TaskOperation className='fa fa-trash'></TaskOperation></a>
-              <a href={`${window.location.pathname}/${this.props.columnId}/tasks/${parseInt(this.props.task.id.match(/\d+/)[0], 10)}/edit`}>
-                <TaskOperation className="fa fa-pencil-square-o"></TaskOperation></a></TaskEdit>}
+            {
+              <TaskEdit>
+                <form method='post' action={`${window.location.pathname}/${this.props.columnId}/tasks/${parseInt(this.props.task.id.match(/\d+/)[0], 10)}/delete`}>
+                  <TaskDeleteBtn type='submit'><TaskOperation className='fa fa-trash'></TaskOperation></TaskDeleteBtn>
+                </form>
+                <a href={`${window.location.pathname}/${this.props.columnId}/tasks/${parseInt(this.props.task.id.match(/\d+/)[0], 10)}/edit`}>
+                  <TaskOperation className="fa fa-pencil-square-o"></TaskOperation>
+                </a>
+              </TaskEdit>
+            }
 
           </TaskContainer>
         )}
