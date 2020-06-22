@@ -7,7 +7,8 @@ const { Project, Team, Column, Task, User } = require('../db/models');
 
 const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
-let url;
+
+let url
 if (process.env.NODE_ENV === 'production') {
   url = 'https://still-reef-05529.herokuapp.com'
 } else {
@@ -215,9 +216,10 @@ router.post('/teams/:teamId/projects/:projectId/columns/create', requireAuth, cs
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
       const error = err.errors.map(error => error.message);
-      res.render('columns-create', {
+      res.render('columns/columns', {
         teamId,
         projectId,
+        column,
         userId,
         teammates,
         allTeams,

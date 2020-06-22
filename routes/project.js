@@ -199,7 +199,7 @@ router.get(
 
 // post edit
 router.post(
-  "/teams/:teamId/projects/:projectId/edit",
+  "/teams/:teamId/projects/:projectId",
   requireAuth,
   csrfProtection,
   asyncHandler(async (req, res, next) => {
@@ -232,8 +232,8 @@ router.post(
       res.redirect(`/teams/${teamId}/projects`);
     } catch (err) {
       if (err.name === "SequelizeValidationError") {
-        const error = err.errors.map((error) => error.message);
-        res.render("projects/project-edit", {
+        const editError = err.errors.map((error) => error.message);
+        res.render("projects/projects", {
           userId,
           team,
           teammates,
@@ -242,7 +242,7 @@ router.post(
           teamId,
           projects,
           project: { ...project, id: projectId },
-          error,
+          editError,
           csrfToken: req.csrfToken(),
         });
       } else next(err);
