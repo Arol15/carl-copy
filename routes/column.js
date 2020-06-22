@@ -169,7 +169,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/create', requireAuth, csr
   if (req.session.auth) userId = req.session.auth.userId
   else userId = 5;
   const column = await Column.build();
-  const user = await User.findOne({ where: userId });
+  const user = await User.findByPk(userId);
   const initials = user.firstName[0] + user.lastName[0];
   const teammates = await User.findAll({
     where: {

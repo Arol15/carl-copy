@@ -2,22 +2,58 @@ const app = require("../app");
 const request = require("supertest");
 const expect = require("chai").expect;
 var cheerio = require("cheerio");
-const { pause, loadModel, migrationsConfig, seedsConfig, moduleInitializationErrorMessage } = require('./test-utils');
-const Runner = require('umzug');
+const login = require('./helper').login;
+const superTestSession = require('supertest-session');
+
+let testSession;
+
+beforeEach( () => {
+  testSession = superTestSession(app)
+})
+
+const session = {
+  // "cookie": {
+  //   "originalMaxAge": null,
+  //   "expires": null,
+  //   "httpOnly": true,
+  //   "path": "/"
+  // },
+  "auth": {
+    "userId": 5
+  }
+}
 
 describe("Columns create form", () => {
-  let res, $;
-
-  before(async () => {
-    res = await request(app)
-      .get("/teams/1/projects/1/columns/create")
-      .expect("Content-type", /html/)
-      .expect(200);
-    $ = cheerio.load(res.text);
+  let res, $, authenticatedSession;
+  
+  beforeEach(function (done) {
+    testSession.post('/users/login')
+      .send({ email: 'test@test.com', password: '1Az@' })
+      .expect(200)
+      .end(function (err) {
+        if (err) return done(err);
+        authenticatedSession = testSession;
+        return done();
+      });
   });
 
-  it("renders a form that posts to create columns", () => {
+  // before(async () => {
+  //   res = await request(app)
+  //     .get("/teams/1/projects/1/columns/create")
+  //     .expect("Content-type", "text/plain; charset=utf-8")
+  //     .expect(200);
+  //   $ = cheerio.load(res.text);
+  // });
+
+  it("renders a form that posts to create columns", async () => {
+    res = await authenticatedSession
+      .get("/teams/1/projects/1/columns/create")
+      // .expect("Content-Type", "text/plain; charset=utf-8")
+      // .expect(200);
+    console.log(res.text)
+    $ = cheerio.load(res.text);
     const form = $("form");
+    // console.log(form)
     expect(form.length).to.equal(2);
     expect(form.attr("action")).to.equal("/teams/1/projects/1/columns/create");
     expect(form.attr("method")).to.equal("post");
