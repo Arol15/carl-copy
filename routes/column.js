@@ -7,7 +7,8 @@ const { Project, Team, Column, Task, User } = require('../db/models');
 
 const router = express.Router();
 const csrfProtection = csrf({ cookie: true });
-let url;
+
+let url
 if (process.env.NODE_ENV === 'production') {
   url = 'https://still-reef-05529.herokuapp.com'
 } else {
