@@ -49,7 +49,7 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/create',
 
   const { taskDescription, dueDate, columnIndx } = req.body;
 
-  const task = Task.build({ taskDescription, dueDate, columnIndx, columnId});
+  const task = Task.build({ taskDescription, dueDate, columnIndx, columnId });
 
   try {
     await task.save();
