@@ -18,8 +18,35 @@ const TaskContainer = styled.div`
   background-color: ${props => (props.isDragging ? 'skyblue' : 'white')};
 
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+`
+
+const TaskEdit = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+const TaskOperation = styled.div`
+  text-decoration: none;
+  padding: 5px;
+  color: #bcbcbc;
+  transition: fill 0.25s;
+
+
+  &:hover {
+    color: lightseagreen;
+  }
+`
+
+const TaskDeleteBtn = styled.button`
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  padding: 0px;
 `
 
 class Task extends React.Component {
@@ -30,8 +57,17 @@ class Task extends React.Component {
         {(provided, snapshot) => (
 
           <TaskContainer {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} isDragging={snapshot.isDragging}>
-
             {this.props.task.content}
+            {
+              <TaskEdit>
+                <form method='post' action={`${window.location.pathname}/${this.props.columnId}/tasks/${parseInt(this.props.task.id.match(/\d+/)[0], 10)}/delete`}>
+                  <TaskDeleteBtn type='submit'><TaskOperation className='fa fa-trash'></TaskOperation></TaskDeleteBtn>
+                </form>
+                <a href={`${window.location.pathname}/${this.props.columnId}/tasks/${parseInt(this.props.task.id.match(/\d+/)[0], 10)}/edit`}>
+                  <TaskOperation className="fa fa-pencil-square-o"></TaskOperation>
+                </a>
+              </TaskEdit>
+            }
 
           </TaskContainer>
         )}
@@ -52,6 +88,7 @@ const ColumnContainer = styled.div`
 const Title = styled.h3`
   padding: 8px;
   text-align: center;
+  font-weight: 500;
 `
 const TaskList = styled.div`
   padding: 8px;
@@ -62,6 +99,7 @@ const TaskList = styled.div`
 `
 
 const TaskAdd = styled.a`
+  display: flex;
   text-decoration: none;
   outline: none;
   font-size: 22px;
@@ -69,11 +107,12 @@ const TaskAdd = styled.a`
   height: 32px;
   margin: 8px;
   background-color: white;
+  color: lightseagreen;
   border: 1px solid lightgrey;
   border-radius: 4px;
   box-shadow: 0 1px 3px 0 rgba(21,27,38,.15);
-  text-align: center;
   align-items: center;
+  justify-content: center;
 `
 
 
@@ -87,7 +126,7 @@ class Column extends React.Component {
           <ColumnContainer {...provided.draggableProps} ref={provided.innerRef}>
 
             <Title {...provided.dragHandleProps}>{this.props.column.title}</Title>
-            {<TaskAdd href={`${window.location.pathname}/${parseInt(this.props.column.id.match(/\d+/)[0], 10)}/tasks/create`}>+</TaskAdd>}
+            {<TaskAdd className="fa fa-plus" href={`${window.location.pathname}/${parseInt(this.props.column.id.match(/\d+/)[0], 10)}/tasks/create`}></TaskAdd>}
 
             <Droppable type='task' droppableId={this.props.column.id}>
               {(provided, snapshot) => (
@@ -95,8 +134,9 @@ class Column extends React.Component {
                 <TaskList ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}>
 
                   {this.props.tasks.map((task, index) => (
-                    <Task key={task.id} task={task} index={index} />
+                    <Task key={task.id} columnId={parseInt(this.props.column.id.match(/\d+/)[0], 10)} task={task} index={index} />
                   ))}
+
 
                   {provided.placeholder}
                 </TaskList>
