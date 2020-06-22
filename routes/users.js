@@ -148,8 +148,14 @@ router.get('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(as
   });
   const teams = await db.Team.findAll({ attributes: ['id', 'teamName'] })
 
+  const teammates = await db.User.findAll({
+    where: {
+      teamId,
+    },
+  })
 
-  res.render('users/user-edit', { user, userId, projects, team, teamId, initials, teams, token: req.csrfToken() })
+
+  res.render('users/user-edit', { user, userId, teammates, projects, team, teamId, initials, teams, token: req.csrfToken() })
 }))
 
 
@@ -167,6 +173,11 @@ router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(a
     order: [["id", "ASC"]],
     include: { model: db.Team },
   });
+  const teammates = await User.findAll({
+    where: {
+      teamId: user.teamId,
+    },
+  })
   const teams = await db.Team.findAll({ attributes: ['id', 'teamName'] })
   user.firstName = firstName
   user.lastName = lastName
@@ -184,6 +195,7 @@ router.post('/users/edit/:id(\\d+)', requireAuth, csrfProtection, asyncHandler(a
       errors,
       projects,
       initials,
+      teammates,
       team,
       teamId: user.teamId,
       teams,
