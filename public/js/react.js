@@ -57,6 +57,21 @@ const TaskList = styled.div`
   min-height: 100px;
 `
 
+const TaskAdd = styled.button`
+  font-size: 22px;
+  padding: 3px;
+  height: 32px;
+  margin: 8px;
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px 0 rgba(21,27,38,.15);
+  text-align: center;
+  align-items: center;
+`
+
+
+
 class Column extends React.Component {
   render() {
     return (
@@ -64,7 +79,10 @@ class Column extends React.Component {
         {(provided) => (
 
           <ColumnContainer {...provided.draggableProps} ref={provided.innerRef}>
+
             <Title {...provided.dragHandleProps}>{this.props.column.title}</Title>
+            <TaskAdd>+</TaskAdd>
+            {/* {console.log(this.props.column.id)} */}
 
             <Droppable type='task' droppableId={this.props.column.id}>
               {(provided, snapshot) => (
