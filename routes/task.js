@@ -132,7 +132,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/:taskId/d
 
 
 // delete task
-router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/:taskId/delete', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
+router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/:taskId/delete', requireAuth, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
@@ -141,7 +141,7 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/:taskId/
   const taskToDelete = await Task.findByPk(taskId);
 
   await taskToDelete.destroy();
-  res.redirect(`/teams/${teamId}/projects/${projectId}/columns/${columnId}/tasks`);
+  res.redirect(`/teams/${teamId}/projects/${projectId}/columns`);
 }));
 
 
