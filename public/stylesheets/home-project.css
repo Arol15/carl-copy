@@ -229,12 +229,17 @@ html, body {
 .initials-div {
   height: 35px;
   width: 35px;
-  border: black 1px solid;
+  border: black 2px solid;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin:0 15px;
+  background-color: rgb(132, 13, 132);
+}
+
+.initials-div > p {
+  color: white;
 }
 
 .initials-div:hover {
@@ -341,6 +346,8 @@ html, body {
   grid-template-rows: 34% 66%;
 }
 
+
+
 .project-options {
   display: flex;
   justify-content: space-evenly;
@@ -375,13 +382,18 @@ html, body {
 }
 .project-square.create-new {
   font-size: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-color: white;
   border: 2px dashed gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.project-square.create-new > p {
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+}
 
 
 .edit-button {

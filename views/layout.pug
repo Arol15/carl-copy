@@ -39,9 +39,10 @@ html
               h3 Home
             h3 Team: #{team.teamName}
             .nav-bar-div
-              h3 Welcome #{user.firstName}
+              h3 Welcome #{user.firstName}!
               if userId
-                .initials-div #{initials}
+                .initials-div 
+                  p #{initials}
                   .user-options(style="display: none")
                     div(onclick=`location.href='/users/edit/${userId}';`) EDIT PROFILE
                     div
