@@ -5,8 +5,8 @@ const { DragDropContext, Draggable, Droppable } = window.ReactBeautifulDnd;
 const styled = window.styled
 
 let url;
-// url = 'https://still-reef-05529.herokuapp.com'
-url = 'http://localhost:8080'
+url = 'https://still-reef-05529.herokuapp.com'
+// url = 'http://localhost:8080'
 
 const TaskContainer = styled.div`
   border: 1px solid lightgrey;
@@ -159,11 +159,7 @@ class App extends React.Component {
       const columnResult = { source, destination, draggableId, newColumnOrder }
 
       // TODO: persist order state to database here
-<<<<<<< HEAD
-      fetch(`http://localhost:8080/columns/update`, {
-=======
       fetch(`${url}/columns/update`, {
->>>>>>> master
         method: 'POST',
         body: JSON.stringify(columnResult),
         headers: { 'Content-Type': 'application/json'}
@@ -194,11 +190,7 @@ class App extends React.Component {
       this.setState(newState)
 
       // TODO: persist order state to database here
-<<<<<<< HEAD
-      fetch(`http://localhost:8080/columns/update`, {
-=======
       fetch(`${url}/columns/update`, {
->>>>>>> master
         method: 'POST',
         body: JSON.stringify(result),
         headers: { 'Content-Type': 'application/json'}
@@ -235,11 +227,7 @@ class App extends React.Component {
     this.setState(newState)
 
     // TODO: persist order state to database here
-<<<<<<< HEAD
-    fetch(`http://localhost:8080/columns/update`, {
-=======
     fetch(`${url}/columns/update`, {
->>>>>>> master
       method: 'POST',
       body: JSON.stringify(result),
       headers: { 'Content-Type': 'application/json'}
