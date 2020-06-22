@@ -73,7 +73,7 @@ router.get('/users/login', csrfProtection, asyncHandler(async (req, res) => {
 }))
 
 
-router.post('/users/login', asyncHandler(async (req, res) => {
+router.post('/users/login', csrfProtection, asyncHandler(async (req, res) => {
   const { email, password } = req.body
   let errors = []
 
