@@ -75,11 +75,12 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/create',
       teamId,
     },
   })
-  const { taskDescription, dueDate, columnIndx } = req.body;
+  const { taskDescription, dueDate } = req.body;
   const team = await Team.findOne({ where: teamId });
   const user = await User.findOne({ where: userId });
   const initials = user.firstName[0] + user.lastName[0];
 
+  const columnIndx = await Task.count({ where: { columnId } })
   const task = Task.build({ taskDescription, dueDate, columnIndx, columnId });
 
   try {
