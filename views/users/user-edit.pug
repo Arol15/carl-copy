@@ -6,13 +6,13 @@ block content
   .wrapper-edit
     body
       +validationErrorSummary(errors)
-      form.form-group(class='authForm-edit' action=`/users/edit/${userId}` method='post')
-        h5.text-center.py-4.text-muted Edit Profile
-        input(type='hidden' name='_csrf' value=token)
+      h3.text-center.text-muted Edit Profile
+      form.form-group-edit-user(class='authForm-edit' action=`/users/edit/${userId}` method='post')
+        input.edit(type='hidden' name='_csrf' value=token)
         +field('First Name', 'firstName', user.firstName)
         +field('Last Name', 'lastName', user.lastName)
         +field('Email Address', 'email', user.email)
-        div.form-group
+        div.form-group-edit
               label Team
               select.custom-select.custom-select.mb-3(name='teamId')
                 each existingTeam in teams
