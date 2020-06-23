@@ -127,5 +127,9 @@ it('exists and creates a good instance',  async  ()  =>  {
 - Allow users to have many teams
 - Allow a user to remove team members
 - Update unit tests so that it can log in to pass the test statements
+- Add Modals to edit tasks and create tasks
+- Allow users to create teams
+- Allow users to delete teams
+- Allow users to invite other users to team
 
 
