@@ -10,10 +10,10 @@ window.addEventListener("DOMContentLoaded", (e) => {
   sideBarOpener.addEventListener("click", (e) => {
     if (sideBar.getAttribute("class") === "side-bar") {
       sideBar.setAttribute("class", "side-bar side-bar__isCollapsed");
-      sideBarOpener.innerHTML = "⇛";
+      //sideBarOpener.innerHTML = "⇛";
     } else {
       sideBar.setAttribute("class", "side-bar");
-      sideBarOpener.innerHTML = "⇚";
+      //sideBarOpener.innerHTML = "⇚";
     }
   });
 
