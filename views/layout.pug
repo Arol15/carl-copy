@@ -52,7 +52,10 @@ html
             if team
               h3 Your Team: #{team.teamName}
             .nav-bar-div
-              h3 Welcome #{user.firstName}!
+              if user
+                h3 Welcome #{user.firstName}!
+              else
+                h3 Welcome Test User!
               if userId
                 .initials-div 
                   p #{initials}
