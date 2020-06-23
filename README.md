@@ -74,10 +74,71 @@ and maybe gif
 # Technical Challenges
 
 ### Front-end
-- front end challenges
+- React Components
+  - utilized React Beautiful DnD to create fluid, intuitive interactions with task cards in the browser
+  - used node-fetch to persist data and positioning of tasks/columns to the database on dragEnd events
+  - created several custom class-based React components for adding tasks/columns
+```jsx
+class Column extends React.Component {
+  render() {
+    return (
+      <Draggable draggableId={this.props.column.id} index={this.props.index}>
+        {(provided) => (
+
+          <ColumnContainer {...provided.draggableProps} ref={provided.innerRef}>
+
+
+            <ColHeader>
+              <Title {...provided.dragHandleProps}>{this.props.column.title}</Title>
+                <ColumnOperation>
+                  <form method='post' action={`${window.location.pathname}/${parseInt(this.props.column.id.match(/\d+/)[0], 10)}/delete`}>
+                      <TaskDeleteBtn type='submit'><TaskOperation className='fa fa-trash'></TaskOperation></TaskDeleteBtn>
+                  </form>
+                  <a href={`${window.location.pathname}/${parseInt(this.props.column.id.match(/\d+/)[0], 10)}/edit`}>
+                      <TaskOperation className="fa fa-pencil-square-o"></TaskOperation>
+                  </a>
+                </ColumnOperation>
+            </ColHeader>
+
+
+            <TaskAdd className="fa fa-plus" href={`${window.location.pathname}/${parseInt(this.props.column.id.match(/\d+/)[0], 10)}/tasks/create`}></TaskAdd>
+
+            <Droppable type='task' droppableId={this.props.column.id}>
+              {(provided, snapshot) => (
+
+                <TaskList ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}>
+
+                  {this.props.tasks.map((task, index) => (
+                    <Task key={task.id} columnId={parseInt(this.props.column.id.match(/\d+/)[0], 10)} task={task} index={index} />
+                  ))}
+
+
+                  {provided.placeholder}
+                </TaskList>
+              )}
+            </Droppable>
+
+          </ColumnContainer>
+
+        )}
+      </Draggable>
+    )
+  }
+}
+```
 ### Back-end
 - Unit Tests
 	- decided to use customized functions to create model instances instead of using separate seed file for test environment
+- Sequelize
+  - implemented custom models for users, teams, projects, and tasks
+  - utilized Sequelize hooks to encrpyt and hash registration passwords using the bcryptjs package
+  - used custom data validation to confirm data input
+- Authorization/Authentication
+  - implemented express-session to track and persist end-user login state
+- Express
+  - used Express to handle Restful API endpoints
+  - created custom middleware to manage security on website
+  - added routes to handle CRUD operations for users, tasks, teams, projects, and columns
 ```javascript
 async  function  testCreate(callback)  {
 	let succeeded =  true;
