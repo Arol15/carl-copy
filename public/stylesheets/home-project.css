@@ -772,6 +772,30 @@ i {
   font-size: 14px; 
 }
 
+.create-column {
+  margin: 20px auto 0; 
+}
+
+.button-add-column {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: lightseagreen; 
+  border: 1px solid lightseagreen; 
+  border-radius: 10px;
+  width: 200px; 
+  text-align: center; 
+  height: 40px; 
+}
+
+.button-add-column:hover {
+  cursor: pointer; 
+  background-color: lightseagreen;
+  color: white; 
+
+}
+
 
 
 
