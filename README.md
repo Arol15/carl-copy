@@ -66,10 +66,10 @@ and maybe gif
 		- homepage
 		- form elements with correct fields
 
-![unit-tests](public/images/test-screenshot-1)
-![unit-tests](public/images/test-screenshot-2)
-![unit-tests](public/images/test-screenshot-3)
-![unit-tests](public/images/test-screenshot-4)
+![unit-tests](public/images/test-screenshot-1.png)
+![unit-tests](public/images/test-screenshot-2.png)
+![unit-tests](public/images/test-screenshot-3.png)
+![unit-tests](public/images/test-screenshot-4.png)
 
 # Technical Challenges
 
