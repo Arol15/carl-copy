@@ -127,8 +127,6 @@ class Column extends React.Component {
 }
 ```
 ### Back-end
-- Unit Tests
-	- decided to use customized functions to create model instances instead of using separate seed file for test environment
 - Sequelize
   - implemented custom models for users, teams, projects, and tasks
   - utilized Sequelize hooks to encrpyt and hash registration passwords using the bcryptjs package
@@ -139,6 +137,9 @@ class Column extends React.Component {
   - used Express to handle Restful API endpoints
   - created custom middleware to manage security on website
   - added routes to handle CRUD operations for users, tasks, teams, projects, and columns
+- Unit Tests
+	- decided to use customized functions to create model instances instead of using separate seed file for test environment
+
 ```javascript
 async  function  testCreate(callback)  {
 	let succeeded =  true;
