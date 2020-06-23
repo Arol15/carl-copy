@@ -42,10 +42,6 @@ Tasks can be assigned to specific projects where they can be organized into cate
 ![home-page]()
 
 - Drag-n-drop using React
-```javascript
-code snippet using react
-and maybe gif
-```
 
 - Create and manage projects
 ![proj-CRUD-gif]()
