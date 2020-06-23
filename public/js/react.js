@@ -5,8 +5,8 @@ const { DragDropContext, Draggable, Droppable } = window.ReactBeautifulDnd;
 const styled = window.styled
 
 let url;
-url = 'https://hidden-fortress-08833.herokuapp.com'
-// url = 'http://localhost:8080'
+// url = 'https://serene-journey-86279.herokuapp.com'
+url = 'http://localhost:8080'
 
 const TaskContainer = styled.div`
   border: 1px solid lightgrey;
@@ -202,8 +202,8 @@ class App extends React.Component {
       fetch(`${url}/columns/update`, {
         method: 'POST',
         body: JSON.stringify(columnResult),
-        headers: { 'Content-Type': 'application/json'}
-        })
+        headers: { 'Content-Type': 'application/json' }
+      })
         .catch(err => console.log(err))
 
       return
@@ -233,8 +233,8 @@ class App extends React.Component {
       fetch(`${url}/columns/update`, {
         method: 'POST',
         body: JSON.stringify(result),
-        headers: { 'Content-Type': 'application/json'}
-        })
+        headers: { 'Content-Type': 'application/json' }
+      })
         .catch(err => console.log(err))
 
       return
@@ -270,8 +270,8 @@ class App extends React.Component {
     fetch(`${url}/columns/update`, {
       method: 'POST',
       body: JSON.stringify(result),
-      headers: { 'Content-Type': 'application/json'}
-      })
+      headers: { 'Content-Type': 'application/json' }
+    })
       .catch(err => console.log(err))
   }
 
@@ -286,7 +286,7 @@ class App extends React.Component {
               {this.state.columnOrder.map((columnId, index) => {
                 const column = this.state.columns[columnId]
                 const tasks = column.taskIds.map(taskId => this.state.tasks[taskId])
-                return <Column key={column.id} column={column} tasks={tasks} index={index}/>
+                return <Column key={column.id} column={column} tasks={tasks} index={index} />
               })}
 
               {provided.placeholder}

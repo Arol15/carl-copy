@@ -2,13 +2,12 @@ extends ../layout.pug
 include task-utils.pug
 
 block content
-  h3 Create New Task
-
-  body
-    +error(error)
-    form(action=`/teams/${teamId}/projects/${projectId}/columns/${columnId}/tasks/create` method='post')
-      include task-form-fields.pug
-      div
+  .wrapper-edit
+    body
+      +error(error)
+      h3.text-center.text-muted Create New Task
+      form.form-group-edit-user(action=`/teams/${teamId}/projects/${projectId}/columns/${columnId}/tasks/create` method='post')
+        include task-form-fields.pug
+        div.py-4
           button(type='submit') Create
-      div
-        a(href=`/teams/${teamId}/projects/${projectId}/columns` role='button') Cancel
+          a(href=`/teams/${teamId}/projects/${projectId}/columns` role='button') Cancel

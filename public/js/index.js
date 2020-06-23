@@ -18,28 +18,29 @@ window.addEventListener("DOMContentLoaded", (e) => {
   });
 
   // adds to favorites
-  for (const favoriteButton of favoriteButtons) {
-    favoriteButton.addEventListener("click", (e) => {
-      let previousSiblingInnerHTML =
-        favoriteButton.previousElementSibling.innerHTML;
-      let node = document.createElement("p");
-      node.appendChild(document.createTextNode(previousSiblingInnerHTML));
-      node.setAttribute("class", `favorite-project`);
-      node.setAttribute("id", previousSiblingInnerHTML);
-      // console.log(node);
-      if (favoriteButton.getAttribute("class") === "favorite-click favorited") {
-        favoriteButton.setAttribute("class", "favorite-click");
-        favoriteButton.innerHTML = "☆";
-        favoriteDiv.removeChild(
-          document.getElementById(previousSiblingInnerHTML)
-        );
-      } else {
-        favoriteDiv.appendChild(node);
-        favoriteButton.setAttribute("class", "favorite-click favorited");
-        favoriteButton.innerHTML = "★";
-      }
-    });
-  }
+  //FUTURE IMPLEMENTATIONS???
+  // for (const favoriteButton of favoriteButtons) {
+  //   favoriteButton.addEventListener("click", (e) => {
+  //     let previousSiblingInnerHTML =
+  //       favoriteButton.previousElementSibling.innerHTML;
+  //     let node = document.createElement("p");
+  //     node.appendChild(document.createTextNode(previousSiblingInnerHTML));
+  //     node.setAttribute("class", `favorite-project`);
+  //     node.setAttribute("id", previousSiblingInnerHTML);
+  //     // console.log(node);
+  //     if (favoriteButton.getAttribute("class") === "favorite-click favorited") {
+  //       favoriteButton.setAttribute("class", "favorite-click");
+  //       favoriteButton.innerHTML = "☆";
+  //       favoriteDiv.removeChild(
+  //         document.getElementById(previousSiblingInnerHTML)
+  //       );
+  //     } else {
+  //       favoriteDiv.appendChild(node);
+  //       favoriteButton.setAttribute("class", "favorite-click favorited");
+  //       favoriteButton.innerHTML = "★";
+  //     }
+  //   });
+  // }
 
 
 
