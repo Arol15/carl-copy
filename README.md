@@ -74,7 +74,11 @@ and maybe gif
 # Technical Challenges
 
 ### Front-end
-- front end challenges
+- Using custom CSS 
+- Implementing modals into pages
+- Using autoplaying vidoe
+- Implementing JS to pug files
+
 ### Back-end
 - Unit Tests
 	- decided to use customized functions to create model instances instead of using separate seed file for test environment
