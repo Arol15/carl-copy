@@ -5,7 +5,8 @@
 } */
 
 html, body {
-  height: 100%;
+  /* max-height: 800px;  */
+  height: 100%; 
   margin: auto;
   color: #273240;
   background: #f6f8f9; 
@@ -101,6 +102,7 @@ html, body {
   height: 100%;
   width: 100%;
   display: flex;
+  /* flex-direction: row; */
   background-color: #f6f8f9;
 }
 
@@ -130,16 +132,12 @@ html, body {
 
 .side-bar {
   background: linear-gradient(to right, #141e30, #243b55);
-  /* background-color: #151b26;   */
+  /* height: 100vh;  */
   display: flex;
-  /* grid-template-rows: 20% 20% 20% 40%; */
-  height: 100vh; 
-  /* flex-direction: column; */
   transition: margin-left 250ms ease-out, transform 250ms ease-out;
-  /* height: auto; */
   width: 245px;
   min-width: 245px;
-  min-height: 300px; 
+  min-height: 500px; 
   flex-direction: column; 
   justify-content: space-between;
 }
@@ -360,7 +358,7 @@ i {
   height: 75px; 
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 2px 12px 0 rgba(36,50,66,.075);
+  box-shadow: 0 2px 12px 0 rgba(36,50,66,.075); 
   width: 100%; 
 }
 
@@ -373,21 +371,19 @@ i {
 .initials-div {
   height: 35px;
   width: 35px;
-  border: black 2px solid;
+  border: 2px solid lightseagreen;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin:0 15px;
-  background-color: rgb(132, 13, 132);
-}
-
-.initials-div > p {
-  color: white;
+  margin: 0 15px;
+  /* background-color: rgb(132, 13, 132); */
 }
 
 .initials-div:hover {
   cursor: pointer;
+  background: lightseagreen;
+  color: black; 
 }
 
 .user-options {
@@ -397,14 +393,15 @@ i {
   background-color: white;
   height: auto;
   width: 175px;
-  border: rgb(196, 196, 196) 2px solid;
-  box-shadow: 4px 4px 2px;
+  border: rgb(196, 196, 196) 1px solid;
+  box-shadow: 2px 2px 1px;
   border-radius: 10px;
 }
 
 .user-options > div:first-child {
    border-radius: 10px 10px 0 0;
 }
+
 .user-options > div {
   display: flex;
   justify-content: center;
@@ -414,20 +411,17 @@ i {
 }
 
 .user-options > div:hover {
-  background-color: rgba(203, 203, 203, 0.797);
+  background-color: #cbd4db;
   cursor: pointer;
   transition: .3s;
 }
-/* .user-options input {
-  font-size: 15px;
-
-} */
 
 .navbar-nav {
   border-top: 0.1px rgb(196, 196, 196) solid;
   width: 100%;
   height: 100%;
   display: flex;
+  
 }
 
 .logout {
@@ -443,19 +437,24 @@ i {
   border-radius: 0 0 10px 10px;
 }
 
+.logout p {
+  display: block;  
+ border-radius: 0 0 10px 10px; 
+}
+
 .logout:hover {
-  background-color: rgba(203, 203, 203, 0.797);
+  background-color: #cbd4db;
   cursor: pointer;
   transition: .3s;
+
 }
 
 .main-page-none {
-  width: 100%;
+  width: 100%; 
   display: flex;
   flex-direction: column;
   height: 100vh; 
-  /* display: grid; */
-  /* grid-template-rows: 10% 10% 80%; */
+  
 }
 
 .project-label {
@@ -481,13 +480,14 @@ i {
 
 .main-page-body-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: center; 
+  /* width: 100vw;  */
+  /* height: 100%;  */
 }
 
 
 .main-page-body {
   display: flex;
-  /* justify-content: center; */
   flex-direction: row;
   flex-wrap: wrap;
   width: 80%; 
@@ -504,8 +504,6 @@ i {
   /* display: grid;
   grid-template-rows: 34% 66%; */
 }
-
-
 
 .project-options {
   display: flex;
@@ -603,6 +601,184 @@ i {
 .main-edit-project {
   display: flex;
   /* flex-direction: column; */
+}
+
+.main-delete-project {
+  display: flex; 
+  flex-direction: column;
+  border: 1px solid lightseagreen; 
+  border-radius: 10px;
+  width: 400px;  
+  height: 200px;
+  margin: 60px auto; 
+  align-items: center;
+  padding: 15px;  
 
 }
+
+.main-delete-project h2 {
+  text-align: center; 
+  margin-bottom: 0px; 
+  padding-bottom: 0px; 
+  border-bottom: 1px solid lightseagreen; 
+}
+
+.main-delete-project p {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 0px; 
+  padding-top: 5px; 
+}
+
+.delete-project {
+  display: flex; 
+  width: 300px; 
+  justify-content: space-between;
+  height: 50px; 
+}
+
+.delete-project button {
+  background: lightseagreen;
+  width: 150px; 
+  border-radius: 10px; 
+  font-size: 16px; 
+  border: none;
+  color: white; 
+}
+
+.delete-project button:hover {
+  background-color: lightsalmon;
+  cursor: pointer; 
+}
+
+.delete-project a {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: lightseagreen; 
+  border: 1px solid lightseagreen; 
+  border-radius: 10px;
+  width: 100px; 
+  text-align: center;
+}
+
+.delete-project a:hover {
+  text-decoration: underline; 
+}
+
+.wrapper-edit {
+  border: 1px solid lightseagreen; 
+  border-radius: 10px;
+  width: 500px; 
+  margin: 50px auto; 
+  height: 600px;  
+}
+
+.wrapper-edit h3 {
+  text-align: center; 
+}
+
+.text-muted {
+  text-align: center; 
+}
+
+.form-group-edit-user {
+  display: flex; 
+  flex-direction: column;
+  /* grid-template-columns: 1fr 1fr;
+  grid-template-rows: 5; */
+  margin: 20px; 
+}
+
+.form-group-edit {
+  
+  display: flex; 
+  flex-direction: column; 
+  margin: 10px 0; 
+
+}
+
+.form-group-edit-user input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px; 
+}
+
+.form-group {
+  display: flex; 
+  flex-direction: column; 
+  /* margin: 8px 0;  */
+}
+
+.py-4 {
+  display: flex;
+  width: 500px; 
+  justify-content: center;
+  height: 50px; 
+}
+
+.py-4 button {
+  background: lightseagreen;
+  width: 150px; 
+  border-radius: 10px; 
+  font-size: 16px; 
+  border: none;
+  color: white; 
+  margin-right: 25px; 
+  
+}
+
+.py-4 button:hover {
+  cursor: pointer; 
+  font-size: larger;
+
+}
+
+.py-4 a {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: lightseagreen; 
+  border: 1px solid lightseagreen; 
+  border-radius: 10px;
+  width: 100px; 
+  text-align: center;
+}
+
+.py-4 a:hover {
+  text-decoration: underline; 
+}
+
+.form-group-edit-user label {
+  display: block; 
+  margin: 6px 0; 
+}
+
+.mb-3 {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px; 
+}
+
+
+
+
+
+
+
+
+
+
 
