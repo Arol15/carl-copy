@@ -1,14 +1,16 @@
 extends ../layout.pug
 include project-utils.pug
-block content
   .project-label
     div YOUR PROJECTS
   .main-page-body
     body
-      div
-        p Proceed with deleting this project?
-      div
-        form(action=`/teams/${teamId}/projects/${projectToDelete.id}/delete` method='post')
-          input(type='hidden' name='_csrf' value=csrfToken)
-          button(class='btn btn-danger' type='submit') Delete Project
-          a(class='btn btn-warning ml-2' href=`/teams/${teamId}/projects` role='button') Cancel
+block content
+      div.main-delete-project 
+        div 
+          h2 Delete
+          p Proceed with deleting this project?
+        div
+          form.delete-project(action=`/teams/${teamId}/projects/${projectToDelete.id}/delete` method='post')
+            input(type='hidden' name='_csrf' value=csrfToken)
+            button(class='btn btn-danger' type='submit') Delete Project
+            a(class='btn btn-warning ml-2' href=`/teams/${teamId}/projects` role='button') Cancel
