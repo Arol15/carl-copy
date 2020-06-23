@@ -47,8 +47,9 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/create',
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
 
-  const { taskDescription, dueDate, columnIndx } = req.body;
+  const { taskDescription, dueDate } = req.body;
 
+  const columnIndx = await Task.count({ where: { columnId } })
   const task = Task.build({ taskDescription, dueDate, columnIndx, columnId });
 
   try {
