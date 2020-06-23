@@ -674,8 +674,29 @@ i {
   height: 600px;  
 }
 
+.wrapper-edit-1 {
+  border: 1px solid lightseagreen; 
+  border-radius: 10px;
+  width: 500px; 
+  margin: 50px auto; 
+  height: 300px;  
+}
+
+
 .wrapper-edit h3 {
   text-align: center; 
+}
+
+.form-group-edit-user textarea {
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px; 
 }
 
 .text-muted {
