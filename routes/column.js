@@ -10,7 +10,7 @@ const csrfProtection = csrf({ cookie: true });
 
 let url
 if (process.env.NODE_ENV === 'production') {
-  url = 'https://serene-journey-86279.herokuapp.com'
+  url = 'https://hidden-fortress-08833.herokuapp.com'
 } else {
   url = 'http://localhost:8080'
 }

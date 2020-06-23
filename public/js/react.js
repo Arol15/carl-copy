@@ -5,8 +5,8 @@ const { DragDropContext, Draggable, Droppable } = window.ReactBeautifulDnd;
 const styled = window.styled
 
 let url;
-// url = 'https://serene-journey-86279.herokuapp.com'
-url = 'http://localhost:8080'
+url = 'https://hidden-fortress-08833.herokuapp.com/'
+// url = 'http://localhost:8080'
 
 const TaskContainer = styled.div`
   border: 1px solid lightgrey;
