@@ -233,8 +233,8 @@ class App extends React.Component {
       fetch(`${url}/columns/update`, {
         method: 'POST',
         body: JSON.stringify(columnResult),
-        headers: { 'Content-Type': 'application/json'}
-        })
+        headers: { 'Content-Type': 'application/json' }
+      })
         .catch(err => console.log(err))
 
       return
@@ -264,8 +264,8 @@ class App extends React.Component {
       fetch(`${url}/columns/update`, {
         method: 'POST',
         body: JSON.stringify(result),
-        headers: { 'Content-Type': 'application/json'}
-        })
+        headers: { 'Content-Type': 'application/json' }
+      })
         .catch(err => console.log(err))
 
       return
@@ -301,8 +301,8 @@ class App extends React.Component {
     fetch(`${url}/columns/update`, {
       method: 'POST',
       body: JSON.stringify(result),
-      headers: { 'Content-Type': 'application/json'}
-      })
+      headers: { 'Content-Type': 'application/json' }
+    })
       .catch(err => console.log(err))
   }
 
@@ -317,7 +317,7 @@ class App extends React.Component {
               {this.state.columnOrder.map((columnId, index) => {
                 const column = this.state.columns[columnId]
                 const tasks = column.taskIds.map(taskId => this.state.tasks[taskId])
-                return <Column key={column.id} column={column} tasks={tasks} index={index}/>
+                return <Column key={column.id} column={column} tasks={tasks} index={index} />
               })}
 
               {provided.placeholder}

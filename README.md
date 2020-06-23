@@ -126,8 +126,7 @@ it('exists and creates a good instance',  async  ()  =>  {
 - Delete user
 - Allow users to have many teams
 - Allow a user to remove team members
-- Indicate completed tasks and projects
-- Invite user button
+- Update unit tests so that it can log in to pass the test statements
 
 # Asana-Clone
 a/A Week 12 Full Stack Project - Asana Clone
