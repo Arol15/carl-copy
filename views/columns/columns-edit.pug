@@ -2,12 +2,12 @@ extends ../layout.pug
 include columns-utils.pug
 
 block content
-  h3 Edit Column
-
-  body
-    +error(error)
-    form(action=`/teams/${teamId}/projects/${projectId}/columns/${columnId}/edit` method='post')
-      include columns-form-fields.pug
-      div
-        button(type='submit') Update Column
-        a(href=`/teams/${teamId}/projects/${projectId}/columns` roll='button') Cancel
+  .wrapper-edit
+    body
+      +error(error)
+      h3.text-center.text-muted Edit Column
+      form.form-group-edit-user(action=`/teams/${teamId}/projects/${projectId}/columns/${columnId}/edit` method='post')
+        include columns-form-fields.pug
+        div.py-4
+          button(type='submit') Update Column
+          a(href=`/teams/${teamId}/projects/${projectId}/columns` roll='button') Cancel
