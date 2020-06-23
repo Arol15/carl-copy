@@ -221,7 +221,7 @@ html, body {
   font-size: 14px; 
 }
 
-project-list a:hover {
+.project-list a:hover {
   cursor: pointer; 
 }
 
@@ -388,8 +388,6 @@ i {
 
 .initials-div:hover {
   cursor: pointer;
-  background: rebeccapurple;
-  color: white; 
 }
 
 .user-options {
