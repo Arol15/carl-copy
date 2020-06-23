@@ -161,6 +161,11 @@ html, body {
   padding-bottom: 5px;
 }
 
+.fa-trash,
+.fa-pencil-square-o {
+  font-size: 20px;
+}
+
 .for-button {
   display: flex; 
   flex-direction: column;
@@ -216,7 +221,7 @@ html, body {
   font-size: 14px; 
 }
 
-project-list a:hover {
+.project-list a:hover {
   cursor: pointer; 
 }
 
@@ -383,8 +388,6 @@ i {
 
 .initials-div:hover {
   cursor: pointer;
-  background: rebeccapurple;
-  color: white; 
 }
 
 .user-options {
