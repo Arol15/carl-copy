@@ -67,6 +67,7 @@ function columnValues(o) {
   return {
     columnName: str(75),
     projectId: Math.floor(Math.random() * 1),
+    columnPos: 1,
     ...o
   };
 }

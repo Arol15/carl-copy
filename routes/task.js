@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { asyncHandler } = require('./utils');
 const { requireAuth } = require('../auth')
-const { Task, Project, Column, Team } = require('../db/models');
+const { Task, Project, Column, Team, User } = require('../db/models');
 const csrf = require('csurf');
 
 const csrfProtection = csrf({ cookie: true });
@@ -35,10 +35,26 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/create', 
   const columnId = parseInt(req.params.columnId, 10);
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
-
+  const userId = req.session.auth.userId
+  const projects = await Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
+  const team = await Team.findOne({ where: teamId });
+  const user = await User.findOne({ where: userId });
+  // created initials variable
+  const initials = user.firstName[0] + user.lastName[0];
   const task = await Task.build();
-
-  res.render('tasks/task-create', { task, columnId, teamId, projectId, csrfToken: req.csrfToken() });
+  // res.render("projects/projects", { projects, user, userId, teammates, team, teamId, project, allTeams, initials, csrfToken: req.csrfToken() });
+  res.render('tasks/task-create', { task, columnId, teamId, initials, userId, teammates, projectId, team, projects, csrfToken: req.csrfToken() });
 }));
 
 // post new task
@@ -46,23 +62,44 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/create',
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
+  const userId = req.session.auth.userId
+  const projects = await Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
+  const { taskDescription, dueDate } = req.body;
+  const team = await Team.findOne({ where: teamId });
+  const user = await User.findOne({ where: userId });
+  const initials = user.firstName[0] + user.lastName[0];
 
-  const { taskDescription, dueDate, columnIndx } = req.body;
-
+  const columnIndx = await Task.count({ where: { columnId } })
   const task = Task.build({ taskDescription, dueDate, columnIndx, columnId });
 
   try {
     await task.save();
-    res.redirect(`/teams/${teamId}/projects/${projectId}/columns/${columnId}/tasks`)
+    res.redirect(`/teams/${teamId}/projects/${projectId}/columns`)
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
       const error = err.errors.map(error => error.message);
       res.render('tasks/task-create', {
+        columnId,
+        teamId,
+        initials,
+        userId,
+        teammates,
+        projectId,
+        team,
+        projects,
         task,
         error,
-        teamId,
-        projectId,
-        columnId,
         csrfToken: req.csrfToken()
       })
     } else next(err);
@@ -72,6 +109,10 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/create',
 // get edit task form
 router.get('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/:taskId/edit', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const taskId = parseInt(req.params.taskId, 10);
+  const teamId = parseInt(req.params.teamId, 10);
+  const columnId = parseInt(req.params.columnId, 10);
+  const projectId = parseInt(req.params.projectId, 10);
+  const userId = req.session.auth.userId
 
   const task = await Task.findByPk(taskId, {
     include: {
@@ -82,14 +123,44 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/:taskId/e
       }
     }
   });
-
-  res.render('tasks/task-edit', { task, csrfToken: req.csrfToken() })
+  const projects = await Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
+  const team = await Team.findOne({ where: teamId });
+  const user = await User.findOne({ where: userId });
+  // created initials variable
+  const initials = user.firstName[0] + user.lastName[0];
+  res.render('tasks/task-edit', { columnId, teamId, initials, userId, teammates, projectId, team, projects, task, csrfToken: req.csrfToken() })
 }));
 
 // post edit
 router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/:taskId/edit', requireAuth, csrfProtection, asyncHandler(async (req, res, next) => {
   const taskId = parseInt(req.params.taskId, 10);
-
+  const teamId = parseInt(req.params.teamId, 10);
+  const projectId = parseInt(req.params.projectId, 10);
+  const columnId = parseInt(req.params.columnId, 10);
+  const userId = req.session.auth.userId
+  const projects = await Project.findAll({
+    where: {
+      teamId,
+    },
+    order: [["id", "ASC"]],
+    include: { model: Team },
+  });
+  const teammates = await User.findAll({
+    where: {
+      teamId,
+    },
+  })
   const taskToUpdate = await Task.findByPk(taskId, {
     include: {
       model: Column,
@@ -99,17 +170,27 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/:taskId/
       }
     }
   });
-
+  const team = await Team.findOne({ where: teamId });
+  const user = await User.findOne({ where: userId });
+  const initials = user.firstName[0] + user.lastName[0];
   const { taskDescription, dueDate, columnIndx } = req.body;
   const task = { taskDescription, dueDate, columnIndx };
 
   try {
     await taskToUpdate.update(task);
-    res.redirect(`/teams/${taskToUpdate.Column.Project.Team.id}/projects/${taskToUpdate.Column.Project.id}/columns/${taskToUpdate.Column.id}/tasks`);
+    res.redirect(`/teams/${taskToUpdate.Column.Project.Team.id}/projects/${taskToUpdate.Column.Project.id}/columns`);
   } catch (err) {
     if (err.name === 'SequelizeValidationError') {
       const error = e.errors.map(error => error.message);
       res.render('projects/project-edit', {
+        columnId,
+        teamId,
+        initials,
+        userId,
+        teammates,
+        projectId,
+        team,
+        projects,
         task: { ...task, id: taskId },
         error,
         csrfToken: req.csrfToken()
@@ -132,7 +213,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/:taskId/d
 
 
 // delete task
-router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/:taskId/delete', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
+router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/:taskId/delete', requireAuth, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
@@ -141,7 +222,7 @@ router.post('/teams/:teamId/projects/:projectId/columns/:columnId/tasks/:taskId/
   const taskToDelete = await Task.findByPk(taskId);
 
   await taskToDelete.destroy();
-  res.redirect(`/teams/${teamId}/projects/${projectId}/columns/${columnId}/tasks`);
+  res.redirect(`/teams/${teamId}/projects/${projectId}/columns`);
 }));
 
 

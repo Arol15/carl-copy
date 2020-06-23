@@ -5,8 +5,8 @@ const { DragDropContext, Draggable, Droppable } = window.ReactBeautifulDnd;
 const styled = window.styled
 
 let url;
-// url = 'https://still-reef-05529.herokuapp.com'
-url = 'http://localhost:8080'
+url = 'https://hidden-fortress-08833.herokuapp.com'
+// url = 'http://localhost:8080'
 
 const TaskContainer = styled.div`
   border: 1px solid lightgrey;
@@ -39,6 +39,16 @@ const TaskOperation = styled.div`
   }
 `
 
+const TaskDeleteBtn = styled.button`
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  padding: 0px;
+`
+
 class Task extends React.Component {
   render() {
     return (
@@ -48,10 +58,16 @@ class Task extends React.Component {
 
           <TaskContainer {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} isDragging={snapshot.isDragging}>
             {this.props.task.content}
-            {<TaskEdit><a href={`${window.location.pathname}/${this.props.columnId}/tasks/${parseInt(this.props.task.id.match(/\d+/)[0], 10)}/delete`}>
-              <TaskOperation className='fa fa-trash'></TaskOperation></a>
-              <a href={`${window.location.pathname}/${this.props.columnId}/tasks/${parseInt(this.props.task.id.match(/\d+/)[0], 10)}/edit`}>
-                <TaskOperation className="fa fa-pencil-square-o"></TaskOperation></a></TaskEdit>}
+            {
+              <TaskEdit>
+                <form method='post' action={`${window.location.pathname}/${this.props.columnId}/tasks/${parseInt(this.props.task.id.match(/\d+/)[0], 10)}/delete`}>
+                  <TaskDeleteBtn type='submit'><TaskOperation className='fa fa-trash'></TaskOperation></TaskDeleteBtn>
+                </form>
+                <a href={`${window.location.pathname}/${this.props.columnId}/tasks/${parseInt(this.props.task.id.match(/\d+/)[0], 10)}/edit`}>
+                  <TaskOperation className="fa fa-pencil-square-o"></TaskOperation>
+                </a>
+              </TaskEdit>
+            }
 
           </TaskContainer>
         )}
