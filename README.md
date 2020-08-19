@@ -12,7 +12,7 @@ Tasks can be assigned to specific projects where they can be organized into cate
 
 - Database management
 	- Sequelize ORM
-	- Postgres
+	- PostgreSQL
 - Front-end development
 	- React
 	- AJAX
@@ -27,7 +27,7 @@ Tasks can be assigned to specific projects where they can be organized into cate
 	- Dotenv
 	- Sequelize
 	- Bcrypt
-	- Unit tests to test:
+	- Unit tests written using:
 		- Mocha
 		- Chai
 		- Cheerio
@@ -39,20 +39,17 @@ Tasks can be assigned to specific projects where they can be organized into cate
 # Features
 
 - Professional landing page
-![home-page]()
+![home-page](public/images/home-page.png)
 
 - Drag-n-drop using React
-```javascript
-code snippet using react
-and maybe gif
-```
+
 
 - Create and manage projects
-![proj-CRUD-gif]()
+![proj-CRUD-gif](public/images/drag-n-drop.gif)
 
 - Create and manage tasks
-![tasks-CRUD-gif]()
-![columns-CRUD-gif]()
+![tasks-CRUD-gif](public/images/create-new-task.gif)
+![columns-CRUD-gif](public/images/create-new-column.gif)
 
 - Unit tests
 	- Models exists and creates good instances
@@ -73,8 +70,6 @@ and maybe gif
 
 # Technical Challenges
 
-### Front-end
-- front end challenges
 ### Back-end
 - Unit Tests
 	- decided to use customized functions to create model instances instead of using separate seed file for test environment
