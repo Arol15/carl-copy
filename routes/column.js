@@ -340,7 +340,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/delete', requir
 }));
 
 // delete column
-router.post('/teams/:teamId/projects/:projectId/columns/:columnId/delete', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
+router.post('/teams/:teamId/projects/:projectId/columns/:columnId/delete', requireAuth, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);
