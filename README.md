@@ -70,6 +70,10 @@ Tasks can be assigned to specific projects where they can be organized into cate
 # Technical Challenges
 
 ### Front-end
+- Using custom CSS 
+- Implementing modals into pages
+- Using autoplaying vidoe
+- Implementing JS to pug files
 - React Components
   - utilized React Beautiful DnD to create fluid, intuitive interactions with task cards in the browser
   - used node-fetch to persist data and positioning of tasks/columns to the database on dragEnd events
@@ -122,6 +126,7 @@ class Column extends React.Component {
   }
 }
 ```
+
 ### Back-end
 - Sequelize
   - implemented custom models for users, teams, projects, and tasks
