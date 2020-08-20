@@ -1,5 +1,5 @@
 # Introduction
-CARL is a work-flow application to help users organize their tasks.  
+CARL is a work-flow application to help users organize their tasks.
 Tasks can be assigned to specific projects where they can be organized into categories.
 
 - User **must** belong to a Team in order to be able to create projects and assign tasks
@@ -70,7 +70,7 @@ Tasks can be assigned to specific projects where they can be organized into cate
 # Technical Challenges
 
 ### Front-end
-- Using custom CSS 
+- Using custom CSS
 - Implementing modals into pages
 - Using autoplaying vidoe
 - Implementing JS to pug files
@@ -175,7 +175,7 @@ function  userValues(o)  {
 ```javascript
 it('exists and creates a good instance',  async  ()  =>  {
 	const  {  models,  error  }  =  loadModel('User');
-	if (stopTest(errorMessage || userError || error)) return;	
+	if (stopTest(errorMessage || userError || error)) return;
 	const  {  User  }  = models;
 	const  values  =  userValues({ teamId });
 	succeeded =  await  createModel(User, values);
@@ -190,12 +190,7 @@ it('exists and creates a good instance',  async  ()  =>  {
 - Allow users to have many teams
 - Allow a user to remove team members
 - Update unit tests so that it can log in to pass the test statements
-<<<<<<< HEAD
-=======
 - Add Modals to edit tasks and create tasks
 - Allow users to create teams
 - Allow users to delete teams
 - Allow users to invite other users to team
-
-
->>>>>>> 584e4e920da9f3edc8cce8722aa5551e3cb7c259
