@@ -10,7 +10,7 @@ const csrfProtection = csrf({ cookie: true });
 
 let url
 if (process.env.NODE_ENV === 'production') {
-  url = 'https://serene-journey-86279.herokuapp.com'
+  url = 'https://still-reef-05529.herokuapp.com'
 } else {
   url = 'http://localhost:8080'
 }
@@ -340,7 +340,7 @@ router.get('/teams/:teamId/projects/:projectId/columns/:columnId/delete', requir
 }));
 
 // delete column
-router.post('/teams/:teamId/projects/:projectId/columns/:columnId/delete', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
+router.post('/teams/:teamId/projects/:projectId/columns/:columnId/delete', requireAuth, asyncHandler(async (req, res) => {
   const teamId = parseInt(req.params.teamId, 10);
   const projectId = parseInt(req.params.projectId, 10);
   const columnId = parseInt(req.params.columnId, 10);

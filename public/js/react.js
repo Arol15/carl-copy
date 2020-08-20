@@ -5,22 +5,23 @@ const { DragDropContext, Draggable, Droppable } = window.ReactBeautifulDnd;
 const styled = window.styled
 
 let url;
-// url = 'https://serene-journey-86279.herokuapp.com'
-url = 'http://localhost:8080'
+url = 'https://still-reef-05529.herokuapp.com'
+// url = 'http://localhost:8080'
 
 const TaskContainer = styled.div`
   border: 1px solid lightgrey;
   border-radius: 4px;
   box-shadow: 0 1px 3px 0 rgba(21,27,38,.15);
-
-  padding: 16px;
-  margin-bottom: 8px;
-  background-color: ${props => (props.isDragging ? 'skyblue' : 'white')};
-
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  padding: 10px;
+  background-color: ${props => (props.isDragging ? '#75e6e0' : 'white')};
+  margin-bottom: 8px;
+  display: grid;
+  grid-template-columns: 1fr 20px;
 `
+
+
+
 
 const TaskEdit = styled.div`
   display: flex;
@@ -32,10 +33,11 @@ const TaskOperation = styled.div`
   padding: 5px;
   color: #bcbcbc;
   transition: fill 0.25s;
-
+  opacity: 0.3;
 
   &:hover {
     color: lightseagreen;
+    opacity: 1;
   }
 `
 
@@ -115,6 +117,22 @@ const TaskAdd = styled.a`
   justify-content: center;
 `
 
+const ColHeader = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 22px;
+  padding: 5px;
+  margin: 8px;
+  align-items: center;
+`
+
+const ColumnOperation = styled.div`
+  margin-right: 2px;
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
+`
 
 
 class Column extends React.Component {
@@ -125,8 +143,21 @@ class Column extends React.Component {
 
           <ColumnContainer {...provided.draggableProps} ref={provided.innerRef}>
 
-            <Title {...provided.dragHandleProps}>{this.props.column.title}</Title>
-            {<TaskAdd className="fa fa-plus" href={`${window.location.pathname}/${parseInt(this.props.column.id.match(/\d+/)[0], 10)}/tasks/create`}></TaskAdd>}
+
+            <ColHeader>
+              <Title {...provided.dragHandleProps}>{this.props.column.title}</Title>
+                <ColumnOperation>
+                  <form method='post' action={`${window.location.pathname}/${parseInt(this.props.column.id.match(/\d+/)[0], 10)}/delete`}>
+                      <TaskDeleteBtn type='submit'><TaskOperation className='fa fa-trash'></TaskOperation></TaskDeleteBtn>
+                  </form>
+                  <a href={`${window.location.pathname}/${parseInt(this.props.column.id.match(/\d+/)[0], 10)}/edit`}>
+                      <TaskOperation className="fa fa-pencil-square-o"></TaskOperation>
+                  </a>
+                </ColumnOperation>
+            </ColHeader>
+
+
+            <TaskAdd className="fa fa-plus" href={`${window.location.pathname}/${parseInt(this.props.column.id.match(/\d+/)[0], 10)}/tasks/create`}></TaskAdd>
 
             <Droppable type='task' droppableId={this.props.column.id}>
               {(provided, snapshot) => (
