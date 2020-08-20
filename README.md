@@ -6,13 +6,13 @@ Tasks can be assigned to specific projects where they can be organized into cate
 
 # Live Link
 
-[C.A.R.L Work-flow Manager](https://still-reef-05529.herokuapp.com/)
+[C.A.R.L Work-flow Manager](https://hidden-fortress-08833.herokuapp.com/)
 
 # Technologies
 
 - Database management
 	- Sequelize ORM
-	- Postgres
+	- PostgreSQL
 - Front-end development
 	- React
 	- AJAX
@@ -27,7 +27,7 @@ Tasks can be assigned to specific projects where they can be organized into cate
 	- Dotenv
 	- Sequelize
 	- Bcrypt
-	- Unit tests to test:
+	- Unit tests written using:
 		- Mocha
 		- Chai
 		- Cheerio
@@ -39,16 +39,16 @@ Tasks can be assigned to specific projects where they can be organized into cate
 # Features
 
 - Professional landing page
-![home-page]()
+![home-page](public/images/home-page.png)
 
 - Drag-n-drop using React
 
 - Create and manage projects
-![proj-CRUD-gif]()
+![proj-CRUD-gif](public/images/drag-n-drop.gif)
 
 - Create and manage tasks
-![tasks-CRUD-gif]()
-![columns-CRUD-gif]()
+![tasks-CRUD-gif](public/images/create-new-task.gif)
+![columns-CRUD-gif](public/images/create-new-column.gif)
 
 - Unit tests
 	- Models exists and creates good instances
@@ -190,9 +190,12 @@ it('exists and creates a good instance',  async  ()  =>  {
 - Allow users to have many teams
 - Allow a user to remove team members
 - Update unit tests so that it can log in to pass the test statements
+<<<<<<< HEAD
+=======
 - Add Modals to edit tasks and create tasks
 - Allow users to create teams
 - Allow users to delete teams
 - Allow users to invite other users to team
 
 
+>>>>>>> 584e4e920da9f3edc8cce8722aa5551e3cb7c259
