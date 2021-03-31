@@ -24,7 +24,7 @@ app.use(cookieParser(sessionSecret))
 app.use(express.urlencoded({ extended: false }))
 app.use(session({
   name: 'asana-clone.sid',
-  store: new (require('connect-pg-simple')(session))(),
+//   store: new (require('connect-pg-simple')(session))(),  # REMOVED 3.31.21 -> timeouts
   secret: sessionSecret,
   resave: false,
   saveUninitialized: false,     // TODO: Add cookie security options
